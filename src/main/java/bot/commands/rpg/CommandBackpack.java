@@ -44,9 +44,9 @@ public class CommandBackpack extends Command {
 
 	private static enum ItemTypeFilter {
 		ALL(null, item -> false), //
-		ARMOR("Armor", item -> item.item.classes.contains(ItemClass.LIGHT_ARMOR)//
-				|| item.item.classes.contains(ItemClass.MEDIUM_ARMOR)//
-				|| item.item.classes.contains(ItemClass.HEAVY_ARMOR)), //
+		ARMOR("Armor", item -> !item.item.classes.contains(ItemClass.LIGHT_ARMOR)//
+				&& !item.item.classes.contains(ItemClass.MEDIUM_ARMOR)//
+				&& !item.item.classes.contains(ItemClass.HEAVY_ARMOR)), //
 		GIFT("Gift", itemClassFilter(ItemClass.GIFT)), //
 		GEM("Gem", item -> item.item.gemType == null), //
 		MG_DROP("Monster girl drop", itemClassFilter(ItemClass.MONMUSU_DROP)), //
