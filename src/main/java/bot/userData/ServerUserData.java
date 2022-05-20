@@ -208,6 +208,7 @@ public class ServerUserData {
 			equip(ItemSlot.RIGHT_HAND, item.id);
 			return ItemSlot.RIGHT_HAND;
 		}
+
 		if (item.classes.contains(ItemClass.LEFT_HAND)) {
 			equip(ItemSlot.LEFT_HAND, item.id);
 			return ItemSlot.LEFT_HAND;

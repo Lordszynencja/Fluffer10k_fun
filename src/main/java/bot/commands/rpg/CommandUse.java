@@ -63,6 +63,7 @@ public class CommandUse extends Command {
 		fluffer10kFun.pagedMessageUtils.addMessage(msg, interaction);
 	}
 
+	@SuppressWarnings("unused")
 	private void onPick(final MessageComponentInteraction interaction, final ItemAmount itemAmount) {
 		final Server server = interaction.getServer().get();
 		final User user = interaction.getUser();
