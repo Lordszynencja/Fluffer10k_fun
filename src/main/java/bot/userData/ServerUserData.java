@@ -10,7 +10,6 @@ import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.Utils.intFromNumber;
 import static bot.util.Utils.longFromNumber;
-import static bot.util.Utils.Pair.pair;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -28,7 +27,6 @@ import org.javacord.api.entity.user.User;
 import bot.Fluffer10kFun;
 import bot.commands.rpg.danuki.DanukiShopUnlock;
 import bot.commands.rpg.skills.Skill;
-import bot.commands.rpg.spells.ActiveSkill;
 import bot.commands.upgrades.Upgrade;
 import bot.data.MonsterGirls.MonsterGirlRace;
 import bot.data.items.FurnitureType;
@@ -38,7 +36,6 @@ import bot.data.items.ItemClass;
 import bot.data.items.ItemSlot;
 import bot.data.items.ItemUtils;
 import bot.data.items.SimpleItemAmount;
-import bot.data.items.data.MagicScrollItems;
 import bot.userData.UserStatusesData.UserStatusType;
 import bot.userData.rpg.UserRPGData;
 import bot.util.CollectionUtils;
@@ -100,29 +97,6 @@ public class ServerUserData {
 		blacksmith = new UserBlacksmithData((Map<String, Object>) data.get("blacksmith"));
 		blessings = new UserBlessingData((Map<String, Object>) data.get("blessings"));
 		saves = mapMapString((Map<String, Map<String, Object>>) data.get("saves"), UserRPGData::new);
-
-		final Map<ActiveSkill, String> scrolls = CollectionUtils.toMap(//
-				pair(ActiveSkill.GOUGE, MagicScrollItems.BOOK_OF_OFFENSE_GOUGE), //
-				pair(ActiveSkill.PRECISE_STRIKE, MagicScrollItems.BOOK_OF_OFFENSE_PRECISE_STRIKE), //
-				pair(ActiveSkill.FORCE_HIT, MagicScrollItems.MAGIC_SCROLL_FORCE_HIT), //
-				pair(ActiveSkill.HEAL, MagicScrollItems.MAGIC_SCROLL_HEAL), //
-
-				pair(ActiveSkill.BASH, MagicScrollItems.BOOK_OF_OFFENSE_BASH), //
-				pair(ActiveSkill.DOUBLE_STRIKE, MagicScrollItems.BOOK_OF_OFFENSE_DOUBLE_STRIKE), //
-				pair(ActiveSkill.FIERY_WEAPON, MagicScrollItems.MAGIC_SCROLL_FIERY_WEAPON), //
-				pair(ActiveSkill.FIREBALL, MagicScrollItems.MAGIC_SCROLL_FIREBALL), //
-				pair(ActiveSkill.HOLY_AURA, MagicScrollItems.MAGIC_SCROLL_HOLY_AURA), //
-				pair(ActiveSkill.ICE_BOLT, MagicScrollItems.MAGIC_SCROLL_ICE_BOLT), //
-				pair(ActiveSkill.LIGHTNING, MagicScrollItems.MAGIC_SCROLL_LIGHTNING), //
-				pair(ActiveSkill.MAGIC_SHIELD, MagicScrollItems.MAGIC_SCROLL_MAGIC_SHIELD), //
-				pair(ActiveSkill.RAGE, MagicScrollItems.MAGIC_SCROLL_RAGE), //
-				pair(ActiveSkill.SLEEP, MagicScrollItems.MAGIC_SCROLL_SLEEP), //
-				pair(ActiveSkill.SPEED_OF_WIND, MagicScrollItems.MAGIC_SCROLL_SPEED_OF_WIND), //
-
-				pair(ActiveSkill.BLIZZARD, MagicScrollItems.MAGIC_SCROLL_BLIZZARD), //
-				pair(ActiveSkill.FREEZE, MagicScrollItems.MAGIC_SCROLL_FREEZE), //
-				pair(ActiveSkill.METEORITE, MagicScrollItems.MAGIC_SCROLL_METEORITE), //
-				pair(ActiveSkill.WHIRLPOOL, MagicScrollItems.MAGIC_SCROLL_WHIRLPOOL));
 
 		upgrades = CollectionUtils.<String, Upgrade>mapToSetSafe(data.get("upgrades"), Upgrade::valueOf);
 		danukiShopUnlocks = CollectionUtils.<String, DanukiShopUnlock>mapToSetSafe(data.get("danukiShopUnlocks"),
@@ -218,9 +192,7 @@ public class ServerUserData {
 	public ItemSlot equip(final Fluffer10kFun fluffer10kFun, final Item item) {
 		if (item.classes.contains(ItemClass.RIGHT_HAND)) {
 			if (rpg.skills.contains(Skill.DUAL_WIELD)) {
-				if (rpg.eq.get(ItemSlot.RIGHT_HAND) == null//
-						|| !fluffer10kFun.items.getItem(rpg.eq.get(ItemSlot.RIGHT_HAND)).classes
-								.contains(ItemClass.DUAL_WIELD)) {
+				if (rpg.eq.get(ItemSlot.RIGHT_HAND) == null) {
 					equip(ItemSlot.RIGHT_HAND, item.id);
 					return ItemSlot.RIGHT_HAND;
 				}

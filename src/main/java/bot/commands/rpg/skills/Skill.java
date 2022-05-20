@@ -16,7 +16,7 @@ public enum Skill {
 	POWER_2(3, "Power II", "Increases physical attack damage by 2", POWER_1), //
 	POWER_3(4, "Power III", "Increases physical attack damage by 3", POWER_2), //
 	POWER_4(5, "Power IV", "Increases physical attack damage by 4", POWER_3), //
-	POWER_5(10, "Power V", "Increases physical attack damage by 10", POWER_3), //
+	POWER_5(10, "Power V", "Increases physical attack damage by 10", POWER_4), //
 
 	THICK_SKIN_1(2, "Thick skin I", "Increases armor and magic resistance by 1", POWER_TREE), //
 	THICK_SKIN_2(3, "Thick skin II", "Increases armor and magic resistance by 1 and allows you to wear medium armor",
