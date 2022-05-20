@@ -1,0 +1,188 @@
+{
+  "161220782733787136" : {
+    "fluffiness" : 2,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "346490267525840907" : {
+    "fluffiness" : 1,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "291741231602466817" : {
+    "fluffiness" : 3,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "254703119772942346" : {
+    "fluffiness" : 4,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "294943864463032320" : {
+    "fluffiness" : 5,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "202385910145351681" : {
+    "fluffiness" : 1,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "130793153186889728" : {
+    "fluffiness" : 1,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "477160770858385419" : {
+    "fluffiness" : 1,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "258274002768887809" : {
+    "fluffiness" : 2,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "373457061431869440" : {
+    "fluffiness" : 2,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "227782364187721729" : {
+    "fluffiness" : 71,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "671427715697606674" : {
+    "fluffiness" : 1,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "141211057485119488" : {
+    "fluffiness" : 0,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "258018575003025408" : {
+    "fluffiness" : 8,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "144142999331274752" : {
+    "fluffiness" : 8,
+    "catchExp" : 12,
+    "autoWait" : true,
+    "runExp" : 3
+  },
+  "345428733584474115" : {
+    "fluffiness" : 1,
+    "catchExp" : 2,
+    "autoWait" : true,
+    "runExp" : 3
+  },
+  "365758326145024002" : {
+    "fluffiness" : 0,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "207970469494652928" : {
+    "fluffiness" : 2,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "349875484751822848" : {
+    "fluffiness" : 1,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "730192657283940384" : {
+    "fluffiness" : 0,
+    "catchExp" : 4,
+    "autoWait" : true,
+    "runExp" : 2
+  },
+  "513587159928930344" : {
+    "fluffiness" : 3,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "365956346127843339" : {
+    "fluffiness" : 2,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "256246729463169025" : {
+    "fluffiness" : 4,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "385253811155107841" : {
+    "fluffiness" : 10,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "167607912733212672" : {
+    "fluffiness" : 30,
+    "catchExp" : 1,
+    "autoWait" : true,
+    "runExp" : 6
+  },
+  "352874520543232012" : {
+    "fluffiness" : 1,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "222368927626297344" : {
+    "fluffiness" : 1,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  },
+  "274634251167727618" : {
+    "fluffiness" : 1,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 8
+  },
+  "361845106958925824" : {
+    "fluffiness" : 0,
+    "catchExp" : 1,
+    "autoWait" : true,
+    "runExp" : 1
+  },
+  "289105579077664768" : {
+    "fluffiness" : 101,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 5
+  },
+  "395678028262277120" : {
+    "fluffiness" : 0,
+    "catchExp" : 0,
+    "autoWait" : true,
+    "runExp" : 0
+  }
+}

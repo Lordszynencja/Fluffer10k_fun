@@ -1,0 +1,28 @@
+package bot.data.fight;
+
+public enum FighterClass {
+	CANT_BE_FROZEN, //
+	CLEVER, //
+	CLIMBING, //
+	CURSED_SWORD, //
+	DOUBLE_ATTACK, //
+	FIERY, //
+	FLYING, //
+	FREEZING_AURA, //
+	ICY, //
+	MECHANICAL, //
+	MONSTER_GIRL, //
+	OCELOMEH_SWORD, //
+	POISONOUS_ATTACK, //
+	QUICK, //
+	SALTABLE, //
+	SLOW, //
+	SPELL_VOID, //
+	STATUS_NEGATION, //
+	TRIPLE_ATTACK, //
+	UNDEAD, //
+	USES_MAGIC, //
+	WEAK_TO_COLD, //
+	WEAK_TO_FIRE, //
+	WET;
+}

@@ -1,0 +1,476 @@
+{
+  "nextFightId" : 153,
+  "reminders" : { },
+  "nextSpecialItemId" : 3,
+  "fights" : {
+    "147" : {
+      "fightEndReward" : "DEFAULT",
+      "turnDescriptions" : [ [ "F is ready to fight!", "Powerful manticore Lilian is ready to fight!" ] ],
+      "turnProgress" : 0,
+      "actionsLeft" : 1,
+      "turn" : 0,
+      "type" : "PVE",
+      "serverId" : 883720051142836224,
+      "fightersOrder" : [ "PLAYER", "BOSS" ],
+      "fighters" : {
+        "PLAYER" : {
+          "maxHp" : 83,
+          "level" : 46,
+          "maxMana" : 25,
+          "lastSpellUsed" : null,
+          "hp" : 83,
+          "team" : "PLAYER",
+          "type" : "PLAYER",
+          "userId" : 289105579077664768,
+          "escaped" : false,
+          "mana" : 25,
+          "heldBy" : null,
+          "lost" : false,
+          "name" : "F",
+          "statuses" : { },
+          "attacked" : false,
+          "exp" : 0
+        },
+        "BOSS" : {
+          "escaped" : false,
+          "maxHp" : 131,
+          "level" : 45,
+          "heldBy" : null,
+          "lost" : false,
+          "name" : "Powerful manticore Lilian",
+          "hp" : 131,
+          "statuses" : { },
+          "team" : "BOSS",
+          "attacked" : false,
+          "type" : "ENEMY",
+          "enemyId" : "MONSTER_ARMY_OFFICER_2"
+        }
+      }
+    },
+    "152" : {
+      "fightEndReward" : "DEFAULT",
+      "turnDescriptions" : [ [ "F hits Zombie, dealing 4 damage." ], [ "Zombie hits F and deals 4 damage." ], [ ] ],
+      "turnProgress" : 0,
+      "actionsLeft" : 1,
+      "turn" : 6,
+      "type" : "PVE",
+      "serverId" : 883720051142836224,
+      "fightersOrder" : [ "PLAYER", "ENEMY_0" ],
+      "fighters" : {
+        "PLAYER" : {
+          "maxHp" : 54,
+          "level" : 52,
+          "maxMana" : 28,
+          "lastSpellUsed" : "STONE_SKIN",
+          "hp" : 41,
+          "team" : "PLAYER",
+          "type" : "PLAYER",
+          "userId" : 289105579077664768,
+          "escaped" : false,
+          "mana" : 18,
+          "heldBy" : null,
+          "lost" : false,
+          "name" : "F",
+          "statuses" : {
+            "STONE_SKIN" : {
+              "duration" : 5,
+              "stacks" : 0,
+              "endless" : false
+            }
+          },
+          "attacked" : true,
+          "exp" : 56
+        },
+        "ENEMY_0" : {
+          "escaped" : false,
+          "maxHp" : 26,
+          "level" : 7,
+          "heldBy" : null,
+          "lost" : false,
+          "name" : "Zombie",
+          "hp" : 14,
+          "statuses" : { },
+          "team" : "ENEMY",
+          "attacked" : true,
+          "type" : "ENEMY",
+          "enemyId" : "ZOMBIE_4"
+        }
+      }
+    }
+  },
+  "serversData" : {
+    "643404810770448385" : {
+      "lastJobMessageId" : 957039934764617799,
+      "monmusuMarket" : {
+        "CHARYBDIS" : 1
+      },
+      "modRoleId" : 671420574974738477,
+      "botChannelId" : 676530759775027210,
+      "lastGoldenCookieMessageId" : null,
+      "goldenCookiesCaught" : 38,
+      "goldenCookieCountdown" : 7,
+      "jackpotStake" : 55,
+      "shopItems" : {
+        "KNIFE" : 1,
+        "HEALTH_POTION" : 2,
+        "PICKAXE_COPPER" : 1,
+        "MANA_POTION" : 3,
+        "KUNAI" : 3,
+        "KAMA" : 1,
+        "DARTS" : 1,
+        "HEALTH_POTION_MAJOR" : 1,
+        "WHIP" : 2,
+        "HEALTH_POTION_MINOR" : 7,
+        "APPRENTICE_BOOK" : 0,
+        "LEATHER_ARMOR" : 1,
+        "APPRENTICE_STAFF" : 2,
+        "SCYTHE" : 1,
+        "SHORT_SWORD" : 1,
+        "WOODEN_SHIELD" : 0,
+        "MAGIC_SCROLL_HEAL" : 1,
+        "SLINGSHOT" : 0,
+        "LUMBERJACK_AXE" : 1,
+        "MANA_POTION_MINOR" : 6,
+        "MANA_POTION_MAJOR" : 1
+      }
+    },
+    "593147619081977888" : {
+      "lastJobMessageId" : 957039932357111859,
+      "monmusuMarket" : {
+        "DEMON" : 1,
+        "BAROMETZ" : 1,
+        "PARASITE_SLIME_SLIME_CARRIER" : 1,
+        "CROW_TENGU" : 1,
+        "MERSHARK" : 1
+      },
+      "modRoleId" : 603319014466387974,
+      "botChannelId" : 948162781969002516,
+      "lastGoldenCookieMessageId" : 957039929504981052,
+      "goldenCookiesCaught" : 385,
+      "goldenCookieCountdown" : 9,
+      "jackpotStake" : 7261,
+      "shopItems" : {
+        "KNIFE" : 1,
+        "HEALTH_POTION" : 2,
+        "PICKAXE_COPPER" : 2,
+        "MANA_POTION" : 2,
+        "KUNAI" : 0,
+        "DARTS" : 0,
+        "KAMA" : 0,
+        "HEALTH_POTION_MAJOR" : 1,
+        "PRISONER_FRUIT" : 0,
+        "MAGIC_SCROLL_FORCE_HIT" : 0,
+        "SHORT_BOW" : 1,
+        "HEALTH_POTION_MINOR" : 7,
+        "APPRENTICE_BOOK" : 0,
+        "LEATHER_ARMOR" : 0,
+        "SCYTHE" : 1,
+        "SHORT_SWORD" : 1,
+        "WOODEN_SHIELD" : 1,
+        "MAGIC_SCROLL_HEAL" : 1,
+        "SLINGSHOT" : 1,
+        "LUMBERJACK_AXE" : 2,
+        "MANA_POTION_MINOR" : 6,
+        "MANA_POTION_MAJOR" : 2
+      }
+    },
+    "355581142960701441" : {
+      "lastJobMessageId" : 957039930297700363,
+      "monmusuMarket" : {
+        "BAPHOMET" : 1,
+        "OGRE" : 1,
+        "HUMPTY_EGG" : 1
+      },
+      "modRoleId" : 893114705126772787,
+      "botChannelId" : 386333223245840394,
+      "lastGoldenCookieMessageId" : null,
+      "goldenCookiesCaught" : 11,
+      "goldenCookieCountdown" : 8,
+      "jackpotStake" : 95,
+      "shopItems" : {
+        "HEALTH_POTION" : 2,
+        "PICKAXE_COPPER" : 1,
+        "MANA_POTION" : 2,
+        "KUNAI" : 0,
+        "DARTS" : 1,
+        "HEALTH_POTION_MAJOR" : 2,
+        "MAGIC_SCROLL_FORCE_HIT" : 0,
+        "WHIP" : 3,
+        "HEALTH_POTION_MINOR" : 6,
+        "LEATHER_ARMOR" : 0,
+        "APPRENTICE_BOOK" : 1,
+        "SHORT_SWORD" : 0,
+        "SCYTHE" : 1,
+        "SLINGSHOT" : 2,
+        "LUMBERJACK_AXE" : 2,
+        "MANA_POTION_MINOR" : 5,
+        "MANA_POTION_MAJOR" : 1,
+        "JAVELIN" : 2
+      }
+    },
+    "853985288434483220" : {
+      "lastJobMessageId" : 957039937692250152,
+      "monmusuMarket" : {
+        "ANT_ARACHNE" : 1
+      },
+      "modRoleId" : null,
+      "botChannelId" : 853988583644069919,
+      "lastGoldenCookieMessageId" : 957039930738114580,
+      "goldenCookiesCaught" : 4,
+      "goldenCookieCountdown" : 10,
+      "jackpotStake" : 0,
+      "shopItems" : {
+        "KNIFE" : 0,
+        "HEALTH_POTION" : 2,
+        "MANA_POTION" : 2,
+        "KUNAI" : 2,
+        "DARTS" : 2,
+        "KAMA" : 1,
+        "HEALTH_POTION_MAJOR" : 2,
+        "MAGIC_SCROLL_FORCE_HIT" : 2,
+        "WHIP" : 2,
+        "HEALTH_POTION_MINOR" : 5,
+        "LEATHER_ARMOR" : 1,
+        "SHORT_SWORD" : 1,
+        "SCYTHE" : 2,
+        "WOODEN_SHIELD" : 2,
+        "MAGIC_SCROLL_HEAL" : 1,
+        "SLINGSHOT" : 1,
+        "GEM_LARGE_REFINED_DIAMOND" : 9990,
+        "LUMBERJACK_AXE" : 1,
+        "MANA_POTION_MINOR" : 5,
+        "MANA_POTION_MAJOR" : 2
+      }
+    },
+    "883720051142836224" : {
+      "lastJobMessageId" : null,
+      "monmusuMarket" : {
+        "KAPPA" : 1,
+        "DEMON" : 1,
+        "HAKUTAKU" : 1,
+        "KRAKEN" : 1,
+        "BAROMETZ" : 1,
+        "DARK_PRIEST" : 1,
+        "GRIFFON" : 1,
+        "SIREN" : 1,
+        "LAVA_GOLEM" : 1,
+        "SPHINX" : 1,
+        "DEVIL_BUG" : 1
+      },
+      "modRoleId" : null,
+      "botChannelId" : null,
+      "lastGoldenCookieMessageId" : null,
+      "goldenCookiesCaught" : 0,
+      "goldenCookieCountdown" : 4,
+      "jackpotStake" : 0,
+      "shopItems" : {
+        "HEALTH_POTION" : 2,
+        "BATTLE_AXE" : 0,
+        "KUNAI" : 1,
+        "APPRENTICE_BOOK_OPAL" : 0,
+        "HEALTH_POTION_MAJOR" : 2,
+        "APPRENTICE_STAFF_EMERALD" : 0,
+        "SHORT_BOW" : 0,
+        "WHIP" : 1,
+        "HEALTH_POTION_MINOR" : 2,
+        "APPRENTICE_BOOK" : 0,
+        "LEATHER_ARMOR" : 0,
+        "APPRENTICE_STAFF" : 0,
+        "WOODEN_SHIELD" : 0,
+        "MAGIC_SCROLL_FIREBALL" : 0,
+        "APPRENTICE_STAFF_TOPAZ" : 0,
+        "SLINGSHOT" : 1,
+        "APPRENTICE_STAFF_RUBY" : 0,
+        "APPRENTICE_STAFF_QUARTZ" : 0,
+        "APPRENTICE_STAFF_DIAMOND" : 0,
+        "PICKAXE_COPPER" : 0,
+        "APPRENTICE_BOOK_TOPAZ" : 0,
+        "APPRENTICE_BOOK_EMERALD" : 0,
+        "APPRENTICE_BOOK_RUBY" : 0,
+        "DAGGER" : 0,
+        "APPRENTICE_STAFF_SAPPHIRE" : 0,
+        "APPRENTICE_BOOK_GARNET" : 0,
+        "APPRENTICE_BOOK_SAPPHIRE" : 0,
+        "EMPTY_BOOK" : 0,
+        "LUMBERJACK_AXE" : 2,
+        "APPRENTICE_STAFF_JADE" : 0,
+        "APPRENTICE_BOOK_QUARTZ" : 0,
+        "KNIFE" : 0,
+        "MAGIC_SCROLL_ICE_BOLT" : 0,
+        "APPRENTICE_STAFF_GARNET" : 0,
+        "KAMA" : 0,
+        "APPRENTICE_BOOK_DIAMOND" : 0,
+        "APPRENTICE_BOOK_JADE" : 0,
+        "SCYTHE" : 0,
+        "SHORT_SWORD" : 2,
+        "MANA_POTION_MINOR" : 5,
+        "MANA_POTION_MAJOR" : 1,
+        "JAVELIN" : 1,
+        "WOODEN_RING" : 0,
+        "MANA_POTION" : 2,
+        "LONG_SWORD" : 1,
+        "APPRENTICE_STAFF_OPAL" : 0,
+        "DARTS" : 0,
+        "MAGIC_SCROLL_FORCE_HIT" : 0,
+        "LONG_BOW" : 0,
+        "APPRENTICE_BOOK_AMETHYST" : 0,
+        "MAGIC_SCROLL_HEAL" : 0,
+        "MAGIC_SCROLL_LIGHTNING" : 0,
+        "OLD_SPELLBOOK" : 1,
+        "APPRENTICE_STAFF_AMETHYST" : 3
+      }
+    }
+  },
+  "winRates" : {
+    "BAPHOMET_3" : {
+      "50" : [ 1, 0 ]
+    },
+    "CHIMAERA_1" : {
+      "50" : [ 1, 0 ]
+    },
+    "CHIMAERA_0" : {
+      "50" : [ 1, 0 ]
+    },
+    "ZOMBIE_1" : {
+      "52" : [ 1, 0 ]
+    },
+    "DARK_ELF_3" : {
+      "50" : [ 2, 3 ]
+    },
+    "MONSTER_ARMY_OFFICER_3" : {
+      "49" : [ 1, 0 ]
+    },
+    "DARK_ELF_1" : {
+      "50" : [ 0, 2 ]
+    },
+    "FAIRY_1" : {
+      "0" : [ 0, 1 ]
+    },
+    "SUCCUBUS_5" : {
+      "50" : [ 2, 0 ]
+    },
+    "BAPHOMET_2" : {
+      "50" : [ 5, 0 ]
+    },
+    "ICE_QUEEN_5" : {
+      "50" : [ 2, 0 ]
+    },
+    "WITCH_5" : {
+      "50" : [ 1, 0 ]
+    },
+    "HOBGOBLIN_1" : {
+      "50" : [ 0, 3 ]
+    },
+    "MONSTER_LORD_BOSS_0" : {
+      "0" : [ 1, 0 ]
+    },
+    "WEREBAT_1" : {
+      "11" : [ 0, 3 ],
+      "12" : [ 0, 1 ]
+    },
+    "GOBLIN_1" : {
+      "50" : [ 0, 10 ]
+    },
+    "SATYROS_1" : {
+      "50" : [ 0, 1 ]
+    },
+    "CHIMAERA_3" : {
+      "50" : [ 1, 0 ]
+    }
+  },
+  "specialItems" : {
+    "SPECIAL_ITEM_1" : {
+      "requiredAgility" : 0,
+      "classes" : [ "WEAPON", "STRENGTH_BASED", "BOTH_HANDS" ],
+      "typeName" : "apprentice staff",
+      "criticalStrikeBonus" : 0,
+      "description" : "Magical staff with small diamond.",
+      "agilityBonus" : 0,
+      "gemSize" : null,
+      "healthBonus" : 0,
+      "strengthBonus" : 0,
+      "damageRollBonus" : 1,
+      "price" : 9000,
+      "requiredStrength" : 0,
+      "manaRegenBonus" : 0,
+      "id" : "SPECIAL_ITEM_1",
+      "requiredIntelligence" : 0,
+      "magicPower" : 2,
+      "magicOnHitDamageBonus" : 0,
+      "image" : null,
+      "manaBonus" : 0,
+      "gemRefinement" : null,
+      "affectionBonus" : 0.0,
+      "namePlural" : "apprentice staffs with clear gem",
+      "spellTaught" : null,
+      "intelligenceBonus" : 0,
+      "pickaxeTier" : 0,
+      "name" : "apprentice staff with clear gem",
+      "healthRegenerationBonus" : 0,
+      "rarity" : 1,
+      "armorBonus" : 0
+    },
+    "SPECIAL_ITEM_0" : {
+      "requiredAgility" : 0,
+      "classes" : [ "WEAPON", "STRENGTH_BASED", "BOTH_HANDS" ],
+      "typeName" : "apprentice staff",
+      "criticalStrikeBonus" : 0,
+      "description" : "Magical staff with small topaz.",
+      "agilityBonus" : 0,
+      "gemSize" : null,
+      "healthBonus" : 0,
+      "strengthBonus" : 0,
+      "damageRollBonus" : 1,
+      "price" : 6750,
+      "requiredStrength" : 0,
+      "manaRegenBonus" : 0,
+      "id" : "SPECIAL_ITEM_0",
+      "requiredIntelligence" : 0,
+      "magicPower" : 2,
+      "magicOnHitDamageBonus" : 0,
+      "image" : null,
+      "manaBonus" : 0,
+      "gemRefinement" : null,
+      "affectionBonus" : 0.0,
+      "namePlural" : "apprentice staffs with orange gem",
+      "spellTaught" : null,
+      "intelligenceBonus" : 0,
+      "pickaxeTier" : 0,
+      "name" : "apprentice staff with orange gem",
+      "healthRegenerationBonus" : 0,
+      "rarity" : 1,
+      "armorBonus" : 0
+    },
+    "SPECIAL_ITEM_2" : {
+      "requiredAgility" : 0,
+      "classes" : [ "WEAPON", "STRENGTH_BASED", "BOTH_HANDS" ],
+      "typeName" : "apprentice staff",
+      "criticalStrikeBonus" : 0,
+      "description" : "Magical staff with small emerald.",
+      "agilityBonus" : 0,
+      "gemSize" : null,
+      "healthBonus" : 0,
+      "strengthBonus" : 0,
+      "damageRollBonus" : 1,
+      "price" : 7500,
+      "requiredStrength" : 0,
+      "manaRegenBonus" : 0,
+      "id" : "SPECIAL_ITEM_2",
+      "requiredIntelligence" : 0,
+      "magicPower" : 2,
+      "magicOnHitDamageBonus" : 0,
+      "image" : null,
+      "manaBonus" : 0,
+      "gemRefinement" : null,
+      "affectionBonus" : 0.0,
+      "namePlural" : "apprentice staffs with green gem",
+      "spellTaught" : null,
+      "intelligenceBonus" : 0,
+      "pickaxeTier" : 0,
+      "name" : "apprentice staff with green gem",
+      "healthRegenerationBonus" : 0,
+      "rarity" : 1,
+      "armorBonus" : 0
+    }
+  }
+}
