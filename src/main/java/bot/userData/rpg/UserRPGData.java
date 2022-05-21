@@ -277,6 +277,7 @@ public class UserRPGData {
 			pair(Skill.RAGE, ActiveSkill.RAGE), //
 			pair(Skill.SHADOW_CLONE, ActiveSkill.SHADOW_CLONE), //
 			pair(Skill.SLEEP, ActiveSkill.SLEEP), //
+			pair(Skill.SPEED_OF_WIND, ActiveSkill.SPEED_OF_WIND), //
 			pair(Skill.STONE_SKIN, ActiveSkill.STONE_SKIN), //
 			pair(Skill.WHIRLPOOL, ActiveSkill.WHIRLPOOL));
 
