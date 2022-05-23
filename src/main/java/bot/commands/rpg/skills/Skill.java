@@ -147,7 +147,7 @@ public enum Skill {
 	static {
 		for (final Skill tree : trees) {
 			final int total = getTotalPriceOfTree(tree);
-			System.out.println("total price of " + tree.name + " tree: " + total);
+			// System.out.println("total price of " + tree.name + " tree: " + total);
 		}
 	}
 

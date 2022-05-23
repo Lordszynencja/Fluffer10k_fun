@@ -419,7 +419,7 @@ public class ServerUserData {
 	}
 
 	public boolean hasHouseSpace() {
-		return harem.size() < house.size;
+		return harem.size() < getHouseSize();
 	}
 
 	public long maxSponsorBonus() {

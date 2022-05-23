@@ -1,5 +1,7 @@
 package bot.commands.rpg.harem;
 
+import static bot.commands.rpg.harem.CommandHaremDo.addBonusItem;
+import static bot.commands.rpg.harem.CommandHaremDo.doInteraction;
 import static bot.data.items.ItemUtils.getFormattedMonies;
 import static bot.util.CollectionUtils.addToLongOnMap;
 import static bot.util.CollectionUtils.mapToList;
@@ -77,6 +79,8 @@ public class CommandHaremList extends Subcommand {
 		if (!haremMember.married) {
 			final boolean disabled = userData.monies < marryPrice || !haremMember.canBeMarried();
 			prompt.addButton(button("Marry", ButtonStyle.PRIMARY, in -> onMarry(in, userData, haremMember), disabled));
+		} else if (haremMember.desiredInteraction != null) {
+			prompt.addButton(button("Interact", ButtonStyle.PRIMARY, in -> onInteraction(in, userData, haremMember)));
 		}
 
 		if (haremMember.changeable) {
@@ -213,6 +217,22 @@ public class CommandHaremList extends Subcommand {
 
 		interaction.createOriginalMessageUpdater().addEmbed(makeEmbed("You married " + haremMember.name + "!",
 				"May you be happy together!", haremMember.race.imageLink)).update();
+	}
+
+	private void onInteraction(final MessageComponentInteraction interaction, final ServerUserData userData,
+			final HaremMemberData haremMember) {
+		if (haremMember.desiredInteraction == null) {
+			onPick(interaction, userData, haremMember);
+			return;
+		}
+
+		final String title = "You " + haremMember.getFormattedInteraction() + " to strengthen your bonds";
+		final String description = addBonusItem(fluffer10kFun.items, haremMember, userData);
+
+		doInteraction(haremMember);
+
+		sendMessageWithBackToDetails(interaction, userData, haremMember, title, description,
+				haremMember.race.imageLink);
 	}
 
 	private void onReturnToMarket(final MessageComponentInteraction interaction, final ServerUserData userData,

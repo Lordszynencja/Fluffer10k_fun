@@ -17,6 +17,7 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.data.items.Item;
+import bot.data.items.Items;
 import bot.data.items.data.MonmusuDropItems;
 import bot.data.items.loot.MonsterGirlRaceLoot;
 import bot.userData.HaremMemberData;
@@ -41,13 +42,14 @@ public class CommandHaremDo extends Subcommand {
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
-	private String addBonusItem(final HaremMemberData haremMember, final ServerUserData userData) {
+	public static String addBonusItem(final Items items, final HaremMemberData haremMember,
+			final ServerUserData userData) {
 		List<String> productList = MonsterGirlRaceLoot.racesProducts.get(haremMember.race);
 		if (productList == null || getRandomBoolean(0.5)) {
 			productList = defaultProducts;
 		}
 
-		final Item item = fluffer10kFun.items.getItem(getRandom(productList));
+		final Item item = items.getItem(getRandom(productList));
 		double chance = haremMember.affection * 2.5 / item.price;
 		long amount = 0;
 		while (chance > 1) {
@@ -66,6 +68,11 @@ public class CommandHaremDo extends Subcommand {
 		return null;
 	}
 
+	public static void doInteraction(final HaremMemberData haremMember) {
+		haremMember.addAffection(7);
+		haremMember.desiredInteraction = null;
+	}
+
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().get();
@@ -76,10 +83,9 @@ public class CommandHaremDo extends Subcommand {
 		for (final HaremMemberData haremMember : userData.harem.values()) {
 			if (haremMember.checkIfInteractionIsValid(action)) {
 				final String title = "You " + haremMember.getFormattedInteraction() + " to strengthen your bonds";
-				final String description = addBonusItem(haremMember, userData);
+				final String description = addBonusItem(fluffer10kFun.items, haremMember, userData);
 
-				haremMember.addAffection(7);
-				haremMember.desiredInteraction = null;
+				doInteraction(haremMember);
 
 				interaction.createImmediateResponder()
 						.addEmbed(makeEmbed(title, description, haremMember.race.imageLink)).respond();
