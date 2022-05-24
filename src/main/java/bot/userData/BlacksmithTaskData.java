@@ -69,6 +69,6 @@ public class BlacksmithTaskData {
 	public EmbedField toField(final Items items) {
 		return new EmbedField(blueprint.name, task.description//
 				+ "\nRequirements:\n"//
-				+ task.target.progressDescription(null, items));
+				+ task.target.taskDescription(items));
 	}
 }

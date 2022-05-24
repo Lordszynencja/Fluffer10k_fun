@@ -33,9 +33,6 @@ public class UserBlacksmithData {
 		available = (boolean) data.get("available");
 		setToday = (boolean) data.get("setToday");
 		tiersUnlocked = mapToSet((Collection<String>) data.get("tiersUnlocked"), BlacksmithTier::valueOf);
-		if (available) {
-			tiersUnlocked.add(BlacksmithTier.TIER_1);
-		}
 
 		try {
 			currentTasks = mapMap((Map<String, List<Map<String, Object>>>) data.get("currentTasks"),

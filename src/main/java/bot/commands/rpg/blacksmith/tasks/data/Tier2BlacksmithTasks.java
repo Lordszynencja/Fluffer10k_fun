@@ -1,6 +1,5 @@
 package bot.commands.rpg.blacksmith.tasks.data;
 
-import static bot.commands.rpg.blacksmith.tasks.utils.BlacksmithTaskTarget.itemTarget;
 import static bot.commands.rpg.blacksmith.tasks.utils.BlacksmithTaskTarget.raceTarget;
 import static bot.data.items.data.WeaponItems.BATTLE_AXE;
 import static bot.data.items.data.WeaponItems.BLOWGUN;
@@ -34,6 +33,7 @@ import java.util.List;
 import bot.commands.rpg.blacksmith.tasks.BlacksmithTier;
 import bot.commands.rpg.blacksmith.tasks.utils.BlacksmithTaskBuilder;
 import bot.commands.rpg.blacksmith.tasks.utils.BlacksmithTaskTarget;
+import bot.commands.rpg.blacksmith.tasks.utils.BlacksmithTaskTargetItemGroup;
 import bot.data.MonsterGirls.MonsterGirlRace;
 import bot.data.items.data.GemItems.GemType;
 
@@ -75,10 +75,18 @@ public class Tier2BlacksmithTasks {
 			weapons.add(getMageStaffId(gemType));
 		}
 
-		for (final String weaponId : weapons) {
-			add(weaponId, //
-					"I couldn't make a weapon in time, bring me it so I can sell it and I'll give you a blueprint.", //
-					itemTarget(weaponId));
+		final BlacksmithTaskTargetItemGroup weaponTarget = new BlacksmithTaskTargetItemGroup(weapons, "tier 1 weapon");
+
+		final int weaponTasks = 25;
+		final String[] descriptions = { //
+				"If you give me a weapon, I'll give you a blueprint.", //
+				"I need a weapon to stock up, I'll share a blueprint if you give me one", //
+				"Weapon for a blueprint is a deal, yes?", //
+				"I need to put something on display, can you find me a nice looking weapon?", //
+				"I'm low on stock, any weapon will do, you will get a blueprint for that" };
+
+		for (int i = 0; i < weaponTasks; i++) {
+			add("WEAPON_" + i, descriptions[i % descriptions.length], weaponTarget);
 		}
 
 		add("CROW_TENGU", //

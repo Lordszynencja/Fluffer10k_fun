@@ -4,23 +4,25 @@ import static bot.util.CollectionUtils.addToIntOnMap;
 import static bot.util.CollectionUtils.mapToList;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
+import static bot.util.modularPrompt.ModularPrompt.prompt;
+import static bot.util.modularPrompt.ModularPromptButton.button;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.javacord.api.entity.message.component.ActionRow;
-import org.javacord.api.entity.message.component.Button;
 import org.javacord.api.entity.message.component.ButtonStyle;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.interaction.MessageComponentInteraction;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
+import bot.commands.rpg.blacksmith.blueprints.utils.Payer;
 import bot.commands.rpg.blacksmith.tasks.BlacksmithTier;
 import bot.userData.BlacksmithTaskData;
 import bot.userData.ServerUserData;
 import bot.util.EmbedUtils.EmbedField;
+import bot.util.modularPrompt.ModularPrompt;
 import bot.util.pages.builders.PagedPickerMessageBuilder;
 import bot.util.pages.messages.PagedMessage;
 import bot.util.subcommand.Subcommand;
@@ -30,11 +32,6 @@ public class CommandBlacksmithTask extends Subcommand {
 
 	public CommandBlacksmithTask(final Fluffer10kFun fluffer10kFun) {
 		super("task", "Check your current task");
-
-		fluffer10kFun.apiUtils.commandHandlers.addMessageComponentHandler("blacksmith_task_finish",
-				this::handleFinishTask);
-		fluffer10kFun.apiUtils.commandHandlers.addMessageComponentHandler("blacksmith_task_clear",
-				this::handleClearTask);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}
@@ -68,11 +65,6 @@ public class CommandBlacksmithTask extends Subcommand {
 				.onConfirm((interaction2, page, task) -> onPickTask(interaction2, userData, task))//
 				.build();
 		fluffer10kFun.pagedMessageUtils.addMessage(msg, interaction);
-	}
-
-	private ActionRow makeButtons(final long userId) {
-		return ActionRow.of(Button.create("blacksmith_task_finish " + userId, ButtonStyle.SUCCESS, "Finish"), //
-				Button.create("blacksmith_task_clear " + userId, ButtonStyle.DANGER, "Clear"));
 	}
 
 	private void onPickTask(final MessageComponentInteraction interaction, final ServerUserData userData,
@@ -121,59 +113,62 @@ public class CommandBlacksmithTask extends Subcommand {
 				+ task.task.target.progressDescription(userData, fluffer10kFun.items);
 
 		final EmbedBuilder embed = makeEmbed("Current blacksmith task", description, CommandBlacksmith.imgUrl);
-		interaction.createImmediateResponder().addEmbed(embed).addComponents(makeButtons(interaction.getUser().getId()))
-				.respond();
+		final ModularPrompt prompt = prompt(embed, //
+				button("Finish", ButtonStyle.PRIMARY, in -> handleFinishTask(in, userData)), //
+				button("Clear", ButtonStyle.DANGER, in -> handleClearTask(in, userData)));
+
+		fluffer10kFun.modularPromptUtils.addMessage(prompt, interaction);
 	}
 
-	private void handleFinishTask(final MessageComponentInteraction interaction) {
-		final long userId = Long.parseLong(interaction.getCustomId().split(" ")[1]);
-		if (interaction.getUser().getId() != userId) {
-			interaction.acknowledge();
+	private void handleClearTask(final MessageComponentInteraction interaction, final ServerUserData userData) {
+		userData.blacksmith.currentTask = null;
+
+		final EmbedBuilder embed = makeEmbed("Task cleared, I hope next one will go better.", null,
+				CommandBlacksmith.imgUrl);
+		interaction.createOriginalMessageUpdater().addEmbed(embed).update();
+	}
+
+	private void handleFinishTask(final MessageComponentInteraction in, final ServerUserData userData) {
+		final BlacksmithTaskData task = userData.blacksmith.currentTask;
+		if (!task.task.target.isPickable()) {
+			final Payer payer = task.task.target.getPayer();
+			completeTaskTarget(in, userData, payer);
+		} else {
+			task.task.target.pick(fluffer10kFun, in, userData, (in2, page, payer) -> {
+				completeTaskTarget(in2, userData, payer);
+			});
 			return;
 		}
+	}
 
-		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(interaction.getServer().get(),
-				userId);
-
-		if (userData.blacksmith.currentTask == null) {
-			interaction.createOriginalMessageUpdater()
+	private void completeTaskTarget(final MessageComponentInteraction in, final ServerUserData userData,
+			final Payer payer) {
+		final BlacksmithTaskData task = userData.blacksmith.currentTask;
+		if (task == null) {
+			in.createOriginalMessageUpdater()
 					.addEmbed(makeEmbed("Did you try to tell me you've done the same task twice?", null,
 							CommandBlacksmith.imgUrl))
 					.update();
 			return;
 		}
 
-		final BlacksmithTaskData task = userData.blacksmith.currentTask;
-		if (!task.task.target.isMet(userData)) {
-			interaction.createOriginalMessageUpdater()
-					.addEmbed(makeEmbed("You didn't meet the requirements, dummy!", null, CommandBlacksmith.imgUrl))
-					.update();
-			return;
+		if (payer != null) {
+			if (!payer.canPay(userData)) {
+				in.createOriginalMessageUpdater()
+						.addEmbed(makeEmbed("You didn't meet the requirements, dummy!", null, CommandBlacksmith.imgUrl))
+						.update();
+				return;
+			}
+
+			payer.pay(userData);
 		}
 
-		task.task.target.apply(userData);
 		addToIntOnMap(userData.blacksmith.blueprints, task.blueprint.id, 1);
 		userData.blacksmith.currentTask = null;
 
 		final String description = "Good job!\n"//
 				+ "Here, have this " + task.blueprint.name + ".";
-		interaction.createOriginalMessageUpdater()
-				.addEmbed(makeEmbed("Task finished", description, CommandBlacksmith.imgUrl)).update();
-	}
-
-	private void handleClearTask(final MessageComponentInteraction interaction) {
-		final long userId = Long.parseLong(interaction.getCustomId().split(" ")[1]);
-		if (interaction.getUser().getId() != userId) {
-			interaction.acknowledge();
-			return;
-		}
-
-		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(interaction.getServer().get(),
-				userId);
-		userData.blacksmith.currentTask = null;
-
-		final EmbedBuilder embed = makeEmbed("Task cleared, I hope next one will go better", null,
-				CommandBlacksmith.imgUrl);
-		interaction.createOriginalMessageUpdater().addEmbed(embed).update();
+		in.createOriginalMessageUpdater().addEmbed(makeEmbed("Task finished", description, CommandBlacksmith.imgUrl))
+				.update();
 	}
 }
