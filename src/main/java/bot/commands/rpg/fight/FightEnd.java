@@ -4,6 +4,9 @@ import static bot.commands.rpg.fight.fightRewards.FightEndReward.BLESSING_0;
 import static bot.commands.rpg.fight.fightRewards.FightEndReward.BLESSING_1;
 import static bot.commands.rpg.fight.fightRewards.FightEndReward.BLESSING_2;
 import static bot.commands.rpg.fight.fightRewards.FightEndReward.BLESSING_3;
+import static bot.commands.rpg.fight.fightRewards.FightEndReward.BLESSING_4;
+import static bot.commands.rpg.fight.fightRewards.FightEndReward.BLESSING_5;
+import static bot.commands.rpg.fight.fightRewards.FightEndReward.BLESSING_6;
 import static bot.commands.rpg.fight.fightRewards.FightEndReward.BUSINESS_AS_USUAL_QUEST_FIGHT_REWARD;
 import static bot.commands.rpg.fight.fightRewards.FightEndReward.DEFAULT;
 import static bot.commands.rpg.fight.fightRewards.FightEndReward.MINERS_HOME_QUEST_REWARD;
@@ -25,6 +28,9 @@ import bot.commands.rpg.fight.fightRewards.Blessing0Reward;
 import bot.commands.rpg.fight.fightRewards.Blessing1Reward;
 import bot.commands.rpg.fight.fightRewards.Blessing2Reward;
 import bot.commands.rpg.fight.fightRewards.Blessing3Reward;
+import bot.commands.rpg.fight.fightRewards.Blessing4Reward;
+import bot.commands.rpg.fight.fightRewards.Blessing5Reward;
+import bot.commands.rpg.fight.fightRewards.Blessing6Reward;
 import bot.commands.rpg.fight.fightRewards.BusinessAsUsualQuestFightReward;
 import bot.commands.rpg.fight.fightRewards.DefaultReward;
 import bot.commands.rpg.fight.fightRewards.FightEndReward;
@@ -56,6 +62,9 @@ public class FightEnd {
 				pair(BLESSING_1, new Blessing1Reward(fluffer10kFun)), //
 				pair(BLESSING_2, new Blessing2Reward(fluffer10kFun)), //
 				pair(BLESSING_3, new Blessing3Reward(fluffer10kFun)), //
+				pair(BLESSING_4, new Blessing4Reward(fluffer10kFun)), //
+				pair(BLESSING_5, new Blessing5Reward(fluffer10kFun)), //
+				pair(BLESSING_6, new Blessing6Reward(fluffer10kFun)), //
 				pair(BUSINESS_AS_USUAL_QUEST_FIGHT_REWARD, new BusinessAsUsualQuestFightReward(fluffer10kFun)), //
 				pair(DEFAULT, new DefaultReward(fluffer10kFun)), //
 				pair(MINERS_HOME_QUEST_REWARD, new MinersHomeQuestFightReward(fluffer10kFun)));

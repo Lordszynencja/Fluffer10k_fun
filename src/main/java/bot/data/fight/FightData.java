@@ -88,7 +88,9 @@ public class FightData {
 	public String getTurnDescriptions() {
 		final List<String> lines = new ArrayList<>();
 		turnDescriptions.forEach(list -> list.forEach(lines::add));
-		return lines.isEmpty() ? "None" : String.join("\n", lines);
+		final String result = lines.isEmpty() ? "None" : String.join("\n", lines);
+
+		return result.length() >= 1024 ? result.substring(result.length() - 1024) : result;
 	}
 
 	public FighterData getCurrentFighter() {
