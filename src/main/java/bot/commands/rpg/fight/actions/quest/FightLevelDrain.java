@@ -41,6 +41,10 @@ public class FightLevelDrain implements FightActionHandler {
 			chance = 1 - userData.blessings.blessings / 3.0;
 			drain = 10;
 			statDrain = 5;
+		} else if (action == RPGFightAction.LEVEL_DRAIN_1) {
+			chance = 1 - (userData.blessings.blessings - 4) / 2;
+			drain = 15;
+			statDrain = 7;
 		} else {
 			chance = 1 - 0.75 * (userData.blessings.blessings) / 21;
 			drain = 15;

@@ -1,9 +1,15 @@
 package bot.commands.rpg.quests;
 
+import static bot.util.CollectionUtils.addToIntOnMap;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.Utils.bold;
+import static java.util.Arrays.asList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.MessageComponentInteraction;
 import org.javacord.api.interaction.SlashCommandInteraction;
@@ -80,16 +86,27 @@ public class QuestBusinessAsUsual1 extends Quest {
 		userData.addItem(QuestItems.BLACKSMITH_TOOLS_ADVANCED, -1);
 		userData.addItem(OreItems.ORE_COAL, -10);
 		userData.blacksmith.available = true;
-		userData.blacksmith.tiersUnlocked.add(BlacksmithTier.TIER_1);
+
+		boolean unlocked = false;
+		if (!userData.blacksmith.tiersUnlocked.contains(BlacksmithTier.TIER_1)) {
+			unlocked = true;
+			userData.blacksmith.tiersUnlocked.add(BlacksmithTier.TIER_1);
+			addToIntOnMap(userData.blacksmith.blueprints, "BLUEPRINT_TIER_1_PICKAXE_COPPER", 1);
+		}
 
 		final UserQuestData questData = new UserQuestData(type, QuestStep.TALKING_TO_RIVAL,
 				stepTalkingToRivalDescription, true);
 		userData.rpg.setQuest(questData);
-		interaction.createImmediateResponder()
-				.addEmbeds(newQuestMessage(stepTalkingToRivalText).setImage(MonsterGirlRace.DWARF.imageLink), //
-						userData.addExpAndMakeEmbed(500, interaction.getUser(), interaction.getServer().get()), //
-						makeEmbed("Blacksmith unlocked!"))
-				.respond();
+
+		final List<EmbedBuilder> embeds = new ArrayList<>(
+				asList(newQuestMessage(stepTalkingToRivalText).setImage(MonsterGirlRace.DWARF.imageLink), //
+						userData.addExpAndMakeEmbed(500, interaction.getUser(), interaction.getServer().get())));
+
+		if (unlocked) {
+			embeds.add(makeEmbed("Unlocked tier 1 crafting and got a copper pickaxe blueprint!"));
+		}
+
+		interaction.createImmediateResponder().addEmbeds(embeds).respond();
 	}
 
 	private void continueTalkingToRivalStep(final MessageComponentInteraction interaction,

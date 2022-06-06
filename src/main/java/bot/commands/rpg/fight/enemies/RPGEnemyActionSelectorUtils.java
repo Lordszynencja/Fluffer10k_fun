@@ -150,6 +150,7 @@ public class RPGEnemyActionSelectorUtils {
 				pair(RPGFightAction.KEJOUROU_HAIR, TARGETTING_FOR_KEJOUROU_HAIR), //
 				pair(RPGFightAction.LICK, TARGETTING_FOR_LICK), //
 				pair(RPGFightAction.LEVEL_DRAIN_0, TARGETTING_ENEMY), //
+				pair(RPGFightAction.LEVEL_DRAIN_1, TARGETTING_ENEMY), //
 				pair(RPGFightAction.MANTICORE_VENOM, FightManticoreVenom.getDefaultTargetting(fluffer10kFun)), //
 				pair(RPGFightAction.MONSTER_LORD_RESTRICTION_0, TARGETTING_ENEMY), //
 				pair(RPGFightAction.MOTHMAN_POWDER, TARGETTING_FOR_MOTHMAN_POWDER), //

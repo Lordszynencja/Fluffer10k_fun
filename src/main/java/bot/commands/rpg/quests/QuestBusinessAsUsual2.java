@@ -1,6 +1,7 @@
 package bot.commands.rpg.quests;
 
 import static bot.data.items.ItemUtils.formatNumber;
+import static bot.util.CollectionUtils.addToIntOnMap;
 import static bot.util.CollectionUtils.mapToList;
 import static bot.util.CollectionUtils.toSet;
 import static bot.util.EmbedUtils.makeEmbed;
@@ -141,6 +142,7 @@ public class QuestBusinessAsUsual2 extends Quest {
 		if (!userData.blacksmith.tiersUnlocked.contains(BlacksmithTier.TIER_2)) {
 			unlocked = true;
 			userData.blacksmith.tiersUnlocked.add(BlacksmithTier.TIER_2);
+			addToIntOnMap(userData.blacksmith.blueprints, "BLUEPRINT_TIER_2_PICKAXE_IRON", 1);
 		}
 
 		userData.rpg.setQuest(new UserQuestData(type, QuestStep.FINISHED, stepFinishedDescription));
@@ -150,7 +152,7 @@ public class QuestBusinessAsUsual2 extends Quest {
 						userData.addExpAndMakeEmbed(10_000, interaction.getUser(), interaction.getServer().get())));
 
 		if (unlocked) {
-			embeds.add(makeEmbed("Unlocked tier 2 crafting!"));
+			embeds.add(makeEmbed("Unlocked tier 2 crafting and got iron pickaxe blueprint!"));
 		}
 
 		interaction.createOriginalMessageUpdater().addEmbeds(embeds).update();

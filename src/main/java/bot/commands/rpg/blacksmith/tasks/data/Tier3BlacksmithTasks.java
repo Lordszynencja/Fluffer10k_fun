@@ -57,7 +57,7 @@ public class Tier3BlacksmithTasks {
 			weapons.add(getArchmageStaffId(gemType));
 		}
 
-		final BlacksmithTaskTargetItemGroup weaponTarget = new BlacksmithTaskTargetItemGroup(weapons, "tier 1 weapon");
+		final BlacksmithTaskTargetItemGroup weaponTarget = new BlacksmithTaskTargetItemGroup(weapons, "tier 3 weapon");
 
 		final int weaponTasks = 10;
 		final String[] descriptions = { //

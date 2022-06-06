@@ -1,6 +1,7 @@
 package bot.commands.rpg.quests;
 
 import static bot.data.items.ItemUtils.formatNumber;
+import static bot.util.CollectionUtils.addToIntOnMap;
 import static bot.util.CollectionUtils.mapToList;
 import static bot.util.CollectionUtils.toSet;
 import static bot.util.EmbedUtils.makeEmbed;
@@ -142,6 +143,7 @@ public class QuestBusinessAsUsual3 extends Quest {
 		if (!userData.blacksmith.tiersUnlocked.contains(BlacksmithTier.TIER_3)) {
 			unlocked = true;
 			userData.blacksmith.tiersUnlocked.add(BlacksmithTier.TIER_3);
+			addToIntOnMap(userData.blacksmith.blueprints, "BLUEPRINT_TIER_3_PICKAXE_DRAGONIUM", 1);
 		}
 
 		userData.rpg.setQuest(new UserQuestData(type, QuestStep.FINISHED, stepFinishedDescription));
@@ -151,7 +153,7 @@ public class QuestBusinessAsUsual3 extends Quest {
 						userData.addExpAndMakeEmbed(25_000, interaction.getUser(), interaction.getServer().get())));
 
 		if (unlocked) {
-			embeds.add(makeEmbed("Unlocked tier 3 crafting!"));
+			embeds.add(makeEmbed("Unlocked tier 3 crafting and got a dragonium pickaxe blueprint!"));
 		}
 
 		interaction.createOriginalMessageUpdater().addEmbeds(embeds).update();

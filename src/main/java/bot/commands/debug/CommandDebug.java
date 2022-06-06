@@ -17,6 +17,7 @@ public class CommandDebug extends Command {
 				new CommandDebugGiveItem(fluffer10kFun), //
 				new CommandDebugGiveMonies(fluffer10kFun), //
 				new CommandDebugItems(fluffer10kFun), //
+				new CommandDebugOther(fluffer10kFun), //
 				new CommandDebugMarketAdd(fluffer10kFun), //
 				new CommandDebugResetQuest(fluffer10kFun), //
 				new CommandDebugSetQuestContinuable(fluffer10kFun), //

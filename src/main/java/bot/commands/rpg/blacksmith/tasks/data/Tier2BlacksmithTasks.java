@@ -75,9 +75,9 @@ public class Tier2BlacksmithTasks {
 			weapons.add(getMageStaffId(gemType));
 		}
 
-		final BlacksmithTaskTargetItemGroup weaponTarget = new BlacksmithTaskTargetItemGroup(weapons, "tier 1 weapon");
+		final BlacksmithTaskTargetItemGroup weaponTarget = new BlacksmithTaskTargetItemGroup(weapons, "tier 2 weapon");
 
-		final int weaponTasks = 25;
+		final int weaponTasks = 10;
 		final String[] descriptions = { //
 				"If you give me a weapon, I'll give you a blueprint.", //
 				"I need a weapon to stock up, I'll share a blueprint if you give me one", //

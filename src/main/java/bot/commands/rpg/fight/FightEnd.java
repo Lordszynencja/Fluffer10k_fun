@@ -129,7 +129,7 @@ public class FightEnd {
 			}
 		}
 
-		return activityExp + enemiesDefeatedExp;
+		return (activityExp + enemiesDefeatedExp) * 3L / 4L;
 	}
 
 	private void addExp(final FightTempData data) {

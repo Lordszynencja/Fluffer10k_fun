@@ -116,6 +116,7 @@ public enum RPGFightAction {
 	INTOXICATE("%1$s makes %2$s drink her wine and intoxicates them!"), //
 	KEJOUROU_HAIR("%1$s wraps her hair around %2$s!"), //
 	LEVEL_DRAIN_0("You feel weaker as the manticore drains your power!"), //
+	LEVEL_DRAIN_1("You feel weaker as the minotaur drains your power!"), //
 	LICK("%1$s licks all over %2$s's body!"), //
 	MANTICORE_VENOM("%1$s stings %2$s with her tail and reduces their charm resistance!", //
 			"%1$s injects her venom into %2$s and reduces their charm resistance!"), //

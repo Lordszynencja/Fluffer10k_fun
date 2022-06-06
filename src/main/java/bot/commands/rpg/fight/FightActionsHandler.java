@@ -229,6 +229,7 @@ public class FightActionsHandler {
 				pair(RPGFightAction.INTOXICATE, new FightIntoxicate(fluffer10kFun)), //
 				pair(RPGFightAction.KEJOUROU_HAIR, new FightKejourouHair(fluffer10kFun)), //
 				pair(RPGFightAction.LEVEL_DRAIN_0, new FightLevelDrain(fluffer10kFun)), //
+				pair(RPGFightAction.LEVEL_DRAIN_1, new FightLevelDrain(fluffer10kFun)), //
 				pair(RPGFightAction.LICK, new FightLick(fluffer10kFun)), //
 				pair(RPGFightAction.MANTICORE_VENOM, new FightManticoreVenom(fluffer10kFun)), //
 				pair(RPGFightAction.MONSTER_LORD_RESTRICTION_0, new FightMonsterLordRestriction0(fluffer10kFun)), //

@@ -20,11 +20,11 @@ import bot.userData.HaremMemberData;
 import bot.userData.HaremMemberData.HaremMemberInteraction;
 import bot.userData.ServerUserData;
 
-public class Blessing3Reward implements RewardCreator {
+public class Blessing6Reward implements RewardCreator {
 
 	private final Fluffer10kFun fluffer10kFun;
 
-	public Blessing3Reward(final Fluffer10kFun fluffer10kFun) {
+	public Blessing6Reward(final Fluffer10kFun fluffer10kFun) {
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
@@ -36,21 +36,20 @@ public class Blessing3Reward implements RewardCreator {
 			userData.rpg.quests.remove(QuestType.ULTIMATE_TEST);
 
 			final String description = String.join("\n", //
-					description("Lilian wins once again, even though you were so close to defeating her."), //
+					description("Helga wins once again, even though you were so close to defeating her."), //
 					dialogue(
-							"Haa~ haa~ O-oh my, that was something! That stupid blessing protected you though... I feel really tired now..."), //
-					dialogue("Was still fun to do a little sparing, I hope you will find me again~"), //
+							"Haa... haa... You almost got me there! Maybe I underestimated your skills, but you still lost!"), //
 					description(
 							"She leaves as you try to catch your breath and decide to rest after this really tiring fight, and fall asleep for a bit."));
 			userData.reduceStamina(ServerUserData.maxStamina);
 
-			data.channel.sendMessage(makeEmbed("You lost the fight with Lilian", description));
+			data.channel.sendMessage(makeEmbed("You lost the fight with Helga", description));
 			return;
 		}
 
 		addToIntOnMap(userData.houseFurniture, FurnitureType.ADDDITIONAL_ROOM, 1);
-		final HaremMemberData lilian = userData.addWife(MonsterGirlRace.MANTICORE);
-		lilian.name = "Lilian";
+		final HaremMemberData lilian = userData.addWife(MonsterGirlRace.MINOTAUR);
+		lilian.name = "Helga";
 		lilian.changeable = false;
 		lilian.married = true;
 		lilian.affection = 100;
@@ -59,23 +58,24 @@ public class Blessing3Reward implements RewardCreator {
 
 		final User user = fluffer10kFun.apiUtils.getUser(player.userId);
 		final EmbedBuilder loveEmbed = fluffer10kFun.commandMgLove.makeLovedByEmbed(data.channel.getServer(), user,
-				getRandomInt(200, 300), "your new wife Lilian");
+				getRandomInt(200, 300), "your new wife Helga");
 
 		final String description = String.join("\n", //
-				description("After a long, tiring fight, Lilian is finally too tired to continue and yields!"), //
+				description(
+						"You fight as long as you can, and finally, the mighty minotaur falls on the ground, unable to fight anymore."), //
+				dialogue("Haa... haa... How could this happen?! Haaa... I am so strong, how did I lose?"), //
+				description("You slowly approach her."), //
 				dialogue(
-						"Haa~ haa~ Y-you really got strong. I give that to you. Now then, if you won, you have to be my husband~"), //
+						"Haa... I guess you are to be my husband now then, huh? I can't say no to someone so powerful. Take me home and let's fuck!"), //
 				description(
-						"You are surprised by her words but she just crawls to you and starts nuzzling you, so you accept."), //
+						"You are a bit surprised by the request, but you help her get up and go to your house, where you have lots of sex."), //
 				description(
-						"After some rest you get married and head home, where you have crazy amounts of sex for the whole week, making you completely exhausted and unable to even move."), //
-				description(
-						"For defeating the officer of the Monster Lord's army and saving villagers that were yet to be attacked, you are blessed by the goddess once again."), //
-				description(
-						"You know that you did a good thing, and smile while your new wife cuddles you and tells you of her superior, one of the Monster Generals."), //
-				description("You plan her to be your next target, but for now you have to go back to strength."));
+						"You get completely exhausted by that, but you are happy that you defeated such a strong opponent. You smile as Helga holds you in her arms."), //
+				dialogue("You look kinda cute like this. Mmmm, I'm happy that you were the one to defeat me~"), //
+				description("You fall asleep, where you dream about becoming the greatest hero of all time."), //
+				description("You also get another blessing, getting you one step closer to that."));
 
-		data.channel.sendMessage(loveEmbed, makeEmbed("You won the fight with Lilian!", description));
+		data.channel.sendMessage(loveEmbed, makeEmbed("You won the fight with Helga!", description));
 	}
 
 }

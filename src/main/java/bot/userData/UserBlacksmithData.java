@@ -40,15 +40,27 @@ public class UserBlacksmithData {
 			currentTask = data.get("currentTask") == null ? null
 					: new BlacksmithTaskData((Map<String, Object>) data.get("currentTask"));
 		} catch (final Exception e) {
-			currentTasks = new HashMap<>();
 			currentTask = null;
 			setToday = false;
 		}
+
 		blueprints = mapMap((Map<String, Number>) data.get("blueprints"), Utils::intFromNumber);
 		for (final String blueprintId : new HashSet<>(blueprints.keySet())) {
 			if (!BlacksmithBlueprintsList.blueprints.containsKey(blueprintId)) {
 				blueprints.remove(blueprintId);
 			}
+		}
+		if (tiersUnlocked.contains(BlacksmithTier.TIER_1)) {
+			final int bps = Math.max(1, blueprints.getOrDefault("BLUEPRINT_TIER_1_PICKAXE_COPPER", 0));
+			blueprints.put("BLUEPRINT_TIER_1_PICKAXE_COPPER", bps);
+		}
+		if (tiersUnlocked.contains(BlacksmithTier.TIER_2)) {
+			final int bps = Math.max(1, blueprints.getOrDefault("BLUEPRINT_TIER_1_PICKAXE_COPPER", 0));
+			blueprints.put("BLUEPRINT_TIER_2_PICKAXE_IRON", bps);
+		}
+		if (tiersUnlocked.contains(BlacksmithTier.TIER_3)) {
+			final int bps = Math.max(1, blueprints.getOrDefault("BLUEPRINT_TIER_1_PICKAXE_COPPER", 0));
+			blueprints.put("BLUEPRINT_TIER_3_PICKAXE_DRAGONIUM", bps);
 		}
 	}
 
@@ -65,6 +77,7 @@ public class UserBlacksmithData {
 		} catch (final Exception e) {
 			currentTasks = new HashMap<>();
 			currentTask = null;
+			setToday = false;
 		}
 		map.put("blueprints", blueprints);
 

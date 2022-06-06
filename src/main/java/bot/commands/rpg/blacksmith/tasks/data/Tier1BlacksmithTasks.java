@@ -55,7 +55,7 @@ public class Tier1BlacksmithTasks {
 
 		final BlacksmithTaskTargetItemGroup weaponTarget = new BlacksmithTaskTargetItemGroup(weapons, "tier 1 weapon");
 
-		final int weaponTasks = 50;
+		final int weaponTasks = 10;
 		final String[] descriptions = { //
 				"If you give me a weapon, I'll give you a blueprint.", //
 				"I need a weapon to stock up, I'll share a blueprint if you give me one", //

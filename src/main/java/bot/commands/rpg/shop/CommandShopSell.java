@@ -82,18 +82,25 @@ public class CommandShopSell extends Subcommand {
 		final String description = "You will get " + getFormattedMonies(calculatePrice(userData, item)) + " for it"
 				+ append;
 
-		final boolean sellDisabled = userData.items.get(item.id) <= 0;
+		final ModularPrompt prompt = prompt(makeEmbed(title, description, item.image));
 
-		final ModularPrompt prompt = prompt(makeEmbed(title, description, item.image), //
-				button("Sell", ButtonStyle.PRIMARY, in2 -> onSell(in2, page, userData, item), sellDisabled), //
-				button("Back", ButtonStyle.DANGER, in2 -> onBack(in2, page, userData)));
+		int amount = 1;
+		for (int i = 0; i < 4; i++) {
+			if (userData.items.get(item.id) >= amount) {
+				final int sellAmount = amount;
+				prompt.addButton(button("Sell " + amount, ButtonStyle.PRIMARY,
+						in2 -> onSell(in2, page, userData, item, sellAmount)));
+			}
+			amount *= 10;
+		}
+		prompt.addButton(button("Back", ButtonStyle.DANGER, in2 -> onBack(in2, page, userData)));
 
 		fluffer10kFun.modularPromptUtils.addMessage(prompt, in);
 	}
 
 	private void onSell(final MessageComponentInteraction in, final int page, final ServerUserData userData,
-			final Item item) {
-		if (userData.items.getOrDefault(item.id, 0L) <= 0) {
+			final Item item, final long amount) {
+		if (userData.items.getOrDefault(item.id, 0L) < amount) {
 			onBack(in, page, userData);
 			return;
 		}
@@ -104,11 +111,11 @@ public class CommandShopSell extends Subcommand {
 
 		final long price = calculatePrice(userData, item);
 
-		userData.monies += price;
-		userData.addItem(item.id, -1);
+		userData.monies += price * amount;
+		userData.addItem(item.id, -amount);
 
 		final ServerData serverData = fluffer10kFun.botDataUtils.getServerData(in.getServer().get());
-		addToLongOnMap(serverData.shopItems, item.id, 1);
+		addToLongOnMap(serverData.shopItems, item.id, amount);
 
 		if (userData.items.getOrDefault(item.id, 0L) <= 0) {
 			onBack(in, page, userData);

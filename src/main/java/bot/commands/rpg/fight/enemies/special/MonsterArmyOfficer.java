@@ -1,7 +1,9 @@
 package bot.commands.rpg.fight.enemies.special;
 
 import static bot.commands.rpg.fight.RPGFightAction.ATTACK_A_1;
+import static bot.commands.rpg.fight.RPGFightAction.ATTACK_S_1;
 import static bot.commands.rpg.fight.RPGFightAction.CHARM;
+import static bot.commands.rpg.fight.RPGFightAction.FRENZY;
 import static bot.commands.rpg.fight.RPGFightAction.GRAB;
 import static bot.commands.rpg.fight.RPGFightAction.MANTICORE_VENOM;
 import static bot.util.Utils.Pair.pair;
@@ -19,6 +21,9 @@ public class MonsterArmyOfficer {
 	public static final String MONSTER_ARMY_OFFICER_1 = "MONSTER_ARMY_OFFICER_1";
 	public static final String MONSTER_ARMY_OFFICER_2 = "MONSTER_ARMY_OFFICER_2";
 	public static final String MONSTER_ARMY_OFFICER_3 = "MONSTER_ARMY_OFFICER_3";
+	public static final String MONSTER_ARMY_OFFICER_4 = "MONSTER_ARMY_OFFICER_4";
+	public static final String MONSTER_ARMY_OFFICER_5 = "MONSTER_ARMY_OFFICER_5";
+	public static final String MONSTER_ARMY_OFFICER_6 = "MONSTER_ARMY_OFFICER_6";
 
 	private static RPGFightAction actionSelector0(final FightTempData data) {
 		if (!data.fight.fighters.get("PLAYER").statuses.isStatus(FighterStatus.RESTRICTED)) {
@@ -87,6 +92,46 @@ public class MonsterArmyOfficer {
 				.armor(10)//
 				.level(45)//
 				.actionSelector(actionSelector3)//
+				.build(rpgEnemies);
+
+		final ActionSelector subactionSelectorMinotaur = fluffer10kFun.rpgEnemyActionSelectorUtils.actionsFrom(//
+				pair(3, ATTACK_S_1), //
+				pair(1, GRAB), //
+				pair(1, FRENZY));
+		final ActionSelector actionSelector4 = data -> {
+			if (data.fight.turn < 3 || data.fight.turn % 3 == 0) {
+				return RPGFightAction.LEVEL_DRAIN_1;
+			}
+
+			return subactionSelectorMinotaur.select(data);
+		};
+		new OtherEnemyDataBuilder(MONSTER_ARMY_OFFICER_4, "Minotaur officer Helga")//
+				.strength(50).agility(30).intelligence(25)//
+				.baseHp(125)//
+				.armor(12)//
+				.level(55)//
+				.actionSelector(actionSelector4)//
+				.build(rpgEnemies);
+		new OtherEnemyDataBuilder(MONSTER_ARMY_OFFICER_5, "Minotaur officer Helga")//
+				.strength(50).agility(30).intelligence(25)//
+				.baseHp(125)//
+				.armor(12)//
+				.level(55)//
+				.actionSelector(actionSelector4)//
+				.build(rpgEnemies);
+		final ActionSelector actionSelector6 = data -> {
+			if (data.fight.turn < 3) {
+				return RPGFightAction.LEVEL_DRAIN_1;
+			}
+
+			return subactionSelectorMinotaur.select(data);
+		};
+		new OtherEnemyDataBuilder(MONSTER_ARMY_OFFICER_6, "Minotaur officer Helga")//
+				.strength(50).agility(30).intelligence(25)//
+				.baseHp(125)//
+				.armor(12)//
+				.level(55)//
+				.actionSelector(actionSelector6)//
 				.build(rpgEnemies);
 	}
 }

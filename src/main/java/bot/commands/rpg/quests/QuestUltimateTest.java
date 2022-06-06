@@ -1,9 +1,5 @@
 package bot.commands.rpg.quests;
 
-import static bot.commands.rpg.fight.enemies.special.MonsterArmyOfficer.MONSTER_ARMY_OFFICER_0;
-import static bot.commands.rpg.fight.enemies.special.MonsterArmyOfficer.MONSTER_ARMY_OFFICER_1;
-import static bot.commands.rpg.fight.enemies.special.MonsterArmyOfficer.MONSTER_ARMY_OFFICER_2;
-import static bot.commands.rpg.fight.enemies.special.MonsterArmyOfficer.MONSTER_ARMY_OFFICER_3;
 import static bot.util.CollectionUtils.toMap;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.Utils.bold;
@@ -20,6 +16,7 @@ import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
 import bot.commands.rpg.RPGStatUtils.RPGStatsData;
+import bot.commands.rpg.fight.enemies.special.MonsterArmyOfficer;
 import bot.commands.rpg.fight.fightRewards.FightEndReward;
 import bot.data.fight.EnemyFighterData;
 import bot.data.fight.FightData.FightType;
@@ -86,7 +83,7 @@ public class QuestUltimateTest extends Quest {
 	private class Step0 extends Step {
 		public Step0() {
 			super(QuestStep.STEP_0, //
-					MONSTER_ARMY_OFFICER_0, //
+					MonsterArmyOfficer.MONSTER_ARMY_OFFICER_0, //
 					FightEndReward.BLESSING_0, //
 					String.join("\n", //
 							description("You approach a small village, when you see someone running towards you."), //
@@ -110,7 +107,7 @@ public class QuestUltimateTest extends Quest {
 	private class Step1 extends Step {
 		public Step1() {
 			super(QuestStep.STEP_1, //
-					MONSTER_ARMY_OFFICER_1, //
+					MonsterArmyOfficer.MONSTER_ARMY_OFFICER_1, //
 					FightEndReward.BLESSING_1, //
 					String.join("\n", //
 							description(
@@ -134,7 +131,7 @@ public class QuestUltimateTest extends Quest {
 	private class Step2 extends Step {
 		public Step2() {
 			super(QuestStep.STEP_2, //
-					MONSTER_ARMY_OFFICER_2, //
+					MonsterArmyOfficer.MONSTER_ARMY_OFFICER_2, //
 					FightEndReward.BLESSING_2, //
 					String.join("\n", //
 							description(
@@ -156,7 +153,7 @@ public class QuestUltimateTest extends Quest {
 	private class Step3 extends Step {
 		public Step3() {
 			super(QuestStep.STEP_3, //
-					MONSTER_ARMY_OFFICER_3, //
+					MonsterArmyOfficer.MONSTER_ARMY_OFFICER_3, //
 					FightEndReward.BLESSING_3, //
 					String.join("\n", //
 							description("You find Lilian in the forest, on her way to attack another village."), //
@@ -172,12 +169,76 @@ public class QuestUltimateTest extends Quest {
 		}
 	}
 
+	private class Step4 extends Step {
+		public Step4() {
+			super(QuestStep.STEP_4, //
+					MonsterArmyOfficer.MONSTER_ARMY_OFFICER_4, //
+					FightEndReward.BLESSING_4, //
+					String.join("\n", //
+							description(
+									"Your wife Lilian told you about the hierarchy and pointed at next target, an officer of minotaur race, named Helga."), //
+							dialogue(
+									"she is really, REALLY strong, but don't worry, you can outsmart her in the fight. Mmmm... But she might be too strong yet, so you will probably need more blessings. Still, go and try, I'll welcome you back happily whether you win or lose~"), //
+							description("You quickly find the officer and get ready to challenge her.")), //
+					String.join("\n", //
+							"Continue the quest to challenge Helga.", //
+							"Use " + bold("/quest continue") + " to start the fight."), //
+					String.join("\n", //
+							description("You come to Helga to challenge her."), //
+							dialogue("Huh? And who the hell are you? Another wimpy hero? Look at this!"), //
+							description("She flexes her huge muscles."), //
+							dialogue("See this? That's what will strike you down, weakling!"), //
+							description("She rushes at you to attack, prepare to fight!")));
+		}
+	}
+
+	private class Step5 extends Step {
+		public Step5() {
+			super(QuestStep.STEP_5, //
+					MonsterArmyOfficer.MONSTER_ARMY_OFFICER_5, //
+					FightEndReward.BLESSING_5, //
+					String.join("\n", //
+							description(
+									"Not affected by previous fight, you find the minotaur again, ready to challenge her one more time.")), //
+					String.join("\n", //
+							"Continue the quest to challenge Helga again.", //
+							"Use " + bold("/quest continue") + " to start the fight."), //
+					String.join("\n", //
+							description("You come to Helga to challenge her again."), //
+							dialogue("Hmm? You? Didn't I teach you last time to stay down?"), //
+							description("She gets closer."), //
+							dialogue("I'll enjoy beating you up again, weakling!"), //
+							description("The fight starts!")));
+		}
+	}
+
+	private class Step6 extends Step {
+		public Step6() {
+			super(QuestStep.STEP_6, //
+					MonsterArmyOfficer.MONSTER_ARMY_OFFICER_6, //
+					FightEndReward.BLESSING_6, //
+					String.join("\n", //
+							description(
+									"Once again you come to fight the powerful minotaur, this time sure to be victorious, with your wives cheering on you.")), //
+					String.join("\n", //
+							"Continue the quest to challenge Helga one more time.", //
+							"Use " + bold("/quest continue") + " to start the fight."), //
+					String.join("\n", //
+							description("You challenge Helga one more time."), //
+							dialogue("You again? Grrrr, this time I won't hold back!"), //
+							description("The fight starts!")));
+		}
+	}
+
 	private final Fluffer10kFun fluffer10kFun;
 	private final List<Step> steps = asList(//
 			new Step0(), //
 			new Step1(), //
 			new Step2(), //
-			new Step3());
+			new Step3(), //
+			new Step4(), //
+			new Step5(), //
+			new Step6());
 
 	public QuestUltimateTest(final Fluffer10kFun fluffer10kFun) {
 		super(QuestType.ULTIMATE_TEST, 30);

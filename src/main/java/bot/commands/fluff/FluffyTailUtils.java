@@ -1,7 +1,5 @@
 package bot.commands.fluff;
 
-import static bot.util.Utils.repeat;
-
 import org.javacord.api.entity.emoji.KnownCustomEmoji;
 
 import bot.Fluffer10kFun;
@@ -39,6 +37,7 @@ public class FluffyTailUtils {
 	}
 
 	public String getTailsMsg(final int tailsNumber) {
-		return repeat(fluffyTailEmoji.getMentionTag(), tailsNumber);
+		return tailsNumber == 1 ? fluffyTailEmoji.getMentionTag()
+				: (tailsNumber + " " + fluffyTailEmoji.getMentionTag() + "s");
 	}
 }
