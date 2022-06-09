@@ -89,25 +89,20 @@ public class GoldenCookies {
 	}
 
 	private void tickServerGoldenCookies(final Long serverId, final ServerData serverData) {
-		try {
-			removeLastGoldenCookieMessage(serverData);
+		removeLastGoldenCookieMessage(serverData);
 
-			serverData.goldenCookieCountdown--;
-			if (serverData.goldenCookieCountdown <= 0) {
-				final int tier = getGoldenCookiesTier(serverData.goldenCookiesCaught);
-				final int minTime = tier < 5 ? 6 : 3;
-				final int randomness = tier < 3 ? 12 : tier < 5 ? 6 : 3;
-				serverData.goldenCookieCountdown = minTime + getRandomLong(randomness);
-				sendGoldenCookie(serverData);
-			}
-		} catch (final Exception e) {
-			fluffer10kFun.apiUtils.messageUtils.sendMessageToMe("Exception for golden cookies for server " + serverId);
-			fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);
+		serverData.goldenCookieCountdown--;
+		if (serverData.goldenCookieCountdown <= 0) {
+			final int tier = getGoldenCookiesTier(serverData.goldenCookiesCaught);
+			final int minTime = tier < 5 ? 6 : 3;
+			final int randomness = tier < 3 ? 12 : tier < 5 ? 6 : 3;
+			serverData.goldenCookieCountdown = minTime + getRandomLong(randomness);
+			sendGoldenCookie(serverData);
 		}
 	}
 
 	private void tickGoldenCookies() {
-		fluffer10kFun.botDataUtils.forEachServer(this::tickServerGoldenCookies);
+		fluffer10kFun.botDataUtils.forEachServer(this::tickServerGoldenCookies, fluffer10kFun.apiUtils.messageUtils);
 	}
 
 	public GoldenCookies(final Fluffer10kFun fluffer10kFun) throws IOException {

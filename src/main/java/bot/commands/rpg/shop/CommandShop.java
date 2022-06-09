@@ -153,7 +153,8 @@ public class CommandShop extends Command {
 
 	private void updateItems() {
 		try {
-			fluffer10kFun.botDataUtils.forEachServer(CommandShop::updateItemsOnServer);
+			fluffer10kFun.botDataUtils.forEachServer(CommandShop::updateItemsOnServer,
+					fluffer10kFun.apiUtils.messageUtils);
 		} catch (final Exception e) {
 			fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);
 		}

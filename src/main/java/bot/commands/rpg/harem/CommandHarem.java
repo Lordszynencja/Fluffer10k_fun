@@ -82,7 +82,8 @@ public class CommandHarem extends Command {
 	}
 
 	private void changeMarketGirlsRandomly() {
-		fluffer10kFun.botDataUtils.forEachServer(CommandHarem::changeMarketGirlsRandomlyOnServer);
+		fluffer10kFun.botDataUtils.forEachServer(CommandHarem::changeMarketGirlsRandomlyOnServer,
+				fluffer10kFun.apiUtils.messageUtils);
 	}
 
 	private void runDailyChanges() {

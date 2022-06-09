@@ -92,7 +92,7 @@ public class Jobs {
 
 	private void tickJobs() {
 		try {
-			fluffer10kFun.botDataUtils.forEachServer(this::tickServerJobs);
+			fluffer10kFun.botDataUtils.forEachServer(this::tickServerJobs, fluffer10kFun.apiUtils.messageUtils);
 		} catch (final Exception e) {
 			fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);
 		}

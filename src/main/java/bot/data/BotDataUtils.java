@@ -227,14 +227,14 @@ public class BotDataUtils {
 		return getServerData(server.getId());
 	}
 
-	public void forEachServer(final BiConsumer<Long, ServerData> action) {
+	public void forEachServer(final BiConsumer<Long, ServerData> action, final MessageUtils messageUtils) {
 		serversData.forEach((serverId, serverData) -> {
 			try {
 				if (fluffer10kFun.apiUtils.isServerOk(serverId)) {
 					action.accept(serverId, serverData);
 				}
 			} catch (final Exception e) {
-				throw new RuntimeException("Exception thrown for server " + serverId, e);
+				messageUtils.sendExceptionToMe("Exception thrown for server " + serverId, e);
 			}
 		});
 	}

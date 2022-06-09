@@ -292,7 +292,7 @@ public class Fluffer10kFun {
 						.addEmbed(makeEmbed(
 								"Restarting the bot, please wait.\n\nReason:\n" + CommandHandlers.exitMessage));
 				serverData.sendMessageOnBotChannel(apiUtils.messageUtils, msg);
-			});
+			}, apiUtils.messageUtils);
 		});
 	}
 
