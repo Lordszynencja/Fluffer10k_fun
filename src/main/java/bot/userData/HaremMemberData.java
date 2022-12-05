@@ -156,7 +156,7 @@ public class HaremMemberData implements Comparable<HaremMemberData> {
 	}
 
 	public String getDescription() {
-		String description = "Affection: " + getAffectionDescription();
+		String description = "Affection: " + getAffectionDescription() + " (" + affection + ")";
 		if (desiredInteraction != null) {
 			description += "\nShe wants you to " + bold(String.format(desiredInteraction.interactionFormat, "her"))
 					+ " today";

@@ -22,6 +22,7 @@ public class CommandHelp extends Command {
 							"/improve - improve your stats after level up", //
 							"/name - name your character", //
 							"/saves - handle your saves", //
+							"/skills - check your skill trees", //
 							"/spellbook - check your spells", //
 							"/trade - trade items", //
 							"/transfer - send someone money", //

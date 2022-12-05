@@ -6,7 +6,6 @@ import static bot.util.TimerUtils.startRepeatedTimedEvent;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageBuilder;
@@ -74,8 +73,7 @@ public class GoldenCookies {
 			final CompletableFuture<Message> newMessage = serverData
 					.sendMessageOnBotChannel(fluffer10kFun.apiUtils.messageUtils, msg);
 			serverData.lastGoldenCookieMessageId = newMessage == null ? null : newMessage.get().getId();
-		} catch (InterruptedException | ExecutionException e) {
-			e.printStackTrace();
+		} catch (final Exception e) {
 			fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);
 		}
 	}

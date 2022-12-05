@@ -28,7 +28,7 @@ public class CommandFluffiness extends Command {
 			"%1$s is a kitsune with five tails that were fluffed %2$s times.", //
 			"%1$s is a strong kitsune with six tails that were fluffed %2$s times!!", //
 			"%1$s is a very strong kitsune with seven tails that were fluffed %2$s times!!", //
-			"%1$s is a very strong and wise kitsune with eight tails that were fluffed {} times!!", //
+			"%1$s is a very strong and wise kitsune with eight tails that were fluffed %2$s times!!", //
 			"%1$s is a legendary kitsune with nine tails that were fluffed %2$s times!!!" };
 
 	private final Fluffer10kFun fluffer10kFun;

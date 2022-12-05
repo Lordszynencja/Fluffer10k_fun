@@ -36,7 +36,8 @@ public class BlacksmithTaskTargetMonsterGirlRace implements BlacksmithTaskTarget
 
 	@Override
 	public String progressDescription(final ServerUserData userData, final Items items) {
-		final int defeated = userData.blacksmith.currentTask.monsterGirlsDefeated.getOrDefault(race, 0);
+		final int defeated = userData.blacksmith.currentTask == null ? 0
+				: userData.blacksmith.currentTask.monsterGirlsDefeated.getOrDefault(race, 0);
 		return race.race + " defeated: " + defeated + "/" + amount;
 	}
 

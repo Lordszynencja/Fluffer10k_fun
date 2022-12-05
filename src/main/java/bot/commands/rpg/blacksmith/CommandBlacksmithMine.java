@@ -93,11 +93,14 @@ public class CommandBlacksmithMine extends Subcommand {
 		final LootTable<Loot> tier3OresTable = weightedI(//
 				pair(1, item(ORE_GOLD)), //
 				pair(1, item(ORE_DEMON_REALM_SILVER)));
+		final LootTable<Loot> tier4OresTable = weightedI(//
+				pair(1, item(ORE_DRAGONIUM)));
 
 		final LootTable<Loot> oresTable = weightedTI(//
-				pair(9, tier1OresTable), //
-				pair(3, tier2OresTable), //
-				pair(1, tier3OresTable));
+				pair(81, tier1OresTable), //
+				pair(27, tier2OresTable), //
+				pair(9, tier3OresTable), //
+				pair(1, tier4OresTable));
 		final LootTable<Loot> lootTable = weightedTI(//
 				pair(9, oresTable), //
 				pair(1, miningGemTiers.get(2)));
@@ -131,6 +134,7 @@ public class CommandBlacksmithMine extends Subcommand {
 		final LootTable<Loot> tier3OresTable = weightedI(//
 				pair(1, item(ORE_GOLD)), //
 				pair(1, item(ORE_DEMON_REALM_SILVER)));
+
 		final LootTable<Loot> tier4OresTable = weightedI(//
 				pair(1, item(ORE_DRAGONIUM)));
 

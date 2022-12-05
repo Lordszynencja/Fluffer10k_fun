@@ -74,18 +74,19 @@ public enum Upgrade {
 	CAR_TUNING("Car tuning", //
 			"Your car is tuned to achieve more speed and better grip on the track, increasing your chances of winning.\n"
 					+ "Lets you have one more mistake and still be in first place.", //
-
 			50_000, UpgradeGroup.RACER),
+
 	SPORT_CAR("Sport car", //
-			"Makes you more recognizable, increasing bonus from sponsor.\n" + "Max sponsor bonus becomes 2 000.", //
+			"Makes you more recognizable, increasing bonus from sponsor.\n"//
+					+ "Max sponsor bonus becomes 2 000, and sponsor bonus grows faster.", //
 			25_000, UpgradeGroup.RACER),
 	SUPER_CAR("Super car", //
 			"You have car from famous super car manufacturer, catching eye of a lot of people, and making your sponsor pay more for the advertisments.\n"
-					+ "Max sponsor bonus becomes 5 000.", //
+					+ "Max sponsor bonus becomes 5 000, and sponsor bonus grows much faster.", //
 			100_000, UpgradeGroup.RACER),
 	HYPER_CAR("Hyper car", //
 			"You have known the best car in the city, and everyone wants to see it, so your sponsor pays way more to put something on it.\n"
-					+ "Max sponsor bonus becomes 10 000.", //
+					+ "Max sponsor bonus becomes 10 000, and sponsor bonus grows very fast.", //
 			1_000_000, UpgradeGroup.RACER);
 
 	public static enum UpgradeGroup {

@@ -47,7 +47,7 @@ public class GoldenCookieSillyStatus implements GoldenCookieEffect {
 			final int goldenCookiesCaught, final EmbedBuilder embed) {
 		final SillyStatusData statusData = getRandom(sillyStatuses);
 		final int length = getRandomInt(1, 24);
-		final int power = getRandomInt(1, 100 * getGoldenCookiesTier(goldenCookiesCaught));
+		final int power = getRandomInt(1, 100 * (1 + getGoldenCookiesTier(goldenCookiesCaught)));
 
 		userData.statuses.addStatus(statusData.status, toMsFromSystemTime(0, length, 0, 0),
 				String.format(statusData.statusDescription, power));

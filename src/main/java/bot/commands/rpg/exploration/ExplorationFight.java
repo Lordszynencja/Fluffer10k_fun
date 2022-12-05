@@ -486,7 +486,7 @@ public class ExplorationFight implements ExplorationEventHandler {
 		}
 
 		if (fluffer10kFun.apiUtils.config.getBoolean("debug")) {
-			printLevels(false);
+			printLevels(true);
 			printDistributions();
 		}
 	}
