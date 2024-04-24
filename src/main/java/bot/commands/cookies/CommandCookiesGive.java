@@ -36,8 +36,8 @@ public class CommandCookiesGive extends Subcommand {
 		final User giver = interaction.getUser();
 
 		final SlashCommandInteractionOption option = getOption(interaction);
-		final String cookieName = option.getOptionStringValueByName("cookie_name").orElse(null);
-		final User receiver = option.getOptionUserValueByName("cookie_receiver").orElse(null);
+		final String cookieName = option.getArgumentStringValueByName("cookie_name").orElse(null);
+		final User receiver = option.getArgumentUserValueByName("cookie_receiver").orElse(null);
 
 		final ServerUserData giverData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, giver.getId());
 		if (giverData.cookies.cookieCounts.getOrDefault(cookieName, 0L) == 0) {

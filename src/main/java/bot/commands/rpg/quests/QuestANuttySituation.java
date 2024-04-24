@@ -112,8 +112,8 @@ public class QuestANuttySituation extends Quest {
 
 		interaction.createImmediateResponder()
 				.addEmbed(makeEmbed(type.name, chooseRewardText, MonsterGirlRace.RATATOSKR.imageLink))//
-				.addComponents(ActionRow.of(
-						SelectMenu.create("quest_a_nutty_situation_reward " + interaction.getUser().getId(), rewards)))//
+				.addComponents(ActionRow.of(SelectMenu
+						.createStringMenu("quest_a_nutty_situation_reward " + interaction.getUser().getId(), rewards)))//
 				.respond();
 	}
 

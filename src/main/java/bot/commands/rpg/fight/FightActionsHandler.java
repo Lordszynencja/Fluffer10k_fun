@@ -23,6 +23,8 @@ import org.javacord.api.interaction.MessageComponentInteraction;
 import bot.Fluffer10kFun;
 import bot.commands.rpg.fight.actions.FightEquipItem;
 import bot.commands.rpg.fight.actions.FightEscape;
+import bot.commands.rpg.fight.actions.FightFighterNext;
+import bot.commands.rpg.fight.actions.FightFighterPrevious;
 import bot.commands.rpg.fight.actions.FightFluff;
 import bot.commands.rpg.fight.actions.FightGetFree;
 import bot.commands.rpg.fight.actions.FightGrab;
@@ -33,12 +35,15 @@ import bot.commands.rpg.fight.actions.FightWait;
 import bot.commands.rpg.fight.actions.physicalAttacks.FightAttack;
 import bot.commands.rpg.fight.actions.quest.FightLevelDrain;
 import bot.commands.rpg.fight.actions.quest.FightMonsterLordRestriction0;
+import bot.commands.rpg.fight.actions.special.FightAlrauneNectar;
+import bot.commands.rpg.fight.actions.special.FightAlrauneVines;
 import bot.commands.rpg.fight.actions.special.FightAtlachNachaVenom;
 import bot.commands.rpg.fight.actions.special.FightBansheeWail;
 import bot.commands.rpg.fight.actions.special.FightBarometzCotton;
 import bot.commands.rpg.fight.actions.special.FightBasiliskEyes;
 import bot.commands.rpg.fight.actions.special.FightBubbles;
 import bot.commands.rpg.fight.actions.special.FightBunshinNoJutsu;
+import bot.commands.rpg.fight.actions.special.FightCallBlackHarpies;
 import bot.commands.rpg.fight.actions.special.FightCharm;
 import bot.commands.rpg.fight.actions.special.FightCurse;
 import bot.commands.rpg.fight.actions.special.FightDormouseSleep;
@@ -53,9 +58,12 @@ import bot.commands.rpg.fight.actions.special.FightLick;
 import bot.commands.rpg.fight.actions.special.FightManticoreVenom;
 import bot.commands.rpg.fight.actions.special.FightMothmanPowder;
 import bot.commands.rpg.fight.actions.special.FightMummyCurse;
+import bot.commands.rpg.fight.actions.special.FightNeurotoxin;
 import bot.commands.rpg.fight.actions.special.FightParalyze;
 import bot.commands.rpg.fight.actions.special.FightSake;
 import bot.commands.rpg.fight.actions.special.FightSalt;
+import bot.commands.rpg.fight.actions.special.FightSandwormHide;
+import bot.commands.rpg.fight.actions.special.FightSandwormOut;
 import bot.commands.rpg.fight.actions.special.FightShrinkDown;
 import bot.commands.rpg.fight.actions.special.FightSuccubusNostrum;
 import bot.commands.rpg.fight.actions.special.FightWeresheepSleep;
@@ -167,6 +175,8 @@ public class FightActionsHandler {
 		final FightParalyze fightParalyze = new FightParalyze(fluffer10kFun);
 
 		return toMap(//
+				pair(RPGFightAction.ALRAUNE_NECTAR, new FightAlrauneNectar(fluffer10kFun)), //
+				pair(RPGFightAction.ALRAUNE_VINES, new FightAlrauneVines(fluffer10kFun)), //
 				pair(RPGFightAction.ATLACH_NACHA_VENOM, new FightAtlachNachaVenom(fluffer10kFun)), //
 				pair(RPGFightAction.ATTACK, fightAttack), //
 				pair(RPGFightAction.ATTACK_A_1, fightAttack), //
@@ -195,6 +205,7 @@ public class FightActionsHandler {
 				pair(RPGFightAction.BASILISK_EYES, new FightBasiliskEyes(fluffer10kFun)), //
 				pair(RPGFightAction.BUBBLES, new FightBubbles()), //
 				pair(RPGFightAction.BUNSHIN_NO_JUTSU, new FightBunshinNoJutsu()), //
+				pair(RPGFightAction.CALL_BLACK_HARPIES, new FightCallBlackHarpies(fluffer10kFun)), //
 				pair(RPGFightAction.CHARM, fightCharm), //
 				pair(RPGFightAction.CHARM_CUTE, fightCharm), //
 				pair(RPGFightAction.CHARM_FEATHERS, fightCharm), //
@@ -215,6 +226,8 @@ public class FightActionsHandler {
 				pair(RPGFightAction.EQUIP_ITEM, new FightEquipItem(fluffer10kFun)), //
 				pair(RPGFightAction.EQUIPPED_ITEM, null), //
 				pair(RPGFightAction.FIND_WEAKNESS, new FightFindWeakness(fluffer10kFun)), //
+				pair(RPGFightAction.FIGHTER_NEXT, new FightFighterNext()), //
+				pair(RPGFightAction.FIGHTER_PREVIOUS, new FightFighterPrevious()), //
 				pair(RPGFightAction.FLUFF, new FightFluff(fluffer10kFun)), //
 				pair(RPGFightAction.FRENZY, fightFrenzy), //
 				pair(RPGFightAction.FRENZY_GRIZZLY, fightFrenzy), //
@@ -235,10 +248,13 @@ public class FightActionsHandler {
 				pair(RPGFightAction.MONSTER_LORD_RESTRICTION_0, new FightMonsterLordRestriction0(fluffer10kFun)), //
 				pair(RPGFightAction.MOTHMAN_POWDER, new FightMothmanPowder(fluffer10kFun)), //
 				pair(RPGFightAction.MUMMY_CURSE, new FightMummyCurse(fluffer10kFun)), //
+				pair(RPGFightAction.NEUROTOXIN, new FightNeurotoxin(fluffer10kFun)), //
 				pair(RPGFightAction.PARALYZE, fightParalyze), //
 				pair(RPGFightAction.PARALYZE_CHIMAERA, fightParalyze), //
 				pair(RPGFightAction.SAKE, new FightSake()), //
 				pair(RPGFightAction.SALT, new FightSalt(fluffer10kFun)), //
+				pair(RPGFightAction.SANDWORM_HIDE, new FightSandwormHide()), //
+				pair(RPGFightAction.SANDWORM_OUT, new FightSandwormOut()), //
 				pair(RPGFightAction.SHRINK_DOWN, new FightShrinkDown(fluffer10kFun)), //
 				pair(RPGFightAction.SIREN_SONG, fightCharm), //
 				pair(RPGFightAction.SPECIAL_ACTION_SHADOW_CLONE, new FightSpecialActionShadowClone(fluffer10kFun)), //
@@ -394,6 +410,8 @@ public class FightActionsHandler {
 
 	private static final Set<RPGFightAction> actionsNotChangingAnything = toSet(//
 			RPGFightAction.EQUIP_ITEM, //
+			RPGFightAction.FIGHTER_NEXT, //
+			RPGFightAction.FIGHTER_PREVIOUS, //
 			RPGFightAction.SPELL, //
 			RPGFightAction.USE_ITEM);
 

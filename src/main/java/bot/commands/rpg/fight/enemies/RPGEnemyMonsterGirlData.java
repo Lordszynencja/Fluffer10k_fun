@@ -13,10 +13,10 @@ import bot.data.fight.FighterClass;
 
 public class RPGEnemyMonsterGirlData extends RPGEnemyData {
 	public static final int calculateLevel(final int strength, final int agility, final int intelligence,
-			final int armor, final int baseHp, final int diff) {
+			final int armor, final int baseHp, final int diff, final Set<FighterClass> classes) {
 		final List<Integer> stats = new ArrayList<>(asList(strength, agility, intelligence));
 		stats.sort(null);
-		final double statsValue = stats.get(0) * 0.5 + stats.get(1) * 0.75 + stats.get(2) * 1.25 + armor + baseHp / 5.0;
+		final double statsValue = stats.get(0) * 0.45 + stats.get(1) * 0.7 + stats.get(2) * 1.1 + armor + baseHp / 8.0;
 		double valueWithModifiers = statsValue - 4;
 		if (valueWithModifiers < 0) {
 			valueWithModifiers = 0;
@@ -37,13 +37,48 @@ public class RPGEnemyMonsterGirlData extends RPGEnemyData {
 		}
 		totalValue += valueWithModifiers * 0.8;
 
+		if (classes.contains(FighterClass.CANT_BE_FROZEN)) {
+			totalValue += 1;
+		}
+		if (classes.contains(FighterClass.SALTABLE)) {
+			totalValue -= 1;
+		}
+
+		if (classes.contains(FighterClass.CLEVER)) {
+			totalValue += totalValue * 0.3;
+		}
+		if (classes.contains(FighterClass.DOUBLE_ATTACK)) {
+			totalValue += totalValue * 0.1;
+		}
+		if (classes.contains(FighterClass.FLYING)) {
+			totalValue += totalValue * 0.1;
+		}
+		if (classes.contains(FighterClass.FREEZING_AURA)) {
+			totalValue += totalValue * 0.05;
+		}
+		if (classes.contains(FighterClass.MECHANICAL)) {
+			totalValue += totalValue * 0.05;
+		}
+		if (classes.contains(FighterClass.POISONOUS_ATTACK)) {
+			totalValue += totalValue * 0.05;
+		}
+		if (classes.contains(FighterClass.SLIME_REGEN)) {
+			totalValue += totalValue * 0.1;
+		}
+		if (classes.contains(FighterClass.STARTS_IN_SPIRIT_FORM)) {
+			totalValue += totalValue * 0.1;
+		}
+		if (classes.contains(FighterClass.TRIPLE_ATTACK)) {
+			totalValue += totalValue * 0.25;
+		}
+
 		return totalValue + diff;
 	}
 
 	public static RPGEnemyMonsterGirlData from(final String id, final MonsterGirlRace race, final String name,
 			final int strength, final int agility, final int intelligence, final int armor, final int baseHp,
 			final int diff, final Set<FighterClass> classes, final ActionSelector actionSelector) {
-		final int level = calculateLevel(strength, agility, intelligence, armor, baseHp, diff);
+		final int level = calculateLevel(strength, agility, intelligence, armor, baseHp, diff, classes);
 
 		return new RPGEnemyMonsterGirlData(id, race, name, strength, agility, intelligence, armor, baseHp, level,
 				classes, actionSelector);

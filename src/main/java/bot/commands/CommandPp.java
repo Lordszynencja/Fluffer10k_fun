@@ -71,7 +71,7 @@ public class CommandPp extends Command {
 			return;
 		}
 
-		final String arg = interaction.getOptionStringValueByName("target").orElse(null);
+		final String arg = interaction.getArgumentStringValueByName("target").orElse(null);
 
 		final String name;
 		if (arg != null) {

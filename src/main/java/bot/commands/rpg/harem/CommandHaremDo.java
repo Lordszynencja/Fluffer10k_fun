@@ -77,7 +77,7 @@ public class CommandHaremDo extends Subcommand {
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().get();
 		final User user = interaction.getUser();
-		final String action = getOption(interaction).getOptionStringValueByName("action").get().trim();
+		final String action = getOption(interaction).getArgumentStringValueByName("action").get().trim();
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(), user.getId());
 
 		for (final HaremMemberData haremMember : userData.harem.values()) {

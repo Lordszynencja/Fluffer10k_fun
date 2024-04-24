@@ -17,8 +17,9 @@ public class CommandOwoify extends Command {
 			{ "owo", "OwO" }, { " wo", " OwO" }, { "ow ", "OwO " }, //
 			{ "uwu", "UwU" }, { " wu", " UwU" }, { "uw ", "UwU " } };
 
+	@Override
 	public void handle(final SlashCommandInteraction interaction) {
-		String msg = " " + interaction.getOptionStringValueByName("text").get() + " ";
+		String msg = " " + interaction.getArgumentStringValueByName("text").get() + " ";
 		for (final String[] replacement : replacements) {
 			msg = msg.replaceAll(replacement[0], replacement[1]);
 		}

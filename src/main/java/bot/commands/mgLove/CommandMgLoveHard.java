@@ -50,7 +50,7 @@ public class CommandMgLoveHard extends Command {
 			return;
 		}
 
-		final User target = interaction.getOptionUserValueByName("target").get();
+		final User target = interaction.getArgumentUserValueByName("target").get();
 		final User user = interaction.getUser();
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(), user.getId());

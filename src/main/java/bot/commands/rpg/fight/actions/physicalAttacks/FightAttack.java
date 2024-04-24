@@ -231,6 +231,9 @@ public class FightAttack implements FightActionHandler {
 		if (data.target.statuses.isStatus(FighterStatus.MUMMY_CURSE)) {
 			dmg *= 2;
 		}
+		if (data.target.statuses.isStatus(FighterStatus.SPIRIT_FORM)) {
+			dmg /= 2;
+		}
 
 		return dmg;
 	}
@@ -371,8 +374,7 @@ public class FightAttack implements FightActionHandler {
 			data.activeFighter.addExp(5);
 		}
 
-		final int realDmg = min(dmg, data.target.hp);
-		data.target.hp -= realDmg;
+		data.target.hp -= min(dmg, data.target.hp);
 
 		String attackDescription = action.description(data.activeFighter.name, data.target.name, dmg);
 		if (isCrit) {

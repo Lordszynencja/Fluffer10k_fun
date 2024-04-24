@@ -105,7 +105,7 @@ public class CommandFluff extends Command {
 
 		final User user = interaction.getUser();
 		final Server server = interaction.getServer().get();
-		final User mentionedUser = interaction.getOptionUserValueByName("target").orElse(null);
+		final User mentionedUser = interaction.getArgumentUserValueByName("target").orElse(null);
 
 		if (mentionedUser != null && mentionedUser.getId() != user.getId()) {
 			fluffTail(interaction, user.getDisplayName(server), mentionedUser.getId(),

@@ -36,7 +36,7 @@ public class CommandAvatar extends Command {
 		final User user = interaction.getUser();
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(), user.getId());
 
-		userData.rpg.avatar = interaction.getOptionStringValueByName("avatar_url").orElse(null);
+		userData.rpg.avatar = interaction.getArgumentStringValueByName("avatar_url").orElse(null);
 
 		sendEphemeralMessage(interaction, "Image changed successfully");
 	}

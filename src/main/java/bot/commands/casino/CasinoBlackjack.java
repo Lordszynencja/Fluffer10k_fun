@@ -279,7 +279,7 @@ public class CasinoBlackjack {
 		final long userId = interaction.getUser().getId();
 
 		final SlashCommandInteractionOption firstOption = interaction.getOptionByName("blackjack").get();
-		final long bet = firstOption.getOptionLongValueByName("bet").get();
+		final long bet = firstOption.getArgumentLongValueByName("bet").get();
 		if (bet < 1) {
 			sendEphemeralMessage(interaction, "Can't place negative or no bet");
 			return;

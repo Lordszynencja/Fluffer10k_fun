@@ -110,14 +110,14 @@ public class CasinoRoulette {
 		final long userId = interaction.getUser().getId();
 
 		final SlashCommandInteractionOption firstOption = interaction.getOptionByName("roulette").get();
-		final String betType = firstOption.getOptionStringValueByName("bet_type").get();
+		final String betType = firstOption.getArgumentStringValueByName("bet_type").get();
 		if (!betTypes.containsKey(betType)) {
 			sendEphemeralMessage(interaction, "Wrong bet type");
 			return;
 		}
 		final BetData betData = betTypes.get(betType);
 
-		final long bet = firstOption.getOptionLongValueByName("bet").get();
+		final long bet = firstOption.getArgumentLongValueByName("bet").get();
 		if (bet < 1) {
 			sendEphemeralMessage(interaction, "Can't place negative or no bet");
 			return;

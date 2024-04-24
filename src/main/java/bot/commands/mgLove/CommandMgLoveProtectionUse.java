@@ -38,7 +38,7 @@ public class CommandMgLoveProtectionUse extends Command {
 			return;
 		}
 
-		final boolean value = interaction.getOptionStringValueByName("value").get().equals("on");
+		final boolean value = interaction.getArgumentStringValueByName("value").get().equals("on");
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(),
 				interaction.getUser().getId());

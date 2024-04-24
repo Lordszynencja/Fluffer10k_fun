@@ -10,6 +10,7 @@ public class CommandPoll extends Command {
 
 	}
 
+	@SuppressWarnings("unused")
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandPoll(final Fluffer10kFun fluffer10kFun) {
@@ -18,6 +19,7 @@ public class CommandPoll extends Command {
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
+	@SuppressWarnings("unused")
 	private void makePollMessage() {
 
 	}

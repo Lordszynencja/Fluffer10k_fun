@@ -94,7 +94,7 @@ public class CommandRoll extends Command {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
-		final String dice_expression = interaction.getOptionStringValueByName("dice_expression").orElse(null);
+		final String dice_expression = interaction.getArgumentStringValueByName("dice_expression").orElse(null);
 		if (dice_expression == null) {
 			sendEphemeralMessage(interaction, "Argument is required");
 			return;

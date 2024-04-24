@@ -62,7 +62,7 @@ public class CommandJewellerRefine extends Subcommand {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) throws Exception {
-		final long refineAmount = getOption(interaction).getOptionLongValueByName("amount").orElse(1L);
+		final long refineAmount = getOption(interaction).getArgumentLongValueByName("amount").orElse(1L);
 		if (refineAmount <= 0) {
 			sendEphemeralMessage(interaction, "You can't refine less than one gem");
 			return;

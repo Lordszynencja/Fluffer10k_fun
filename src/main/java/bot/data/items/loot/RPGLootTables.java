@@ -4,25 +4,6 @@ import static bot.data.items.data.ArmorItems.CHAINMAIL;
 import static bot.data.items.data.ArmorItems.LEATHER_ARMOR;
 import static bot.data.items.data.ArmorItems.PLATE_ARMOR;
 import static bot.data.items.data.ArmorItems.RING_MAIL;
-import static bot.data.items.data.MagicScrollItems.BOOK_OF_OFFENSE_BASH;
-import static bot.data.items.data.MagicScrollItems.BOOK_OF_OFFENSE_DOUBLE_STRIKE;
-import static bot.data.items.data.MagicScrollItems.BOOK_OF_OFFENSE_GOUGE;
-import static bot.data.items.data.MagicScrollItems.BOOK_OF_OFFENSE_PRECISE_STRIKE;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_BLIZZARD;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_FIERY_WEAPON;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_FIREBALL;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_FORCE_HIT;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_FREEZE;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_HEAL;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_HOLY_AURA;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_ICE_BOLT;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_LIGHTNING;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_MAGIC_SHIELD;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_METEORITE;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_RAGE;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_SLEEP;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_SPEED_OF_WIND;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_WHIRLPOOL;
 import static bot.data.items.data.MonmusuDropItems.COUPLES_FRUIT;
 import static bot.data.items.data.MonmusuDropItems.INTOXICATION_FRUIT;
 import static bot.data.items.data.MonmusuDropItems.PRISONER_FRUIT;
@@ -249,32 +230,6 @@ public class RPGLootTables {
 					STRENGTH_3_POTION, //
 					INTELLIGENCE_3_POTION)));
 
-	/////////////
-	// SCROLLS //
-	/////////////
-	private static final LootTable<Loot> commonScrollsLootTable = lootTable(//
-			BOOK_OF_OFFENSE_GOUGE, //
-			BOOK_OF_OFFENSE_PRECISE_STRIKE, //
-			MAGIC_SCROLL_HEAL, //
-			MAGIC_SCROLL_FORCE_HIT);
-	private static final LootTable<Loot> uncommonScrollsLootTable = lootTable(//
-			BOOK_OF_OFFENSE_BASH, //
-			BOOK_OF_OFFENSE_DOUBLE_STRIKE, //
-			MAGIC_SCROLL_FIERY_WEAPON, //
-			MAGIC_SCROLL_FIREBALL, //
-			MAGIC_SCROLL_HOLY_AURA, //
-			MAGIC_SCROLL_ICE_BOLT, //
-			MAGIC_SCROLL_LIGHTNING, //
-			MAGIC_SCROLL_MAGIC_SHIELD, //
-			MAGIC_SCROLL_RAGE, //
-			MAGIC_SCROLL_SLEEP, //
-			MAGIC_SCROLL_SPEED_OF_WIND);
-	private static final LootTable<Loot> rareScrollsLootTable = lootTable(//
-			MAGIC_SCROLL_BLIZZARD, //
-			MAGIC_SCROLL_FREEZE, //
-			MAGIC_SCROLL_METEORITE, //
-			MAGIC_SCROLL_WHIRLPOOL);
-
 	//////////
 	// GOLD //
 	//////////
@@ -326,19 +281,16 @@ public class RPGLootTables {
 			commonWeaponsLootTable, //
 			commonEqLootTable, //
 			minorPotionsLootTable, //
-			commonScrollsLootTable, //
 			commonSpecialLootTable);
 	private static final LootTable<Loot> uncommonItemsTable = listT(//
 			uncommonWeaponsLootTable, //
 			uncommonEqLootTable, //
 			mediumPotionsLootTable, //
-			uncommonScrollsLootTable, //
 			uncommonSpecialLootTable);
 	private static final LootTable<Loot> rareItemsTable = listT(//
 			rareWeaponsLootTable, //
 			rareEqLootTable, //
 			majorPotionsLootTable, //
-			rareScrollsLootTable, //
 			rareSpecialLootTable);
 
 	private static final LootTable<Loot> trashLootTable = weightedTI(//

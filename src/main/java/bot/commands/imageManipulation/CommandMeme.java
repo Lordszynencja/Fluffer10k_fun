@@ -294,7 +294,7 @@ public class CommandMeme extends Command {
 	}
 
 	List<User> getTargets(final SlashCommandInteraction interaction) {
-		final String targetsParam = interaction.getOptionStringValueByName("targets").orElse(null);
+		final String targetsParam = interaction.getArgumentStringValueByName("targets").orElse(null);
 
 		if (targetsParam != null) {
 			final List<Long> userMentionIds = getUserMentionIds(targetsParam);
@@ -308,7 +308,7 @@ public class CommandMeme extends Command {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) throws Exception {
-		String template = interaction.getOptionStringValueByName("template").orElse(null);
+		String template = interaction.getArgumentStringValueByName("template").orElse(null);
 
 		final List<User> targets = getTargets(interaction);
 

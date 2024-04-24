@@ -93,15 +93,15 @@ public class CommandTrade extends Command {
 			return;
 		}
 
-		final User buyer = interaction.getOptionUserValueByName("buyer").get();
+		final User buyer = interaction.getArgumentUserValueByName("buyer").get();
 		final ServerUserData buyerData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, buyer.getId());
 		if (buyerData.rpg.fightId != null) {
 			sendEphemeralMessage(interaction, "Target can't buy during a fight!");
 			return;
 		}
 
-		final long price = interaction.getOptionLongValueByName("price").get();
-		final long amount = interaction.getOptionLongValueByName("amount").orElse(1L);
+		final long price = interaction.getArgumentLongValueByName("price").get();
+		final long amount = interaction.getArgumentLongValueByName("amount").orElse(1L);
 		if (price < 0) {
 			sendEphemeralMessage(interaction, "You can't sell for negative price");
 			return;

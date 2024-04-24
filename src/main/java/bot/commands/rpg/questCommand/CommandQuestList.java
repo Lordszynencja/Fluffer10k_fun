@@ -42,7 +42,8 @@ public class CommandQuestList extends Subcommand {
 	public void handle(final SlashCommandInteraction interaction) throws Exception {
 		final Server server = interaction.getServer().get();
 		final User user = interaction.getUser();
-		final String filter = interaction.getOptionByIndex(0).get().getOptionStringValueByName("filter").orElse("all");
+		final String filter = interaction.getOptionByIndex(0).get().getArgumentStringValueByName("filter")
+				.orElse("all");
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server, user);
 		final int questsCount = userData.rpg.quests.size();

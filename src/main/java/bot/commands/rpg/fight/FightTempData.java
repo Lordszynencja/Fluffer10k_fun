@@ -34,6 +34,9 @@ public class FightTempData {
 	}
 
 	public void setUpTarget(final Fluffer10kFun fluffer10kFun, final Targetting targetting) {
+		if (activeFighter.player() != null) {
+			targetId = fight.targetFighter;
+		}
 		if (targetId != null) {
 			target = fight.fighters.get(targetId);
 			if (!targetting.valid(activeFighter, target)) {

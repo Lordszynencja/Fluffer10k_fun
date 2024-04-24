@@ -5,6 +5,7 @@ import static bot.util.CollectionUtils.toSet;
 import java.util.HashSet;
 import java.util.Set;
 
+import bot.commands.rpg.exploration.ExplorationFight;
 import bot.commands.rpg.fight.enemies.RPGEnemyActionSelectorUtils.ActionSelector;
 import bot.data.MonsterGirls.MonsterGirlRace;
 import bot.data.fight.FighterClass;
@@ -13,6 +14,8 @@ public class RPGEnemyMonsterGirlDataBuilder {
 	public String id;
 	public MonsterGirlRace race;
 	public String name;
+
+	public boolean standard = false;
 
 	public int strength = 1;
 	public int agility = 1;
@@ -31,6 +34,11 @@ public class RPGEnemyMonsterGirlDataBuilder {
 
 	public RPGEnemyMonsterGirlDataBuilder name(final String name) {
 		this.name = name;
+		return this;
+	}
+
+	public RPGEnemyMonsterGirlDataBuilder standard() {
+		standard = true;
 		return this;
 	}
 
@@ -66,11 +74,19 @@ public class RPGEnemyMonsterGirlDataBuilder {
 
 	public RPGEnemyMonsterGirlDataBuilder classes(final FighterClass... classes) {
 		this.classes = toSet(classes);
+		this.classes.remove(null);
 		return this;
 	}
 
 	public RPGEnemyMonsterGirlDataBuilder actionSelector(final ActionSelector actionSelector) {
 		this.actionSelector = actionSelector;
+		return this;
+	}
+
+	public RPGEnemyMonsterGirlDataBuilder slime() {
+		classes.add(FighterClass.SLIME_REGEN);
+		classes.add(FighterClass.WET);
+		classes.add(FighterClass.WEAK_TO_FIRE);
 		return this;
 	}
 
@@ -81,5 +97,8 @@ public class RPGEnemyMonsterGirlDataBuilder {
 
 	public void build(final RPGEnemies rpgEnemies) {
 		rpgEnemies.add(build());
+		if (standard) {
+			ExplorationFight.addEnemyId(id);
+		}
 	}
 }

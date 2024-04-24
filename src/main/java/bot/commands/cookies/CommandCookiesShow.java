@@ -22,11 +22,12 @@ public class CommandCookiesShow extends Subcommand {
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
+	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final long serverId = interaction.getServer().get().getId();
 		final long userId = interaction.getUser().getId();
 
-		final String cookieName = getOption(interaction).getOptionStringValueByName("cookie_name").get();
+		final String cookieName = getOption(interaction).getArgumentStringValueByName("cookie_name").get();
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, userId);
 		if (userData.cookies.cookieCounts.getOrDefault(cookieName, 0L) == 0) {

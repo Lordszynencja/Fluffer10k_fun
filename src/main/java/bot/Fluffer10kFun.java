@@ -63,6 +63,7 @@ import bot.commands.rpg.fight.CommandFight;
 import bot.commands.rpg.fight.FightActionsHandler;
 import bot.commands.rpg.fight.FightSender;
 import bot.commands.rpg.fight.FightStart;
+import bot.commands.rpg.fight.FighterCreator;
 import bot.commands.rpg.fight.actions.FightActionUtils;
 import bot.commands.rpg.fight.enemies.RPGEnemies;
 import bot.commands.rpg.fight.enemies.RPGEnemyActionSelectorUtils;
@@ -97,8 +98,7 @@ import bot.util.modularPrompt.ModularPromptUtils;
 import bot.util.pages.PagedMessageUtils;
 
 public class Fluffer10kFun {
-
-	// https://discord.com/api/oauth2/authorize?client_id=900109965035974706&permissions=2147601408&scope=bot%20applications.commands
+	private static final String inviteLink = "https://discord.com/api/oauth2/authorize?client_id=900109965035974706&permissions=2147601408&scope=bot%20applications.commands";
 
 	public final APIUtils apiUtils;
 	public final PagedMessageUtils pagedMessageUtils;
@@ -118,6 +118,7 @@ public class Fluffer10kFun {
 	public final QuestUtils questUtils;
 	public final FightActionsHandler fightActionsHandler;
 	public final FightActionUtils fightActionUtils;
+	public final FighterCreator fighterCreator;
 	public final FightStart fightStart;
 	public final FightSender fightSender;
 
@@ -184,7 +185,8 @@ public class Fluffer10kFun {
 	public final CommandWag commandWag;
 
 	public Fluffer10kFun() throws IOException {
-		apiUtils = new APIUtils("fluffer10kFun_config.txt", asList(Intent.GUILD_MEMBERS));
+		apiUtils = new APIUtils("Fluffer 10k Fun", inviteLink, "fluffer10kFun_config.txt",
+				asList(Intent.GUILD_MEMBERS));
 		pagedMessageUtils = new PagedMessageUtils(apiUtils.commandHandlers);
 		modularPromptUtils = new ModularPromptUtils(apiUtils.commandHandlers);
 
@@ -204,6 +206,7 @@ public class Fluffer10kFun {
 		questUtils = new QuestUtils(this);
 		fightActionsHandler = new FightActionsHandler(this);
 		fightActionUtils = new FightActionUtils(this);
+		fighterCreator = new FighterCreator(this);
 		fightStart = new FightStart(this);
 		fightSender = new FightSender(this);
 
@@ -269,13 +272,13 @@ public class Fluffer10kFun {
 		commandVoid = new CommandVoid(this);
 		commandWag = new CommandWag(this);
 
-		apiUtils.messageUtils.sendMessageToMe("10k fun Bot started");
+		apiUtils.messageUtils.sendMessageToMe("Fluffer 10k Fun started");
 
 		final SlashCommandBuilder scb = SlashCommand.with("print", "prints")
 				.addOption(SlashCommandOption.create(SlashCommandOptionType.STRING, "arg", "arg", true));
 		apiUtils.commandHandlers.addSlashCommandHandler("print", interaction -> {
 			interaction.createImmediateResponder().append("ok").respond();
-			System.out.println(interaction.getOptionStringValueByName("arg").get());
+			System.out.println(interaction.getArgumentStringValueByName("arg").get());
 		}, scb);
 
 		apiUtils.api.addServerJoinListener(event -> {

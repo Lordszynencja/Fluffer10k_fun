@@ -2,6 +2,7 @@ package bot.data.fight;
 
 import static bot.util.Utils.intFromNumber;
 import static bot.util.Utils.Pair.pair;
+import static java.lang.Math.min;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -163,5 +164,11 @@ public abstract class FighterData {
 		}
 
 		return null;
+	}
+
+	public int heal(final int healing) {
+		final int hpBefore = hp;
+		hp = min(maxHp, hp + healing);
+		return hp - hpBefore;
 	}
 }

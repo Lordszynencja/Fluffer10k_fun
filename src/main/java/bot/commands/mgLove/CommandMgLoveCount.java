@@ -34,7 +34,7 @@ public class CommandMgLoveCount extends Command {
 			return;
 		}
 
-		final User user = interaction.getOptionUserValueByName("user").orElse(interaction.getUser());
+		final User user = interaction.getArgumentUserValueByName("user").orElse(interaction.getUser());
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(), user.getId());
 		final String countString = userData.cums == 1 ? "1 time" : userData.cums + " times";

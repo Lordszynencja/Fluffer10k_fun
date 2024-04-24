@@ -21,7 +21,7 @@ public class CommandStatusDescription extends Command {
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final FighterStatus status = FighterStatus
-				.findByName(interaction.getOptionStringValueByName("statusName").orElse(null));
+				.findByName(interaction.getArgumentStringValueByName("statusName").orElse(null));
 		if (status == null) {
 			sendEphemeralMessage(interaction, "Status not found");
 			return;

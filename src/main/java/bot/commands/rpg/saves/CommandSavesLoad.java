@@ -29,7 +29,7 @@ public class CommandSavesLoad extends Subcommand {
 		final long serverId = interaction.getServer().get().getId();
 		final User user = interaction.getUser();
 
-		final String saveName = getOption(interaction).getOptionStringValueByName("save_name").get();
+		final String saveName = getOption(interaction).getArgumentStringValueByName("save_name").get();
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, user.getId());
 		if (userData.rpg.fightId != null) {

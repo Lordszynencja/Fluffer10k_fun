@@ -15,13 +15,10 @@ import org.javacord.api.interaction.MessageComponentInteraction;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
-import bot.commands.rpg.RPGStatUtils.RPGStatsData;
 import bot.commands.rpg.fight.enemies.special.MonsterArmyOfficer;
 import bot.commands.rpg.fight.fightRewards.FightEndReward;
-import bot.data.fight.EnemyFighterData;
 import bot.data.fight.FightData.FightType;
 import bot.data.fight.FighterData;
-import bot.data.fight.PlayerFighterData;
 import bot.data.quests.QuestType;
 import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
@@ -70,11 +67,9 @@ public class QuestUltimateTest extends Quest {
 			final ServerTextChannel channel = interaction.getChannel().get().asServerTextChannel().get();
 			final User user = interaction.getUser();
 			final Server server = interaction.getServer().get();
-			final String name = userData.rpg.getName(user, server);
-			final RPGStatsData playerStats = fluffer10kFun.rpgStatUtils.getTotalStats(userData);
 			final List<FighterData> fightersList = asList(//
-					PlayerFighterData.fromStats("PLAYER", user.getId(), "PLAYER", name, playerStats), //
-					EnemyFighterData.fromStats("BOSS", fluffer10kFun.rpgEnemies.get(enemyId), "BOSS"));
+					fluffer10kFun.fighterCreator.getPlayerFighter(server, user, userData, "PLAYER", "PLAYER"), //
+					fluffer10kFun.fighterCreator.getAIFighter(server, enemyId, "BOSS", "BOSS"));
 			final Map<String, FighterData> fighters = toMap(fighter -> fighter.id, fightersList);
 			fluffer10kFun.fightStart.startFight(channel, FightType.NO_NORMAL_REWARDS, fighters, reward);
 		}
@@ -229,6 +224,14 @@ public class QuestUltimateTest extends Quest {
 							description("The fight starts!")));
 		}
 	}
+
+	// step 7,8,9: name? Manticore? strong tail (another attack/level suck?), stings
+	// harder?
+	// step 10,11,12: name? Chimaera? skills?
+	// step 13,14,15: name? Baphomet? skills?
+	// step 16,17,18: name? Lilim? skills?
+	// step 19,20,21: Monster Lord (name (Druella? something else than in MGE)?
+	// Succubus? skills?)
 
 	private final Fluffer10kFun fluffer10kFun;
 	private final List<Step> steps = asList(//

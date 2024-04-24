@@ -9,10 +9,10 @@ import java.util.NavigableSet;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageAttachment;
+import org.javacord.api.entity.message.MessageFlag;
 import org.javacord.api.interaction.SlashCommandInteraction;
 import org.javacord.api.interaction.SlashCommandOption;
 import org.javacord.api.interaction.SlashCommandOptionType;
-import org.javacord.api.interaction.callback.InteractionCallbackDataFlag;
 
 import bot.Fluffer10kFun;
 import bot.util.ImageUtils.ImageData;
@@ -27,7 +27,7 @@ public class CommandInvert extends Command {
 	}
 
 	private static ImageData getImageData(final SlashCommandInteraction interaction) {
-		final String url = interaction.getOptionStringValueByName("image_url").get();
+		final String url = interaction.getArgumentStringValueByName("image_url").get();
 		if (url != null) {
 			return getImageFromUrl(url);
 		}
@@ -37,7 +37,7 @@ public class CommandInvert extends Command {
 		for (final Message message : messages) {
 			for (final MessageAttachment attachment : message.getAttachments()) {
 				if (attachment.isImage()) {
-					return new ImageData(attachment.downloadAsImage().join());
+					return new ImageData(attachment.asImage().join());
 				}
 			}
 		}
@@ -72,7 +72,7 @@ public class CommandInvert extends Command {
 
 		final ImageData imageData = getImageData(interaction);
 		if (imageData == null) {
-			interaction.createFollowupMessageBuilder().setFlags(InteractionCallbackDataFlag.EPHEMERAL)
+			interaction.createFollowupMessageBuilder().setFlags(MessageFlag.EPHEMERAL)
 					.setContent("Couldn't read the image").send();
 			return;
 		}

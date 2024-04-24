@@ -21,6 +21,26 @@ public class FightGetFree implements FightActionHandler {
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
+	private void handleAlrauneVines(final FightTempData data, final RPGFightAction action) {
+		data.targetId = data.activeFighter.heldBy;
+		data.setUpTarget(fluffer10kFun, defaultTargetting);
+
+		final int exp = 2 * (data.activeFighterStats.strength + data.targetStats.strength);
+		data.activeFighter.addExp(exp);
+		data.target.addExp(exp);
+
+		if (data.target.hp <= 0 || clash(data.activeFighterStats.strength, data.targetStats.strength, 5, 0.75)) {
+			data.activeFighter.addExp(10);
+			data.activeFighter.statuses.removeStatus(FighterStatus.ALRAUNE_VINES);
+			data.fight
+					.addTurnDescription(data.activeFighter.name + " untangles from " + data.target.name + "'s vines!");
+		} else {
+			data.target.addExp(10);
+			data.fight.addTurnDescription(
+					data.activeFighter.name + " can't untangle from " + data.target.name + "'s vines!");
+		}
+	}
+
 	private void handleHeld(final FightTempData data, final RPGFightAction action) {
 		data.targetId = data.activeFighter.heldBy;
 		data.setUpTarget(fluffer10kFun, defaultTargetting);
@@ -79,6 +99,10 @@ public class FightGetFree implements FightActionHandler {
 	public void handle(final FightTempData data, final RPGFightAction action) {
 		if (data.activeFighter.statuses.isStatus(FighterStatus.HELD)) {
 			handleHeld(data, action);
+			return;
+		}
+		if (data.activeFighter.statuses.isStatus(FighterStatus.ALRAUNE_VINES)) {
+			handleAlrauneVines(data, action);
 			return;
 		}
 		if (data.activeFighter.statuses.isStatus(FighterStatus.KEJOUROU_HAIR)) {

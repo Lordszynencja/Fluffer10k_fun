@@ -73,9 +73,9 @@ public class CommandTransfer extends Command {
 		}
 
 		final User user = interaction.getUser();
-		final User target = interaction.getOptionUserValueByName("target").get();
-		final long amount = interaction.getOptionLongValueByName("amount").get();
-		final Currency currency = Currency.valueOf(interaction.getOptionStringValueByName("currency").get());
+		final User target = interaction.getArgumentUserValueByName("target").get();
+		final long amount = interaction.getArgumentLongValueByName("amount").get();
+		final Currency currency = Currency.valueOf(interaction.getArgumentStringValueByName("currency").get());
 		if (amount <= 0) {
 			sendEphemeralMessage(interaction, "You can't give nothing");
 			return;

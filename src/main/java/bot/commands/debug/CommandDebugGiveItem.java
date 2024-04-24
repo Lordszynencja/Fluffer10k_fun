@@ -30,9 +30,9 @@ public class CommandDebugGiveItem extends Subcommand {
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().get();
 		final SlashCommandInteractionOption option = getOption(interaction);
-		final String itemId = option.getOptionStringValueByName("item_id").get();
-		final long amount = option.getOptionLongValueByName("amount").orElse(1L);
-		final User user = option.getOptionUserValueByName("user").orElse(interaction.getUser());
+		final String itemId = option.getArgumentStringValueByName("item_id").get();
+		final long amount = option.getArgumentLongValueByName("amount").orElse(1L);
+		final User user = option.getArgumentUserValueByName("user").orElse(interaction.getUser());
 
 		if (!fluffer10kFun.items.items.containsKey(itemId)) {
 			System.out.println(itemId);

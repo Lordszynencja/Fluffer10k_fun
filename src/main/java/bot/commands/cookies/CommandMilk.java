@@ -48,7 +48,7 @@ public class CommandMilk extends Command {
 
 		final long serverId = server.getId();
 		final User maker = interaction.getUser();
-		final User receiver = interaction.getOptionUserValueByName("target").orElse(maker);
+		final User receiver = interaction.getArgumentUserValueByName("target").orElse(maker);
 		final String milkName = getRandom(fluffer10kFun.cookieUtils.milkTypes);
 		final ServerUserData receiverData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, receiver.getId());
 

@@ -34,7 +34,7 @@ public class CommandName extends Command {
 
 		final long serverId = server.getId();
 		final User user = interaction.getUser();
-		final String newName = interaction.getOptionStringValueByName("new_name").orElse(null);
+		final String newName = interaction.getArgumentStringValueByName("new_name").orElse(null);
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, user.getId());
 		userData.rpg.name = newName;

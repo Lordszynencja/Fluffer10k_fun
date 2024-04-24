@@ -75,8 +75,8 @@ public class CommandCookie extends Command {
 
 		final long serverId = server.getId();
 		final User baker = interaction.getUser();
-		final User receiver = interaction.getOptionUserValueByName("receiver").orElse(baker);
-		String cookieName = capitalize(interaction.getOptionStringValueByName("target_cookie").orElse(""));
+		final User receiver = interaction.getArgumentUserValueByName("receiver").orElse(baker);
+		String cookieName = capitalize(interaction.getArgumentStringValueByName("target_cookie").orElse(""));
 
 		final ServerUserData bakerData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, baker.getId());
 		final ServerUserData receiverData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, receiver.getId());

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import bot.Fluffer10kFun;
-import bot.commands.rpg.fight.enemies.data.races.EnemiesOfRace;
+import bot.commands.rpg.fight.enemies.races.EnemiesOfRace;
 import bot.commands.rpg.fight.enemies.special.MonsterArmyOfficer;
 
 public class RPGEnemies {

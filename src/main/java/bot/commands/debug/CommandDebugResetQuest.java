@@ -30,7 +30,7 @@ public class CommandDebugResetQuest extends Subcommand {
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().get();
-		final String questId = getOption(interaction).getOptionStringValueByName("quest").get();
+		final String questId = getOption(interaction).getArgumentStringValueByName("quest").get();
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server, interaction.getUser());
 
 		try {

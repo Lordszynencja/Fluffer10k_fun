@@ -25,7 +25,7 @@ public class CommandRunLevel extends Command {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
-		final User user = interaction.getOptionUserValueByName("target").orElse(interaction.getUser());
+		final User user = interaction.getArgumentUserValueByName("target").orElse(interaction.getUser());
 		final UserData userData = fluffer10kFun.userDataUtils.getUserData(user.getId());
 		final long level = userData.getRunningLevel();
 		final String userName = user.getDisplayName(interaction.getServer().get());

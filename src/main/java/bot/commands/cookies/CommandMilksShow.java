@@ -27,7 +27,7 @@ public class CommandMilksShow extends Subcommand {
 		final long serverId = interaction.getServer().get().getId();
 		final long userId = interaction.getUser().getId();
 
-		final String milkName = getOption(interaction).getOptionStringValueByName("milk_name").get();
+		final String milkName = getOption(interaction).getArgumentStringValueByName("milk_name").get();
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, userId);
 		if (userData.cookies.milkCounts.getOrDefault(milkName, 0L) == 0) {

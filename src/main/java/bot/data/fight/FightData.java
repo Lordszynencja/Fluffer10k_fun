@@ -25,6 +25,7 @@ public class FightData {
 	public Map<String, FighterData> fighters;
 	public int turn;
 	public int turnProgress;
+	public String targetFighter;
 	public List<String> fightersOrder;
 	public List<List<String>> turnDescriptions;
 	public int actionsLeft;
@@ -38,6 +39,7 @@ public class FightData {
 		this.fighters = fighters;
 		turn = 0;
 		turnProgress = 0;
+		targetFighter = fightersOrder.get(0);
 		this.fightersOrder = fightersOrder;
 		turnDescriptions = new ArrayList<>();
 		turnDescriptions.add(new ArrayList<>());
@@ -59,10 +61,15 @@ public class FightData {
 		});
 		turn = intFromNumber(data.get("turn"));
 		turnProgress = intFromNumber(data.get("turnProgress"));
+		targetFighter = (String) data.get("targetFighter");
 		fightersOrder = (List<String>) data.get("fightersOrder");
 		turnDescriptions = (List<List<String>>) data.get("turnDescriptions");
 		actionsLeft = intFromNumber(data.get("actionsLeft"));
 		fightEndReward = FightEndReward.valueOf((String) data.get("fightEndReward"));
+
+		if (targetFighter == null) {
+			targetFighter = fightersOrder.get(0);
+		}
 	}
 
 	public Map<String, Object> toMap() {
@@ -73,6 +80,7 @@ public class FightData {
 		map.put("fighters", mapMapString(fighters, fighterData -> fighterData.toMap()));
 		map.put("turn", turn);
 		map.put("turnProgress", turnProgress);
+		map.put("targetFighter", targetFighter);
 		map.put("fightersOrder", fightersOrder);
 		map.put("turnDescriptions", turnDescriptions);
 		map.put("actionsLeft", actionsLeft);

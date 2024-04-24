@@ -1,6 +1,15 @@
 package bot.commands.rpg.fight.enemies;
 
+import static bot.commands.rpg.fight.RPGFightAction.SPELL_BLIZZARD;
+import static bot.commands.rpg.fight.RPGFightAction.SPELL_FIREBALL;
+import static bot.commands.rpg.fight.RPGFightAction.SPELL_FORCE_HIT;
+import static bot.commands.rpg.fight.RPGFightAction.SPELL_ICE_BOLT;
+import static bot.commands.rpg.fight.RPGFightAction.SPELL_LIGHTNING;
+import static bot.commands.rpg.fight.RPGFightAction.SPELL_METEORITE;
+import static bot.commands.rpg.fight.RPGFightAction.SPELL_QUADRUPLE_FLAME;
+import static bot.commands.rpg.fight.RPGFightAction.SPELL_WHIRLPOOL;
 import static bot.data.items.loot.LootTable.weightedI;
+import static bot.data.items.loot.LootTable.weightedTI;
 import static bot.util.CollectionUtils.toMap;
 import static bot.util.CollectionUtils.toSet;
 import static bot.util.Utils.Pair.pair;
@@ -52,6 +61,18 @@ public class RPGEnemyActionSelectorUtils {
 		}
 	}
 
+	public static LootTable<RPGFightAction> basicSpells = weightedI(//
+			pair(1, SPELL_FIREBALL), //
+			pair(1, SPELL_FORCE_HIT), //
+			pair(1, SPELL_ICE_BOLT), //
+			pair(1, SPELL_LIGHTNING));
+	public static LootTable<RPGFightAction> advancedSpells = weightedI(//
+			pair(1, SPELL_BLIZZARD), //
+			pair(1, SPELL_WHIRLPOOL));
+	public static LootTable<RPGFightAction> masterSpells = weightedI(//
+			pair(1, SPELL_METEORITE), //
+			pair(1, SPELL_QUADRUPLE_FLAME));
+
 	private final Fluffer10kFun fluffer10kFun;
 
 	private final Map<RPGFightAction, Targetting> defaultTargetting;
@@ -66,12 +87,15 @@ public class RPGEnemyActionSelectorUtils {
 
 		final Targetting TARGETTING_ENEMY = new Targetting(aliveEnemy);
 
+		final Targetting TARGETTING_FOR_ALRAUNE_NECTAR = new Targetting(
+				aliveEnemy.with(FighterStatus.CHARM_RESISTANCE));
+		final Targetting TARGETTING_FOR_ALRAUNE_VINES = new Targetting(aliveEnemy.without(FighterStatus.ALRAUNE_VINES));
 		final Targetting TARGETTING_FOR_ATLACH_NACHA_VENOM = new Targetting(
 				atlachNachaVenomValid.with(FighterStatus.ATLACH_NACHA_VENOM))//
-						.orElse(atlachNachaVenomValid);
+				.orElse(atlachNachaVenomValid);
 		final Targetting TARGETTING_FOR_BAROMETZ_COTTON = new Targetting(
 				nonMechanicalAliveEnemy.without(FighterStatus.BAROMETZ_COTTON))//
-						.orElse(nonMechanicalAliveEnemy);
+				.orElse(nonMechanicalAliveEnemy);
 		final Targetting TARGETTING_FOR_CHARM = new Targetting(aliveEnemy.without(FighterStatus.CHARMED))
 				.orElse(aliveEnemy);
 		final Targetting TARGETTING_FOR_CURSE = new Targetting(nonMechanicalAliveEnemy.without(FighterStatus.CURSED))//
@@ -81,13 +105,17 @@ public class RPGEnemyActionSelectorUtils {
 		final Targetting TARGETTING_FOR_GRAB = new Targetting(aliveEnemy.notHeld());
 		final Targetting TARGETTING_FOR_INTOXICATE = new Targetting(
 				nonMechanicalAliveEnemy.without(FighterStatus.INTOXICATED))//
-						.orElse(nonMechanicalAliveEnemy);
+				.orElse(nonMechanicalAliveEnemy);
 		final Targetting TARGETTING_FOR_KEJOUROU_HAIR = new Targetting(aliveEnemy.without(FighterStatus.KEJOUROU_HAIR));
 		final Targetting TARGETTING_FOR_LICK = new Targetting(nonMechanicalAliveEnemy.without(FighterStatus.LICKED))//
 				.orElse(nonMechanicalAliveEnemy);
 		final Targetting TARGETTING_FOR_LIFE_DRAIN = new Targetting(nonMechanicalAliveEnemy);
 		final Targetting TARGETTING_FOR_MOTHMAN_POWDER = new Targetting(
 				nonMechanicalAliveEnemy.without(FighterStatus.MOTHMAN_POWDER));
+		final Targetting TARGETTING_FOR_NEUROTOXIN = new Targetting(//
+				nonMechanicalAliveEnemy.with(FighterStatus.NEUROTOXIN)//
+						.withStacksLessThan(FighterStatus.NEUROTOXIN, 4))//
+				.orElse(nonMechanicalAliveEnemy);
 		final Targetting TARGETTING_FOR_PARALYZE = //
 				new Targetting(aliveEnemy.with(fluffer10kFun, FighterClass.MECHANICAL).without(FighterStatus.PARALYZED))//
 						.orElse(aliveEnemy.without(FighterStatus.PARALYZED))//
@@ -101,6 +129,8 @@ public class RPGEnemyActionSelectorUtils {
 				.orElse(aliveEnemy);
 
 		defaultTargetting = toMap(//
+				pair(RPGFightAction.ALRAUNE_NECTAR, TARGETTING_FOR_ALRAUNE_NECTAR), //
+				pair(RPGFightAction.ALRAUNE_VINES, TARGETTING_FOR_ALRAUNE_VINES), //
 				pair(RPGFightAction.ATLACH_NACHA_VENOM, TARGETTING_FOR_ATLACH_NACHA_VENOM), //
 				pair(RPGFightAction.ATTACK_A_1, TARGETTING_ENEMY), //
 				pair(RPGFightAction.ATTACK_A_2, TARGETTING_ENEMY), //
@@ -155,6 +185,7 @@ public class RPGEnemyActionSelectorUtils {
 				pair(RPGFightAction.MONSTER_LORD_RESTRICTION_0, TARGETTING_ENEMY), //
 				pair(RPGFightAction.MOTHMAN_POWDER, TARGETTING_FOR_MOTHMAN_POWDER), //
 				pair(RPGFightAction.MUMMY_CURSE, FightMummyCurse.getDefaultTargetting(fluffer10kFun)), //
+				pair(RPGFightAction.NEUROTOXIN, TARGETTING_FOR_NEUROTOXIN), //
 				pair(RPGFightAction.PARALYZE, TARGETTING_FOR_PARALYZE), //
 				pair(RPGFightAction.PARALYZE_CHIMAERA, TARGETTING_FOR_PARALYZE), //
 				pair(RPGFightAction.SHRINK_DOWN, TARGETTING_FOR_SHRINK_DOWN), //
@@ -207,6 +238,7 @@ public class RPGEnemyActionSelectorUtils {
 	private final Map<RPGFightAction, BiConsumer<FightTempData, RPGFightAction>> targetSetters = toMap(//
 			pair(RPGFightAction.BUBBLES, this::targetSelf), //
 			pair(RPGFightAction.BUNSHIN_NO_JUTSU, this::targetSelf), //
+			pair(RPGFightAction.CALL_BLACK_HARPIES, this::targetSelf), //
 			pair(RPGFightAction.DORMOUSE_SLEEP, this::targetSelf), //
 			pair(RPGFightAction.DORMOUSE_SLEEP_WAKE, this::targetSelf), //
 			pair(RPGFightAction.EGG_SHELL, this::targetSelf), //
@@ -216,6 +248,8 @@ public class RPGEnemyActionSelectorUtils {
 			pair(RPGFightAction.GET_FREE, this::targetSelf), //
 			pair(RPGFightAction.GROW_UP, this::targetSelf), //
 			pair(RPGFightAction.SAKE, this::targetSelf), //
+			pair(RPGFightAction.SANDWORM_HIDE, this::targetSelf), //
+			pair(RPGFightAction.SANDWORM_OUT, this::targetSelf), //
 			pair(RPGFightAction.SPECIAL_ACTION_SHADOW_CLONE, this::targetSelf), //
 			pair(RPGFightAction.SPELL_FIERY_WEAPON, this::targetSelf), //
 			pair(RPGFightAction.SPELL_FROST_ARMOR, this::targetSelf), //
@@ -264,8 +298,17 @@ public class RPGEnemyActionSelectorUtils {
 
 	@SafeVarargs
 	public final ActionSelector actionsFrom(final Pair<Integer, RPGFightAction>... actionWeights) {
-		final LootTable<RPGFightAction> actionsTable = weightedI(actionWeights);
+		return actionsFrom(weightedI(actionWeights));
+	}
+
+	public final ActionSelector actionsFrom(final LootTable<RPGFightAction> actionsTable) {
 		return data -> selectDefault(data, actionsTable);
+	}
+
+	@SafeVarargs
+	public final ActionSelector actionsFromTables(
+			final Pair<Integer, LootTable<RPGFightAction>>... weightedLootTables) {
+		return actionsFrom(weightedTI(weightedLootTables));
 	}
 
 	@SafeVarargs
@@ -283,8 +326,4 @@ public class RPGEnemyActionSelectorUtils {
 			return defaultAction.select(data);
 		};
 	}
-
-//		    if attackType == 'LAVA_GOLEM_TEMP_CHANGE' and fighter.get('lavaGolemTemperatureStacks', 0) >= 3:
-//		        return False
-
 }

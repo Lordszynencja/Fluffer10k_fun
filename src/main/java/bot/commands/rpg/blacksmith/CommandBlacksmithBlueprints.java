@@ -85,7 +85,7 @@ public class CommandBlacksmithBlueprints extends Subcommand {
 			return;
 		}
 
-		final String tierParam = getOption(interaction).getOptionStringValueByName("tier").orElse(null);
+		final String tierParam = getOption(interaction).getArgumentStringValueByName("tier").orElse(null);
 		final BlacksmithTier tier = tierParam == null ? null : BlacksmithTier.valueOf(tierParam);
 
 		fluffer10kFun.pagedMessageUtils.addMessage(makeList(0, userData, tier), interaction);

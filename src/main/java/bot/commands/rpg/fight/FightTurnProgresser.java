@@ -5,6 +5,7 @@ import static java.lang.Math.min;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import org.javacord.api.entity.channel.ServerTextChannel;
@@ -25,6 +26,7 @@ import bot.userData.rpg.questData.QuestStep;
 public class FightTurnProgresser {
 
 	private final Fluffer10kFun fluffer10kFun;
+	private final Random random = new Random();
 
 	public FightTurnProgresser(final Fluffer10kFun fluffer10kFun) {
 		this.fluffer10kFun = fluffer10kFun;
@@ -76,6 +78,24 @@ public class FightTurnProgresser {
 		}
 	}
 
+	private void tickSandwormShell(final FighterData fighter) {
+		if (fighter.statuses.isStatus(FighterStatus.SANDWORM_SHELL)) {
+			final int healing = fighter.heal(random.nextInt(3) + 1);
+			if (healing > 0) {
+				fighter.fight.addTurnDescription(fighter.name + "heals for " + healing + " inside her shell.");
+			}
+		}
+	}
+
+	private void tickSlimeRegen(final FighterData fighter) {
+		if (fighter.statuses.isStatus(FighterStatus.SLIME_REGEN)) {
+			final int healing = fighter.heal(Math.max(2, random.nextInt(Math.max(1, fighter.maxHp / 20))));
+			if (healing > 0) {
+				fighter.fight.addTurnDescription(fighter.name + " heals for " + healing + " inside her shell.");
+			}
+		}
+	}
+
 	private void tickFieryWeapon(final FighterData fighter) {
 		if (fighter.type != FighterType.PLAYER || !fighter.statuses.isStatus(FighterStatus.FIERY_WEAPON)) {
 			return;
@@ -109,6 +129,8 @@ public class FightTurnProgresser {
 		tickBleeding(data);
 		tickHolyAura(data);
 		tickKejorouHair(data.activeFighter);
+		tickSandwormShell(data.activeFighter);
+		tickSlimeRegen(data.activeFighter);
 		tickFieryWeapon(data.activeFighter);
 		tickMagicShield(data.activeFighter);
 
@@ -241,5 +263,11 @@ public class FightTurnProgresser {
 		}
 
 		data.fight.actionsLeft = actions;
+
+		data.fight.targetFighter = data.fight.fightersOrder.stream()//
+				.map(data.fight.fighters::get)//
+				.filter(fighter -> !fighter.isOut() && !fighter.team.equals(data.fight.getCurrentFighter().team))//
+				.map(fighter -> fighter.id)//
+				.findFirst().orElse(data.fight.fightersOrder.get(0));
 	}
 }

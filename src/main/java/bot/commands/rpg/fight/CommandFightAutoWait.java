@@ -26,7 +26,7 @@ public class CommandFightAutoWait extends Subcommand {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
-		final String value = interaction.getOptionStringValueByName("value").get();
+		final String value = interaction.getArgumentStringValueByName("value").get();
 
 		final UserData userData = fluffer10kFun.userDataUtils.getUserData(interaction.getUser().getId());
 		userData.autoWait = value.equals("on");

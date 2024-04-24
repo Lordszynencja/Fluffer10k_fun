@@ -39,13 +39,13 @@ public class CommandReminder extends Command {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
-		final String timeExpression = interaction.getOptionStringValueByName("time").get();
+		final String timeExpression = interaction.getArgumentStringValueByName("time").get();
 		if (!timeExpression.matches(timeRegexp)) {
 			sendEphemeralMessage(interaction, "Wrong time expression");
 			return;
 		}
 
-		final String msg = interaction.getOptionStringValueByName("message").get();
+		final String msg = interaction.getArgumentStringValueByName("message").get();
 		final long userId = interaction.getUser().getId();
 
 		final long time = System.currentTimeMillis() + readTime(timeExpression) * 1000;

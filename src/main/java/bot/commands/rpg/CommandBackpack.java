@@ -122,9 +122,9 @@ public class CommandBackpack extends Command {
 		}
 
 		final ItemTypeFilter itemType = ItemTypeFilter
-				.valueOf(interaction.getOptionStringValueByName("item_type").orElse(ItemTypeFilter.ALL.name()));
+				.valueOf(interaction.getArgumentStringValueByName("item_type").orElse(ItemTypeFilter.ALL.name()));
 		final ItemRarityFilter itemRarity = ItemRarityFilter
-				.valueOf(interaction.getOptionStringValueByName("item_rarity").orElse(ItemRarityFilter.ALL.name()));
+				.valueOf(interaction.getArgumentStringValueByName("item_rarity").orElse(ItemRarityFilter.ALL.name()));
 
 		final long serverId = server.getId();
 		final User user = interaction.getUser();

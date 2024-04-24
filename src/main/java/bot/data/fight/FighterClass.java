@@ -16,8 +16,10 @@ public enum FighterClass {
 	POISONOUS_ATTACK, //
 	QUICK, //
 	SALTABLE, //
+	SLIME_REGEN, //
 	SLOW, //
 	SPELL_VOID, //
+	STARTS_IN_SPIRIT_FORM, //
 	STATUS_NEGATION, //
 	TRIPLE_ATTACK, //
 	UNDEAD, //

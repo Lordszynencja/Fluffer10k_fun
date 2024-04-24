@@ -61,7 +61,7 @@ public class CommandMGE extends Command {
 			return;
 		}
 
-		final String arg = fixString(interaction.getOptionStringValueByName("race").orElse(null));
+		final String arg = fixString(interaction.getArgumentStringValueByName("race").orElse(null));
 		if (arg != null && arg.equals("all")) {
 			sendAll(interaction);
 			return;

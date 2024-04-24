@@ -36,8 +36,8 @@ public class CommandDebugUserData extends Subcommand {
 	public void handle(final SlashCommandInteraction interaction) throws JsonMappingException, JsonProcessingException {
 		final Server server = interaction.getServer().get();
 		final SlashCommandInteractionOption option = getOption(interaction);
-		final User user = option.getOptionUserValueByName("user").orElse(interaction.getUser());
-		final String path = option.getOptionStringValueByName("path").orElse(null);
+		final User user = option.getArgumentUserValueByName("user").orElse(interaction.getUser());
+		final String path = option.getArgumentStringValueByName("path").orElse(null);
 		final String[] pathTokens = path == null ? new String[0] : path.split(" ");
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server, user);

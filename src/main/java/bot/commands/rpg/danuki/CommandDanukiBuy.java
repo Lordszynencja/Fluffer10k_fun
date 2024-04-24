@@ -45,7 +45,7 @@ public class CommandDanukiBuy extends Subcommand {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) throws Exception {
-		final long amount = getOption(interaction).getOptionLongValueByName("amount").orElse(1L);
+		final long amount = getOption(interaction).getArgumentLongValueByName("amount").orElse(1L);
 		if (amount < 1) {
 			sendEphemeralMessage(interaction, "You can't buy no items");
 			return;

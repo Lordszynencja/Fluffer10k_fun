@@ -9,7 +9,7 @@ import org.javacord.api.interaction.MessageComponentInteraction;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
-import bot.commands.rpg.fight.enemies.data.races.Werebat;
+import bot.commands.rpg.fight.enemies.races.Werebat;
 import bot.commands.rpg.fight.fightRewards.FightEndReward;
 import bot.data.MonsterGirls.MonsterGirlRace;
 import bot.data.items.data.WeaponItems;

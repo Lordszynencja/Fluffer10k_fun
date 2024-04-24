@@ -50,7 +50,7 @@ public class CommandAnswer extends Command {
 			return;
 		}
 
-		final String answer = interaction.getOptionStringValueByName("answer").get();
+		final String answer = interaction.getArgumentStringValueByName("answer").get();
 		channelUserHandler.handle(interaction, answer);
 	}
 

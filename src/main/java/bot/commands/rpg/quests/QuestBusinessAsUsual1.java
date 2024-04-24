@@ -16,7 +16,7 @@ import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
 import bot.commands.rpg.blacksmith.tasks.BlacksmithTier;
-import bot.commands.rpg.fight.enemies.data.races.Dwarf;
+import bot.commands.rpg.fight.enemies.races.Dwarf;
 import bot.commands.rpg.fight.fightRewards.FightEndReward;
 import bot.data.MonsterGirls.MonsterGirlRace;
 import bot.data.items.data.GemItems;

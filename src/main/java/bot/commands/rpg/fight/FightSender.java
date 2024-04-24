@@ -26,7 +26,6 @@ import bot.commands.rpg.fight.Targetting.TargetCheck;
 import bot.commands.rpg.fight.enemies.RPGEnemyData;
 import bot.commands.rpg.spells.ActiveSkill;
 import bot.data.MonsterGirls.MonsterGirlRace;
-import bot.data.fight.EnemyFighterData;
 import bot.data.fight.FightData;
 import bot.data.fight.FighterClass;
 import bot.data.fight.FighterData;
@@ -47,6 +46,9 @@ public class FightSender {
 	private final Fluffer10kFun fluffer10kFun;
 
 	private final Map<RPGFightAction, KnownCustomEmoji> actionEmojis = new HashMap<>();
+
+	private final List<RPGFightAction> fighterChoosingRow = asList(RPGFightAction.FIGHTER_PREVIOUS,
+			RPGFightAction.FIGHTER_NEXT);
 
 	public FightSender(final Fluffer10kFun fluffer10kFun) {
 		this.fluffer10kFun = fluffer10kFun;
@@ -79,47 +81,97 @@ public class FightSender {
 			}
 		}
 
-		return enemyClassesDescriptions.isEmpty() ? null : "Enemy is " + joinNames(enemyClassesDescriptions);
+		return enemyClassesDescriptions.isEmpty() ? null
+				: enemyData.name + " is " + joinNames(enemyClassesDescriptions);
+	}
+
+	private String getAvatar(final FighterData fighter) {
+		if (fighter.enemy() != null) {
+			final RPGEnemyData data = fighter.enemy().enemyData(fluffer10kFun);
+			switch (data.type) {
+			case MONSTER_GIRL:
+				return data.mg().race.avatarLink == null ? data.mg().race.imageLink : data.mg().race.avatarLink;
+			case OTHER:
+			default:
+				return data.imgUrl();
+			}
+		}
+
+		if (fighter.player() != null) {
+			final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(fighter.fight.serverId,
+					fighter.player().userId);
+			return userData.rpg.avatar;
+		}
+
+		return null;
+	}
+
+	private String getImage(final FighterData fighter) {
+		if (fighter.enemy() != null) {
+			final RPGEnemyData data = fighter.enemy().enemyData(fluffer10kFun);
+			switch (data.type) {
+			case MONSTER_GIRL:
+				return data.mg().race.imageLink;
+			case OTHER:
+			default:
+				return data.imgUrl();
+			}
+		}
+
+		if (fighter.player() != null) {
+			final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(fighter.fight.serverId,
+					fighter.player().userId);
+			return userData.rpg.avatar;
+		}
+
+		return null;
+	}
+
+	private void addFighterData(final EmbedBuilder embed, final FighterData fighter) {
+		if (fighter.enemy() != null) {
+			final String description = getDescription(fighter.enemy().enemyData(fluffer10kFun));
+			if (description != null) {
+				embed.addField("Description", description);
+			}
+		}
+		embed.addField(fighter.name + "'s HP", fighter.hp + "/" + fighter.maxHp);
+
+		if (fighter.player() != null) {
+			final PlayerFighterData player = fighter.player();
+			embed.addField(fighter.name + "'s mana", player.mana + "/" + player.maxMana);
+		}
+
+		embed.addField(fighter.name + "'s status", fighter.statuses.getDescription());
 	}
 
 	private EmbedBuilder getEmbed(final FightData fight) {
-		if (fight.fighters.size() > 2) {
-			return makeEmbed("Oops", "Fights shouldn't have more than 2 enemies for now");
-		}
+		final FighterData currentFighter = fight.getCurrentFighter();
+		final FighterData otherFighter = fight.fighters.get(fight.targetFighter);
 
-		final PlayerFighterData playerFighter = fight.fighters.values().stream()
-				.filter(f -> f.type == FighterType.PLAYER).findAny().get().player();
-		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(fight.serverId,
-				playerFighter.userId);
-		final EnemyFighterData enemyFighter = fight.fighters.values().stream().filter(f -> f.type == FighterType.ENEMY)
-				.findAny().get().enemy();
-		final RPGEnemyData enemyData = enemyFighter.enemyData(fluffer10kFun);
+		final int currentFighterNumber = fight.fightersOrder.indexOf(fight.targetFighter) + 1;
 
-		final String enemyName = enemyFighter.name + " (" + (enemyFighter.level >= 999 ? "???" : enemyFighter.level)
-				+ ")";
-		final String playerName = playerFighter.name + " (" + playerFighter.level + ")";
-		final String title = "fight of " + enemyName + " and " + playerName;
+		final EmbedBuilder embed = makeEmbed(
+				"Fight! (" + currentFighterNumber + "/" + fight.fightersOrder.size() + ")");
 
-		final String description = getDescription(enemyData);
+		embed.addField("Fighter", otherFighter.name + " (" + otherFighter.level + ")");
 
-		final EmbedBuilder embed = makeEmbed(title, description)//
-				.addField("Enemy HP", enemyFighter.hp + "/" + enemyFighter.maxHp)//
-				.addField("Enemy status", enemyFighter.statuses.getDescription())//
-				.addField("Last actions", fight.getTurnDescriptions())//
-				.addField("Current turn", fight.getCurrentFighter().name)//
-				.addField("Player HP", playerFighter.hp + "/" + playerFighter.maxHp, true)//
-				.addField("Player mana", playerFighter.mana + "/" + playerFighter.maxMana, true)//
-				.addField("Player status", playerFighter.statuses.getDescription())//
-				.setThumbnail(userData.rpg.avatar)//
-				.setImage(enemyData.imgUrl())//
-				.setFooter("User /fight refresh to send new embed");
+		addFighterData(embed, otherFighter);
+
+		embed.addField("Last actions", fight.getTurnDescriptions())//
+				.addField("Current turn", currentFighter.name);
+
+		addFighterData(embed, currentFighter);
+
+		embed.setThumbnail(getAvatar(currentFighter))//
+				.setImage(getImage(otherFighter))//
+				.setFooter("Use \"/fight refresh\" to send new embed");
 
 		return embed;
 	}
 
 	private List<List<RPGFightAction>> actions(final FightData fight, final PlayerFighterData fighter) {
 		if (fighter.statuses.cantDoActions()) {
-			return asList(asList(RPGFightAction.WAIT));
+			return asList(asList(RPGFightAction.WAIT), fighterChoosingRow);
 		}
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(fight.serverId, fighter.userId);
@@ -158,9 +210,8 @@ public class FightSender {
 		}
 
 		final List<RPGFightAction> row2 = new ArrayList<>();
-		// row2.add(RPGFightAction.SURRENDER);
 		row2.add(RPGFightAction.WAIT);
-		if (userData.blessings.blessingsObtained.contains(Blessing.FAST_RUNNER)) {
+		if (!fighter.statuses.canGetFree() && userData.blessings.blessingsObtained.contains(Blessing.FAST_RUNNER)) {
 			row2.add(RPGFightAction.ESCAPE);
 		}
 
@@ -178,6 +229,8 @@ public class FightSender {
 		}
 		rows.add(row2);
 
+		rows.add(fighterChoosingRow);
+
 		return rows;
 	}
 
@@ -190,6 +243,8 @@ public class FightSender {
 			pair(RPGFightAction.SALT, "Salt"), //
 			pair(RPGFightAction.SPELL, "Spell"), //
 			pair(RPGFightAction.SURRENDER, "Surrender"), //
+			pair(RPGFightAction.FIGHTER_NEXT, "Next fighter"), //
+			pair(RPGFightAction.FIGHTER_PREVIOUS, "Previous fighter"), //
 			pair(RPGFightAction.USE_ITEM, "Use"), //
 			pair(RPGFightAction.WAIT, "Wait"));
 

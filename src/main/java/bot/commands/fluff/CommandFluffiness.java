@@ -48,7 +48,7 @@ public class CommandFluffiness extends Command {
 		}
 
 		final Server server = interaction.getServer().get();
-		final User user = interaction.getOptionUserValueByName("fluff").orElse(interaction.getUser());
+		final User user = interaction.getArgumentUserValueByName("fluff").orElse(interaction.getUser());
 		final long userId = user.getId();
 		final String userName = user.getDisplayName(server);
 		final long fluffiness = fluffer10kFun.userDataUtils.getUserData(userId).fluffiness;

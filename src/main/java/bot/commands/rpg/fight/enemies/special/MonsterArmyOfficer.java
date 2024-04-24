@@ -5,12 +5,13 @@ import static bot.commands.rpg.fight.RPGFightAction.ATTACK_S_1;
 import static bot.commands.rpg.fight.RPGFightAction.CHARM;
 import static bot.commands.rpg.fight.RPGFightAction.FRENZY;
 import static bot.commands.rpg.fight.RPGFightAction.GRAB;
+import static bot.commands.rpg.fight.RPGFightAction.LEVEL_DRAIN_0;
+import static bot.commands.rpg.fight.RPGFightAction.LEVEL_DRAIN_1;
 import static bot.commands.rpg.fight.RPGFightAction.MANTICORE_VENOM;
+import static bot.commands.rpg.fight.RPGFightAction.MONSTER_LORD_RESTRICTION_0;
 import static bot.util.Utils.Pair.pair;
 
 import bot.Fluffer10kFun;
-import bot.commands.rpg.fight.FightTempData;
-import bot.commands.rpg.fight.RPGFightAction;
 import bot.commands.rpg.fight.enemies.RPGEnemies;
 import bot.commands.rpg.fight.enemies.RPGEnemyActionSelectorUtils.ActionSelector;
 import bot.commands.rpg.fight.enemies.special.OtherEnemyData.OtherEnemyDataBuilder;
@@ -25,51 +26,38 @@ public class MonsterArmyOfficer {
 	public static final String MONSTER_ARMY_OFFICER_5 = "MONSTER_ARMY_OFFICER_5";
 	public static final String MONSTER_ARMY_OFFICER_6 = "MONSTER_ARMY_OFFICER_6";
 
-	private static RPGFightAction actionSelector0(final FightTempData data) {
-		if (!data.fight.fighters.get("PLAYER").statuses.isStatus(FighterStatus.RESTRICTED)) {
-			return RPGFightAction.MONSTER_LORD_RESTRICTION_0;
-		}
+	private static void addLilian(final Fluffer10kFun fluffer10kFun, final RPGEnemies rpgEnemies) {
+		final ActionSelector actionSelector0 = data -> (!data.fight.fighters.get("PLAYER").statuses
+				.isStatus(FighterStatus.RESTRICTED)) ? MONSTER_LORD_RESTRICTION_0 : LEVEL_DRAIN_0;
+		final ActionSelector actionSelector1 = data -> (data.fight.turn > 2
+				&& !data.fight.fighters.get("PLAYER").statuses.isStatus(FighterStatus.RESTRICTED))
+						? MONSTER_LORD_RESTRICTION_0
+						: LEVEL_DRAIN_0;
+		final ActionSelector actionSelector2 = data -> (data.fight.turn > 4
+				&& !data.fight.fighters.get("PLAYER").statuses.isStatus(FighterStatus.RESTRICTED))
+						? MONSTER_LORD_RESTRICTION_0
+						: LEVEL_DRAIN_0;
 
-		return RPGFightAction.LEVEL_DRAIN_0;
-	}
-
-	private static RPGFightAction actionSelector1(final FightTempData data) {
-		if (data.fight.turn > 2 && !data.fight.fighters.get("PLAYER").statuses.isStatus(FighterStatus.RESTRICTED)) {
-			return RPGFightAction.MONSTER_LORD_RESTRICTION_0;
-		}
-
-		return RPGFightAction.LEVEL_DRAIN_0;
-	}
-
-	private static RPGFightAction actionSelector2(final FightTempData data) {
-		if (data.fight.turn > 4 && !data.fight.fighters.get("PLAYER").statuses.isStatus(FighterStatus.RESTRICTED)) {
-			return RPGFightAction.MONSTER_LORD_RESTRICTION_0;
-		}
-
-		return RPGFightAction.LEVEL_DRAIN_0;
-	}
-
-	public static void add(final Fluffer10kFun fluffer10kFun, final RPGEnemies rpgEnemies) {
 		new OtherEnemyDataBuilder(MONSTER_ARMY_OFFICER_0, "Powerful manticore")//
 				.strength(25).agility(40).intelligence(30)//
 				.baseHp(100)//
 				.armor(10)//
 				.level(999)//
-				.actionSelector(MonsterArmyOfficer::actionSelector0)//
+				.actionSelector(actionSelector0)//
 				.build(rpgEnemies);
 		new OtherEnemyDataBuilder(MONSTER_ARMY_OFFICER_1, "Powerful manticore Lilian")//
 				.strength(25).agility(40).intelligence(30)//
 				.baseHp(100)//
 				.armor(10)//
 				.level(45)//
-				.actionSelector(MonsterArmyOfficer::actionSelector1)//
+				.actionSelector(actionSelector1)//
 				.build(rpgEnemies);
 		new OtherEnemyDataBuilder(MONSTER_ARMY_OFFICER_2, "Powerful manticore Lilian")//
 				.strength(25).agility(40).intelligence(30)//
 				.baseHp(100)//
 				.armor(10)//
 				.level(45)//
-				.actionSelector(MonsterArmyOfficer::actionSelector2)//
+				.actionSelector(actionSelector2)//
 				.build(rpgEnemies);
 
 		final ActionSelector subactionSelector3 = fluffer10kFun.rpgEnemyActionSelectorUtils.actionsFrom(//
@@ -80,7 +68,7 @@ public class MonsterArmyOfficer {
 
 		final ActionSelector actionSelector3 = data -> {
 			if (data.fight.turn < 3) {
-				return RPGFightAction.LEVEL_DRAIN_0;
+				return LEVEL_DRAIN_0;
 			}
 
 			return subactionSelector3.select(data);
@@ -93,45 +81,46 @@ public class MonsterArmyOfficer {
 				.level(45)//
 				.actionSelector(actionSelector3)//
 				.build(rpgEnemies);
+	}
 
+	private static void addHelga(final Fluffer10kFun fluffer10kFun, final RPGEnemies rpgEnemies) {
 		final ActionSelector subactionSelectorMinotaur = fluffer10kFun.rpgEnemyActionSelectorUtils.actionsFrom(//
 				pair(3, ATTACK_S_1), //
 				pair(1, GRAB), //
 				pair(1, FRENZY));
-		final ActionSelector actionSelector4 = data -> {
-			if (data.fight.turn < 3 || data.fight.turn % 3 == 0) {
-				return RPGFightAction.LEVEL_DRAIN_1;
-			}
 
-			return subactionSelectorMinotaur.select(data);
-		};
+		final ActionSelector actionSelectorA = data -> (data.fight.turn < 3 || data.fight.turn % 3 == 0) ? LEVEL_DRAIN_1
+				: subactionSelectorMinotaur.select(data);
+
 		new OtherEnemyDataBuilder(MONSTER_ARMY_OFFICER_4, "Minotaur officer Helga")//
 				.strength(50).agility(30).intelligence(25)//
 				.baseHp(125)//
 				.armor(12)//
 				.level(55)//
-				.actionSelector(actionSelector4)//
+				.actionSelector(actionSelectorA)//
 				.build(rpgEnemies);
 		new OtherEnemyDataBuilder(MONSTER_ARMY_OFFICER_5, "Minotaur officer Helga")//
 				.strength(50).agility(30).intelligence(25)//
 				.baseHp(125)//
 				.armor(12)//
 				.level(55)//
-				.actionSelector(actionSelector4)//
+				.actionSelector(actionSelectorA)//
 				.build(rpgEnemies);
-		final ActionSelector actionSelector6 = data -> {
-			if (data.fight.turn < 3) {
-				return RPGFightAction.LEVEL_DRAIN_1;
-			}
 
-			return subactionSelectorMinotaur.select(data);
-		};
+		final ActionSelector actionSelectorB = data -> (data.fight.turn < 3) ? LEVEL_DRAIN_1
+				: subactionSelectorMinotaur.select(data);
+
 		new OtherEnemyDataBuilder(MONSTER_ARMY_OFFICER_6, "Minotaur officer Helga")//
 				.strength(50).agility(30).intelligence(25)//
 				.baseHp(125)//
 				.armor(12)//
 				.level(55)//
-				.actionSelector(actionSelector6)//
+				.actionSelector(actionSelectorB)//
 				.build(rpgEnemies);
+	}
+
+	public static void add(final Fluffer10kFun fluffer10kFun, final RPGEnemies rpgEnemies) {
+		addLilian(fluffer10kFun, rpgEnemies);
+		addHelga(fluffer10kFun, rpgEnemies);
 	}
 }

@@ -32,8 +32,8 @@ public class CommandDebugSetQuestContinuable extends Subcommand {
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().get();
-		final String questId = getOption(interaction).getOptionStringValueByName("quest").get();
-		final User user = getOption(interaction).getOptionUserValueByName("user").get();
+		final String questId = getOption(interaction).getArgumentStringValueByName("quest").get();
+		final User user = getOption(interaction).getArgumentUserValueByName("user").get();
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server, user);
 
 		try {

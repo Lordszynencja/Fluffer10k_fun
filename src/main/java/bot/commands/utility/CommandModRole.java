@@ -38,7 +38,7 @@ public class CommandModRole extends Command {
 			return;
 		}
 
-		final Role role = interaction.getOptionRoleValueByName("role").orElse(null);
+		final Role role = interaction.getArgumentRoleValueByName("role").orElse(null);
 		if (role == null) {
 			sendEphemeralMessage(interaction, "Unknown role");
 			return;

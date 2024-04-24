@@ -35,8 +35,8 @@ public class CommandMilksGive extends Subcommand {
 		final User giver = interaction.getUser();
 
 		final SlashCommandInteractionOption option = getOption(interaction);
-		final String milkName = option.getOptionStringValueByName("milk_name").orElse(null);
-		final User receiver = option.getOptionUserValueByName("milk_receiver").orElse(null);
+		final String milkName = option.getArgumentStringValueByName("milk_name").orElse(null);
+		final User receiver = option.getArgumentUserValueByName("milk_receiver").orElse(null);
 
 		final ServerUserData giverData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, giver.getId());
 		if (giverData.cookies.milkCounts.getOrDefault(milkName, 0L) == 0) {

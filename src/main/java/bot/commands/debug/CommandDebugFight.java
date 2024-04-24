@@ -38,8 +38,8 @@ public class CommandDebugFight extends Subcommand {
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().get();
-		String enemyId = getOption(interaction).getOptionStringValueByName("enemyId").get();
-		final User user = getOption(interaction).getOptionUserValueByName("user").orElse(interaction.getUser());
+		String enemyId = getOption(interaction).getArgumentStringValueByName("enemyId").get();
+		final User user = getOption(interaction).getArgumentUserValueByName("user").orElse(interaction.getUser());
 
 		if (enemyId.startsWith("WINS ")) {
 			enemyId = enemyId.substring(5);

@@ -62,7 +62,7 @@ public class CommandSavesDelete extends Subcommand {
 		final long serverId = interaction.getServer().get().getId();
 		final long userId = interaction.getUser().getId();
 
-		final String saveName = interaction.getOptionByName("delete").get().getOptionStringValueByName("save_name")
+		final String saveName = interaction.getOptionByName("delete").get().getArgumentStringValueByName("save_name")
 				.get();
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, userId);
 		if (userData.saves.get(saveName) == null) {

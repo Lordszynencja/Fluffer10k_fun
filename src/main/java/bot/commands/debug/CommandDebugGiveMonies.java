@@ -32,10 +32,10 @@ public class CommandDebugGiveMonies extends Subcommand {
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().get();
 		final SlashCommandInteractionOption option = getOption(interaction);
-		final User target = option.getOptionUserValueByName("target").orElse(interaction.getUser());
-		final long amount = option.getOptionLongValueByName("amount").get();
+		final User target = option.getArgumentUserValueByName("target").orElse(interaction.getUser());
+		final long amount = option.getArgumentLongValueByName("amount").get();
 		final Currency currency = Currency
-				.valueOf(option.getOptionStringValueByName("currency").orElse(Currency.MONIES.name()));
+				.valueOf(option.getArgumentStringValueByName("currency").orElse(Currency.MONIES.name()));
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(), target.getId());
 		currency.adder.accept(userData, amount);

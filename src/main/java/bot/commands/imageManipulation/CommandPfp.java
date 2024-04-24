@@ -17,7 +17,7 @@ public class CommandPfp extends Command {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
-		final User target = interaction.getOptionUserValueByName("target").orElse(interaction.getUser());
+		final User target = interaction.getArgumentUserValueByName("target").orElse(interaction.getUser());
 		final Icon avatar = target.getServerAvatar(interaction.getServer().orElse(null)).orElse(target.getAvatar());
 
 		interaction.createImmediateResponder().append(avatar.getUrl()).respond();

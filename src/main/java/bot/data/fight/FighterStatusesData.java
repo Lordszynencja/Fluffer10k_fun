@@ -76,9 +76,11 @@ public class FighterStatusesData {
 			stats.intelligence += status.type.intelligence * multiplier;
 			stats.armor += status.type.armor * multiplier;
 			stats.magicResistance += status.type.magicResistance * multiplier;
+			stats.healthRegenerationBonus += status.type.healthRegen * multiplier;
 		});
 
 		final int allStatBonus = 0//
+				- getStacks(FighterStatus.ALRAUNE_VINES)//
 				- getStacks(FighterStatus.ATLACH_NACHA_VENOM)//
 				- getStacks(FighterStatus.FREEZING)//
 				- (getStacks(FighterStatus.CURSED_SWORD_CUT)//

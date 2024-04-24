@@ -2,17 +2,6 @@ package bot.commands.rpg.exploration;
 
 import static bot.data.items.data.ArmorItems.CHAINMAIL;
 import static bot.data.items.data.ArmorItems.RING_MAIL;
-import static bot.data.items.data.MagicScrollItems.BOOK_OF_OFFENSE_GOUGE;
-import static bot.data.items.data.MagicScrollItems.BOOK_OF_OFFENSE_PRECISE_STRIKE;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_FIERY_WEAPON;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_FIREBALL;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_HOLY_AURA;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_ICE_BOLT;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_LIGHTNING;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_MAGIC_SHIELD;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_RAGE;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_SLEEP;
-import static bot.data.items.data.MagicScrollItems.MAGIC_SCROLL_SPEED_OF_WIND;
 import static bot.data.items.data.RingItems.REGENERATION_RING;
 import static bot.data.items.data.RingItems.SPELL_VOID_RING;
 import static bot.data.items.data.RingItems.STATUS_NEGATION_RING;
@@ -93,19 +82,7 @@ public class ExplorationTravelingMerchant implements ExplorationEventHandler {
 
 			SPELL_VOID_RING, //
 			STATUS_NEGATION_RING, //
-			REGENERATION_RING, //
-
-			BOOK_OF_OFFENSE_GOUGE, //
-			BOOK_OF_OFFENSE_PRECISE_STRIKE, //
-			MAGIC_SCROLL_FIERY_WEAPON, //
-			MAGIC_SCROLL_FIREBALL, //
-			MAGIC_SCROLL_HOLY_AURA, //
-			MAGIC_SCROLL_ICE_BOLT, //
-			MAGIC_SCROLL_LIGHTNING, //
-			MAGIC_SCROLL_MAGIC_SHIELD, //
-			MAGIC_SCROLL_RAGE, //
-			MAGIC_SCROLL_SLEEP, //
-			MAGIC_SCROLL_SPEED_OF_WIND));
+			REGENERATION_RING));
 
 	static {
 		for (final GemType gemType : GemType.values()) {

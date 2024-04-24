@@ -76,7 +76,7 @@ public class CommandShoot extends Command {
 			return;
 		}
 
-		final String arg = interaction.getOptionStringValueByName("target").orElse(null);
+		final String arg = interaction.getArgumentStringValueByName("target").orElse(null);
 
 		final String shooterName = interaction.getUser().getDisplayName(server);
 		final String target = arg == null ? "themselves"

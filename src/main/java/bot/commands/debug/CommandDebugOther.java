@@ -38,7 +38,7 @@ public class CommandDebugOther extends Subcommand {
 	@Override
 	public void handle(final SlashCommandInteraction interaction) throws Exception {
 		final SlashCommandInteractionOption option = getOption(interaction);
-		final String cmd = option.getOptionStringValueByName("cmd").orElse(null);
+		final String cmd = option.getArgumentStringValueByName("cmd").orElse(null);
 
 		if (handlers.containsKey(cmd)) {
 			handlers.get(cmd).handle(interaction);

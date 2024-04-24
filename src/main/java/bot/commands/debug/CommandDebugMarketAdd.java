@@ -30,8 +30,8 @@ public class CommandDebugMarketAdd extends Subcommand {
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().get();
 		final SlashCommandInteractionOption option = getOption(interaction);
-		final String race = option.getOptionStringValueByName("race").get();
-		final long amount = option.getOptionLongValueByName("amount").get();
+		final String race = option.getArgumentStringValueByName("race").get();
+		final long amount = option.getArgumentLongValueByName("amount").get();
 
 		final MonsterGirlRace mgRace = MonsterGirlRace.valueOf(race);
 

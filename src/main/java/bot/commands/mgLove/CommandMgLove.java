@@ -166,7 +166,7 @@ public class CommandMgLove extends Command {
 			return;
 		}
 
-		final User target = interaction.getOptionUserValueByName("target").get();
+		final User target = interaction.getArgumentUserValueByName("target").get();
 
 		final MgLoveData mgLoveData = calculateMgLove(target, interaction.getUser(), server);
 

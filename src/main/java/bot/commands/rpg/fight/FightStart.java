@@ -16,14 +16,10 @@ import bot.Fluffer10kFun;
 import bot.commands.rpg.RPGStatUtils.RPGStatsData;
 import bot.commands.rpg.fight.enemies.RPGEnemyData;
 import bot.commands.rpg.fight.fightRewards.FightEndReward;
-import bot.data.fight.EnemyFighterData;
 import bot.data.fight.FightData;
 import bot.data.fight.FightData.FightType;
 import bot.data.fight.FighterClass;
 import bot.data.fight.FighterData;
-import bot.data.fight.FighterData.FighterType;
-import bot.data.fight.FighterStatus;
-import bot.data.fight.FighterStatusData;
 import bot.data.fight.PlayerFighterData;
 import bot.userData.ServerUserData;
 
@@ -35,25 +31,7 @@ public class FightStart {
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
-	private void giveStartingBuffs(final Server server, final FighterData fighter) {
-		final RPGStatsData stats = fluffer10kFun.rpgStatUtils.getTotalStatsInFight(fighter, server.getId());
-		if (fighter.type == FighterType.PLAYER) {
-			final int charmResistance = stats.intelligence / 4;
-			if (charmResistance > 0) {
-				fighter.statuses.addStatus(
-						new FighterStatusData(FighterStatus.CHARM_RESISTANCE).endless().stacks(charmResistance));
-			}
-
-			final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(),
-					fighter.player().userId);
-
-			if (userData.rpg.undyingAvailable) {
-				fighter.statuses.addStatus(new FighterStatusData(FighterStatus.UNDYING).endless());
-			}
-		}
-	}
-
-	private List<String> getfightersOrder(final Server server, final Map<String, FighterData> fighters) {
+	private List<String> getFightersOrder(final Server server, final Map<String, FighterData> fighters) {
 		final List<String> fightersOrder = new ArrayList<>(fighters.keySet());
 		fightersOrder.sort((a, b) -> {
 			final RPGStatsData aStats = fluffer10kFun.rpgStatUtils.getTotalStatsInFight(fighters.get(a),
@@ -96,16 +74,14 @@ public class FightStart {
 
 	private Map<String, FighterData> prepareFighters(final Server server, final User user,
 			final ServerUserData userData, final List<RPGEnemyData> enemies) {
-		final String name = userData.rpg.getName(user, server);
-		final RPGStatsData playerStats = fluffer10kFun.rpgStatUtils.getTotalStats(userData);
-		final FighterData playerFighter = PlayerFighterData.fromStats("PLAYER", user.getId(), "PLAYER", name,
-				playerStats);
+		final FighterData playerFighter = fluffer10kFun.fighterCreator.getPlayerFighter(server, user, userData,
+				"PLAYER", "PLAYER");
 
-		final Map<String, FighterData> fighters = toMap(pair("PLAYER", playerFighter));
+		final Map<String, FighterData> fighters = toMap(pair(playerFighter.id, playerFighter));
 		for (int i = 0; i < enemies.size(); i++) {
-			final String id = "ENEMY_" + i;
-			final FighterData enemyFighter = EnemyFighterData.fromStats(id, enemies.get(i), "ENEMY");
-			fighters.put(id, enemyFighter);
+			final FighterData enemyFighter = fluffer10kFun.fighterCreator.getAIFighter(server, enemies.get(i),
+					"ENEMY_" + i, "ENEMY");
+			fighters.put(enemyFighter.id, enemyFighter);
 		}
 
 		return fighters;
@@ -123,9 +99,7 @@ public class FightStart {
 	public void startFight(final ServerTextChannel channel, final FightType type,
 			final Map<String, FighterData> fighters, final FightEndReward reward) {
 		final Server server = channel.getServer();
-
-		fighters.values().forEach(fighter -> giveStartingBuffs(server, fighter));
-		final List<String> fightersOrder = getfightersOrder(server, fighters);
+		final List<String> fightersOrder = getFightersOrder(server, fighters);
 
 		final FightData fight = new FightData(server.getId(), type, fighters, fightersOrder, reward);
 		for (final String fighterId : fightersOrder) {

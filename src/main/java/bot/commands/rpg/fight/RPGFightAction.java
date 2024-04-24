@@ -6,6 +6,8 @@ import static java.util.Arrays.asList;
 import java.util.List;
 
 public enum RPGFightAction {
+	ALRAUNE_NECTAR("%1$s splashes %2$s with her nectar!"), //
+	ALRAUNE_VINES("%1$s wraps her vines around %2$s!"), //
 	ATLACH_NACHA_VENOM("%1$s bites %2$s and injects her venom!", //
 			"%1$s injects venom into %2$s veins!"), //
 	ATTACK("%1$s hits %2$s, dealing %3$d damage.", //
@@ -75,6 +77,7 @@ public enum RPGFightAction {
 	BASILISK_EYES("%1$s looks at %2$s with her evil eyes!"), //
 	BUBBLES("%1$s started releasing bubbles!"), //
 	BUNSHIN_NO_JUTSU("%1$s creates a clone!"), //
+	CALL_BLACK_HARPIES("%1$s's cry calls the nearby black harpies!"), //
 	CHARM("%1$s charms %2$s!"), //
 	CHARM_CUTE("%1$s charms %2$s with her cuteness!", //
 			"%1$s charms %2$s with her adorableness!"), //
@@ -97,6 +100,8 @@ public enum RPGFightAction {
 	DORMOUSE_SLEEP_WAKE("%1$s wakes up."), //
 	EGG_SHELL("%1$s constructs an eggshell!"), //
 	FIND_WEAKNESS("%1$s found %2$s's weakness!"), //
+	FIGHTER_NEXT(""), //
+	FIGHTER_PREVIOUS(""), //
 	FLUFF("%1$s fluffs the %2$s."), //
 	FRENZY("%1$s goes into frenzy!"), //
 	FRENZY_GRIZZLY("%1$s licks honey off of her paw and goes into a frenzy!"), //
@@ -123,10 +128,13 @@ public enum RPGFightAction {
 	MONSTER_LORD_RESTRICTION_0("The mysterious manticore wraps her tail around you and pins you down!"), //
 	MOTHMAN_POWDER("%1$s flaps her wings and showers %2$s with her powder!"), //
 	MUMMY_CURSE("%1$s curses %2$s with Mummy Curse!"), //
+	NEUROTOXIN("%1$s injects neurotoxin into %2$s!"), //
 	PARALYZE("%1$s paralyzes %2$s with her tentacle!"), //
 	PARALYZE_CHIMAERA("%1$s tail bites and paralyzes %2$s!"), //
 	SAKE("%1$s drinks sake!"), //
 	SALT("%1$s salts %2$s!"), //
+	SANDWORM_HIDE("%1$s hides in her shell!"), //
+	SANDWORM_OUT("%1$s gets out of her shell!"), //
 	SHRINK_DOWN("%1$s shrinks %2$s!"), //
 	SIREN_SONG("%1$s sings song for %2$s!"), //
 	SPECIAL_ACTION_SHADOW_CLONE("%1$s creates a shadow clone!"), //

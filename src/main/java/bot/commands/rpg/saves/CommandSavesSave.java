@@ -30,7 +30,7 @@ public class CommandSavesSave extends Subcommand {
 		final long serverId = interaction.getServer().get().getId();
 		final User user = interaction.getUser();
 
-		final String saveName = getOption(interaction).getOptionStringValueByName("save_name").get();
+		final String saveName = getOption(interaction).getArgumentStringValueByName("save_name").get();
 		if (!saveName.matches("[0-9a-zA-Z \\-_]+")) {
 			sendEphemeralMessage(interaction,
 					"Wrong save name, it can only contain letters, numbers, spaces, dashes and underscores");

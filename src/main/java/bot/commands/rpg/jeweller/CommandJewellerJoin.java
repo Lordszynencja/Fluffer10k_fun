@@ -63,7 +63,7 @@ public class CommandJewellerJoin extends Subcommand {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) throws Exception {
-		final long joinAmount = getOption(interaction).getOptionLongValueByName("amount").orElse(1L);
+		final long joinAmount = getOption(interaction).getArgumentLongValueByName("amount").orElse(1L);
 		if (joinAmount <= 0) {
 			sendEphemeralMessage(interaction, "You can't join less than 2 gems");
 			return;

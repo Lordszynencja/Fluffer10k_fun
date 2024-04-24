@@ -60,7 +60,8 @@ public class QuestHeroAcademy extends Quest {
 			.map(c -> SelectMenuOption.create(c.name, c.name())).collect(toList());
 
 	private void addChooseClassEmbed(final MessageComponentInteraction interaction) {
-		final SelectMenu select = SelectMenu.create("q_ha_class " + interaction.getUser().getId(), classOptions);
+		final SelectMenu select = SelectMenu.createStringMenu("q_ha_class " + interaction.getUser().getId(),
+				classOptions);
 
 		interaction.createOriginalMessageUpdater().addEmbed(makeEmbed(type.name, chooseClassText))//
 				.addComponents(ActionRow.of(select), //

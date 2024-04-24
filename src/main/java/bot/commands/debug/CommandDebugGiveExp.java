@@ -29,8 +29,8 @@ public class CommandDebugGiveExp extends Subcommand {
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().get();
 		final SlashCommandInteractionOption option = getOption(interaction);
-		final User target = option.getOptionUserValueByName("target").orElse(interaction.getUser());
-		final BigInteger amount = new BigInteger(option.getOptionStringValueByName("amount").get());
+		final User target = option.getArgumentUserValueByName("target").orElse(interaction.getUser());
+		final BigInteger amount = new BigInteger(option.getArgumentStringValueByName("amount").get());
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(), target.getId());
 		interaction.createImmediateResponder().addEmbed(userData.addExpAndMakeEmbed(amount, target, server)).respond();

@@ -60,8 +60,8 @@ public class CommandDebugItems extends Subcommand {
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final SlashCommandInteractionOption option = getOption(interaction);
-		String itemName = option.getOptionStringValueByName("item_name").orElse(null);
-		final String className = option.getOptionStringValueByName("class").orElse(null);
+		String itemName = option.getArgumentStringValueByName("item_name").orElse(null);
+		final String className = option.getArgumentStringValueByName("class").orElse(null);
 
 		ItemClass itemClass = null;
 		try {

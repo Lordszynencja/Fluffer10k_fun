@@ -7,6 +7,7 @@ import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.javacord.api.entity.message.MessageFlag;
 import org.javacord.api.entity.message.component.ActionRow;
 import org.javacord.api.entity.message.component.SelectMenu;
 import org.javacord.api.entity.message.component.SelectMenuOption;
@@ -14,7 +15,6 @@ import org.javacord.api.interaction.MessageComponentInteraction;
 import org.javacord.api.interaction.SlashCommandInteraction;
 import org.javacord.api.interaction.SlashCommandOption;
 import org.javacord.api.interaction.SlashCommandOptionType;
-import org.javacord.api.interaction.callback.InteractionCallbackDataFlag;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
@@ -38,7 +38,7 @@ public class CommandCookiesUpgradeBuy extends Subcommand {
 		final long serverId = interaction.getServer().get().getId();
 		final long userId = interaction.getUser().getId();
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, userId);
-		final int amount = getOption(interaction).getOptionLongValueByName("amount").orElse(1L).intValue();
+		final int amount = getOption(interaction).getArgumentLongValueByName("amount").orElse(1L).intValue();
 		if (amount < 1) {
 			sendEphemeralMessage(interaction, "You can't buy less than 1 upgrade level");
 			return;
@@ -63,8 +63,9 @@ public class CommandCookiesUpgradeBuy extends Subcommand {
 		}
 
 		interaction.createImmediateResponder().addEmbed(makeEmbed("Choose cookie upgrade to buy x" + amount))//
-				.setFlags(InteractionCallbackDataFlag.EPHEMERAL)//
-				.addComponents(ActionRow.of(SelectMenu.create("cookies_upgrade_buy " + amount, options))).respond();
+				.setFlags(MessageFlag.EPHEMERAL)//
+				.addComponents(ActionRow.of(SelectMenu.createStringMenu("cookies_upgrade_buy " + amount, options)))
+				.respond();
 	}
 
 	public void handleBuyAction(final MessageComponentInteraction interaction) {
