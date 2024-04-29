@@ -120,13 +120,11 @@ public class Jobs {
 		final Server server = interaction.getServer().get();
 		final ServerData serverData = fluffer10kFun.botDataUtils.getServerData(server.getId());
 		if (serverData.lastJobMessageId == null) {
-			fluffer10kFun.apiUtils.messageUtils.sendMessageToMe("last job message id is null");
 			return;
 		}
 
 		final List<Embed> embeds = interaction.getMessage().getEmbeds();
 		if (embeds.isEmpty()) {
-			fluffer10kFun.apiUtils.messageUtils.sendMessageToMe("no embeds");
 			return;
 		}
 		final EmbedBuilder embed = embeds.get(0).toBuilder();
