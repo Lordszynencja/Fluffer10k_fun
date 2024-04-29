@@ -4,8 +4,11 @@ import static bot.util.EmbedUtils.makeEmbed;
 import static java.util.Arrays.asList;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import org.javacord.api.entity.intent.Intent;
+import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandBuilder;
@@ -272,8 +275,6 @@ public class Fluffer10kFun {
 		commandVoid = new CommandVoid(this);
 		commandWag = new CommandWag(this);
 
-		apiUtils.messageUtils.sendMessageToMe("Fluffer 10k Fun started");
-
 		final SlashCommandBuilder scb = SlashCommand.with("print", "prints")
 				.addOption(SlashCommandOption.create(SlashCommandOptionType.STRING, "arg", "arg", true));
 		apiUtils.commandHandlers.addSlashCommandHandler("print", interaction -> {
@@ -294,7 +295,13 @@ public class Fluffer10kFun {
 				final MessageBuilder msg = new MessageBuilder()//
 						.addEmbed(makeEmbed(
 								"Restarting the bot, please wait.\n\nReason:\n" + CommandHandlers.exitMessage));
-				serverData.sendMessageOnBotChannel(apiUtils.messageUtils, msg);
+				final CompletableFuture<Message> message = serverData.sendMessageOnBotChannel(serverId, apiUtils, msg);
+				if (message != null) {
+					try {
+						message.get();
+					} catch (InterruptedException | ExecutionException e) {
+					}
+				}
 			}, apiUtils.messageUtils);
 		});
 	}

@@ -64,30 +64,31 @@ public class GoldenCookies {
 
 	private final Fluffer10kFun fluffer10kFun;
 
-	private void sendGoldenCookie(final ServerData serverData) {
+	private void sendGoldenCookie(final long serverId, final ServerData serverData) {
 		try {
 			final MessageBuilder msg = new MessageBuilder()
 					.addEmbed(makeEmbed("Golden Cookie!", null, goldenCookieImgUrl))//
 					.addActionRow(Button.create("golden_cookie", ButtonStyle.PRIMARY, "Catch!"));
 
-			final CompletableFuture<Message> newMessage = serverData
-					.sendMessageOnBotChannel(fluffer10kFun.apiUtils.messageUtils, msg);
+			final CompletableFuture<Message> newMessage = serverData.sendMessageOnBotChannel(serverId,
+					fluffer10kFun.apiUtils, msg);
 			serverData.lastGoldenCookieMessageId = newMessage == null ? null : newMessage.get().getId();
 		} catch (final Exception e) {
 			fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);
 		}
 	}
 
-	private void removeLastGoldenCookieMessage(final ServerData serverData) {
-		if (serverData.lastGoldenCookieMessageId != null) {
-			serverData.removeMessageFromBotChannel(fluffer10kFun.apiUtils.messageUtils,
-					serverData.lastGoldenCookieMessageId);
-			serverData.lastGoldenCookieMessageId = null;
+	private void removeLastGoldenCookieMessage(final long serverId, final ServerData serverData) {
+		if (serverData.lastGoldenCookieMessageId == null) {
+			return;
 		}
+
+		serverData.removeMessageFromBotChannel(serverId, fluffer10kFun.apiUtils, serverData.lastGoldenCookieMessageId);
+		serverData.lastGoldenCookieMessageId = null;
 	}
 
 	private void tickServerGoldenCookies(final Long serverId, final ServerData serverData) {
-		removeLastGoldenCookieMessage(serverData);
+		removeLastGoldenCookieMessage(serverId, serverData);
 
 		serverData.goldenCookieCountdown--;
 		if (serverData.goldenCookieCountdown <= 0) {
@@ -95,7 +96,7 @@ public class GoldenCookies {
 			final int minTime = tier < 5 ? 6 : 3;
 			final int randomness = tier < 3 ? 12 : tier < 5 ? 6 : 3;
 			serverData.goldenCookieCountdown = minTime + getRandomLong(randomness);
-			sendGoldenCookie(serverData);
+			sendGoldenCookie(serverId, serverData);
 		}
 	}
 

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
@@ -32,6 +33,7 @@ import bot.data.fight.FightData;
 import bot.data.items.Item;
 import bot.data.items.ItemBuilder;
 import bot.util.Utils.Pair;
+import bot.util.apis.APIUtils;
 import bot.util.apis.MessageUtils;
 
 public class BotDataUtils {
@@ -208,9 +210,9 @@ public class BotDataUtils {
 		return false;
 	}
 
-	public CompletableFuture<Message> sendMessageOnServerBotChannel(final MessageUtils messageUtils,
-			final long serverId, final MessageBuilder msg) {
-		return getServerData(serverId).sendMessageOnBotChannel(messageUtils, msg);
+	public CompletableFuture<Message> sendMessageOnServerBotChannel(final APIUtils apiUtils, final long serverId,
+			final MessageBuilder msg) {
+		return getServerData(serverId).sendMessageOnBotChannel(serverId, apiUtils, msg);
 	}
 
 	public ServerData getServerData(final long serverId) {
@@ -230,6 +232,11 @@ public class BotDataUtils {
 	public void forEachServer(final BiConsumer<Long, ServerData> action, final MessageUtils messageUtils) {
 		serversData.forEach((serverId, serverData) -> {
 			try {
+				final Optional<Server> serverOption = fluffer10kFun.apiUtils.api.getServerById(serverId);
+				if (!serverOption.isPresent()) {
+					return;
+				}
+
 				if (fluffer10kFun.apiUtils.isServerOk(serverId)) {
 					action.accept(serverId, serverData);
 				}

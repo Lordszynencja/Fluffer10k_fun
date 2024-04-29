@@ -51,12 +51,12 @@ public class Jobs {
 
 	private final Fluffer10kFun fluffer10kFun;
 
-	private void removeLastJobMessage(final ServerData serverData) {
+	private void removeLastJobMessage(final long serverId, final ServerData serverData) {
 		if (serverData.lastJobMessageId == null) {
 			return;
 		}
 
-		serverData.removeMessageFromBotChannel(fluffer10kFun.apiUtils.messageUtils, serverData.lastJobMessageId);
+		serverData.removeMessageFromBotChannel(serverId, fluffer10kFun.apiUtils, serverData.lastJobMessageId);
 		serverData.lastJobMessageId = null;
 	}
 
@@ -76,36 +76,33 @@ public class Jobs {
 				.addEmbed(embed)//
 				.addComponents(makeActionRow(job.getJobId()));
 
-		final CompletableFuture<Message> newMsg = serverData
-				.sendMessageOnBotChannel(fluffer10kFun.apiUtils.messageUtils, msg);
+		final CompletableFuture<Message> newMsg = serverData.sendMessageOnBotChannel(serverId, fluffer10kFun.apiUtils,
+				msg);
 
-		if (newMsg != null) {
-			try {
-				final Message messagePosted = newMsg.get();
-				serverData.lastJobMessageId = messagePosted.getId();
-				serverData.lastJobMessageIdWrong = false;
-			} catch (InterruptedException | ExecutionException e) {
-				throw e;
-			} catch (final Exception e) {
-				fluffer10kFun.apiUtils.messageUtils
-						.sendExceptionToMe("Couldn't get message id for job on server " + serverId, e);
-			}
-		} else {
-			serverData.lastJobMessageIdWrong = true;
-			fluffer10kFun.apiUtils.messageUtils.sendMessageToMe("Couldn't get message for job on server " + serverId);
-		}
-	}
-
-	private void tickServerJobs(final Long serverId, final ServerData serverData) {
-		if (serverData.botChannelId == null) {
+		if (newMsg == null) {
 			return;
 		}
 
 		try {
-			removeLastJobMessage(serverData);
+			final Message messagePosted = newMsg.get();
+			serverData.lastJobMessageId = messagePosted.getId();
+			serverData.lastJobMessageIdWrong = false;
+		} catch (InterruptedException | ExecutionException e) {
+			throw e;
 		} catch (final Exception e) {
-			fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);
+			final Server server = fluffer10kFun.apiUtils.api.getServerById(serverId).orElse(null);
+			final String serverName = server == null ? "null" : server.getName();
+			fluffer10kFun.apiUtils.messageUtils
+					.sendExceptionToMe("Couldn't get message id for job on server " + serverId + ": " + serverName, e);
 		}
+	}
+
+	private void tickServerJobs(final Long serverId, final ServerData serverData) {
+		if (!serverData.checkBotChannel(serverId, fluffer10kFun.apiUtils)) {
+			return;
+		}
+
+		removeLastJobMessage(serverId, serverData);
 
 		try {
 			createJob(serverId, serverData);

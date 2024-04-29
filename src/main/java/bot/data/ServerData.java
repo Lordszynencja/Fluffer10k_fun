@@ -12,16 +12,16 @@ import java.util.concurrent.CompletableFuture;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageBuilder;
+import org.javacord.api.entity.server.Server;
 
 import bot.commands.casino.CasinoJackpot;
 import bot.commands.rpg.harem.CommandHarem;
 import bot.commands.rpg.shop.CommandShop;
 import bot.data.MonsterGirls.MonsterGirlRace;
 import bot.util.Utils;
-import bot.util.apis.MessageUtils;
+import bot.util.apis.APIUtils;
 
 public class ServerData {
-
 	public Long modRoleId = null;
 	public long jackpotStake = 0;
 	public Long botChannelId = null;
@@ -74,27 +74,46 @@ public class ServerData {
 		return map;
 	}
 
-	public CompletableFuture<Message> sendMessageOnBotChannel(final MessageUtils messageUtils,
-			final MessageBuilder msg) {
+	public boolean checkBotChannel(final long serverId, final APIUtils apiUtils) {
 		if (botChannelId == null) {
+			return false;
+		}
+		if (apiUtils.messageUtils.getChannelById(botChannelId) == null) {
+			botChannelId = null;
+			final Server server = apiUtils.api.getServerById(serverId).orElse(null);
+			final String serverName = server == null ? "null" : server.getName();
+			apiUtils.messageUtils.sendMessageToMe("No bot channel for server " + serverId + ": " + serverName);
+			return false;
+		}
+
+		return true;
+	}
+
+	public CompletableFuture<Message> sendMessageOnBotChannel(final long serverId, final APIUtils apiUtils,
+			final MessageBuilder msg) {
+		if (!checkBotChannel(serverId, apiUtils)) {
 			return null;
 		}
 
-		return messageUtils.sendMessageOnServerChannel(botChannelId, msg);
+		return apiUtils.messageUtils.sendMessageOnServerChannel(botChannelId, msg);
 	}
 
-	public void removeMessageFromBotChannel(final MessageUtils messageUtils, final long messageId) {
+	public void removeMessageFromBotChannel(final long serverId, final APIUtils apiUtils, final long messageId) {
+		if (!checkBotChannel(serverId, apiUtils)) {
+			return;
+		}
+
 		try {
-			final ServerTextChannel channel = messageUtils.getChannelById(botChannelId);
+			final ServerTextChannel channel = apiUtils.messageUtils.getChannelById(botChannelId);
 			if (channel != null) {
-				final Message lastMsg = messageUtils.getMessageById(channel, messageId);
+				final Message lastMsg = apiUtils.messageUtils.getMessageById(channel, messageId);
 				if (lastMsg != null) {
 					lastMsg.delete();
 				}
 			}
 		} catch (final Exception e) {
 			e.printStackTrace();
-			messageUtils.sendExceptionToMe(e);
+			apiUtils.messageUtils.sendExceptionToMe(e);
 		}
 	}
 
