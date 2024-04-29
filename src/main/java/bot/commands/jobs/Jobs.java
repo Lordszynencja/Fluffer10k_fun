@@ -80,16 +80,27 @@ public class Jobs {
 				.sendMessageOnBotChannel(fluffer10kFun.apiUtils.messageUtils, msg);
 
 		if (newMsg != null) {
-			serverData.lastJobMessageId = newMsg.get().getId();
-			serverData.lastJobMessageIdWrong = false;
+			try {
+				final Message messagePosted = newMsg.get();
+				serverData.lastJobMessageId = messagePosted.getId();
+				serverData.lastJobMessageIdWrong = false;
+			} catch (InterruptedException | ExecutionException e) {
+				throw e;
+			} catch (final Exception e) {
+				fluffer10kFun.apiUtils.messageUtils
+						.sendExceptionToMe("Couldn't get message id for job on server " + serverId, e);
+			}
 		} else {
 			serverData.lastJobMessageIdWrong = true;
-			fluffer10kFun.apiUtils.messageUtils
-					.sendMessageToMe("Couldn't get message id for job on server " + serverId);
+			fluffer10kFun.apiUtils.messageUtils.sendMessageToMe("Couldn't get message for job on server " + serverId);
 		}
 	}
 
 	private void tickServerJobs(final Long serverId, final ServerData serverData) {
+		if (serverData.botChannelId == null) {
+			return;
+		}
+
 		try {
 			removeLastJobMessage(serverData);
 		} catch (final Exception e) {
