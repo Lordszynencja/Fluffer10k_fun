@@ -118,11 +118,23 @@ public class Jobs {
 
 	private void handleAction(final MessageComponentInteraction interaction) {
 		final Server server = interaction.getServer().get();
-		final ServerData serverData = fluffer10kFun.botDataUtils.getServerData(server.getId());
-		if (serverData.lastJobMessageId == null) {
-			interaction.acknowledge();
-			return;
+		final String[] tokens = interaction.getCustomId().split(" ");
+		final String jobId = tokens[1];
+		final boolean correct = Boolean.valueOf(tokens[2]);
+
+		final String msg;
+		if (!correct) {
+			msg = interaction.getUser().getDisplayName(server)
+					+ " failed to provide service to the client, and she went away!";
+		} else {
+			final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(),
+					interaction.getUser().getId());
+			final long pay = jobsById.get(jobId).calculateReward(userData);
+			userData.monies += pay;
+			msg = interaction.getUser().getDisplayName(server)
+					+ " successfully provided service to the client, and got paid " + pay + " gold coins!";
 		}
+		fluffer10kFun.botDataUtils.getServerData(server.getId()).lastJobMessageId = null;
 
 		final List<Embed> embeds = interaction.getMessage().getEmbeds();
 		if (embeds.isEmpty()) {
@@ -130,23 +142,7 @@ public class Jobs {
 			return;
 		}
 		final EmbedBuilder embed = embeds.get(0).toBuilder();
-
-		final String[] tokens = interaction.getCustomId().split(" ");
-		final String jobId = tokens[1];
-		final boolean correct = Boolean.valueOf(tokens[2]);
-
-		if (!correct) {
-			embed.setDescription(interaction.getUser().getDisplayName(server)
-					+ " failed to provide service to the client, and she went away!");
-		} else {
-			final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(),
-					interaction.getUser().getId());
-			final long pay = jobsById.get(jobId).calculateReward(userData);
-			userData.monies += pay;
-			embed.setDescription(interaction.getUser().getDisplayName(server)
-					+ " successfully provided service to the client, and got paid " + pay + " gold coins!");
-		}
-		serverData.lastJobMessageId = null;
+		embed.setDescription(msg);
 
 		interaction.createOriginalMessageUpdater().addEmbed(embed)//
 				.addComponents(ActionRow.of(asList(Button.create("do_nothing",
