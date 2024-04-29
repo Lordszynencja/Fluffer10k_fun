@@ -120,11 +120,13 @@ public class Jobs {
 		final Server server = interaction.getServer().get();
 		final ServerData serverData = fluffer10kFun.botDataUtils.getServerData(server.getId());
 		if (serverData.lastJobMessageId == null) {
+			interaction.acknowledge();
 			return;
 		}
 
 		final List<Embed> embeds = interaction.getMessage().getEmbeds();
 		if (embeds.isEmpty()) {
+			interaction.acknowledge();
 			return;
 		}
 		final EmbedBuilder embed = embeds.get(0).toBuilder();
