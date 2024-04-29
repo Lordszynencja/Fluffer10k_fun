@@ -52,10 +52,12 @@ public class Jobs {
 	private final Fluffer10kFun fluffer10kFun;
 
 	private void removeLastJobMessage(final ServerData serverData) {
-		if (serverData.lastJobMessageId != null) {
-			serverData.removeMessageFromBotChannel(fluffer10kFun.apiUtils.messageUtils, serverData.lastJobMessageId);
-			serverData.lastJobMessageId = null;
+		if (serverData.lastJobMessageId == null) {
+			return;
 		}
+
+		serverData.removeMessageFromBotChannel(fluffer10kFun.apiUtils.messageUtils, serverData.lastJobMessageId);
+		serverData.lastJobMessageId = null;
 	}
 
 	private ActionRow makeActionRow(final String jobId) {
@@ -65,7 +67,8 @@ public class Jobs {
 		return ActionRow.of(actions);
 	}
 
-	private void createJob(final ServerData serverData) throws InterruptedException, ExecutionException {
+	private void createJob(final Long serverId, final ServerData serverData)
+			throws InterruptedException, ExecutionException {
 		final Job job = getRandom(jobs);
 
 		final EmbedBuilder embed = job.createJob();
@@ -78,14 +81,23 @@ public class Jobs {
 
 		if (newMsg != null) {
 			serverData.lastJobMessageId = newMsg.get().getId();
+			serverData.lastJobMessageIdWrong = false;
+		} else {
+			serverData.lastJobMessageIdWrong = true;
+			fluffer10kFun.apiUtils.messageUtils
+					.sendMessageToMe("Couldn't get message id for job on server " + serverId);
 		}
 	}
 
 	private void tickServerJobs(final Long serverId, final ServerData serverData) {
-		removeLastJobMessage(serverData);
+		try {
+			removeLastJobMessage(serverData);
+		} catch (final Exception e) {
+			fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);
+		}
 
 		try {
-			createJob(serverData);
+			createJob(serverId, serverData);
 		} catch (InterruptedException | ExecutionException e) {
 			fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);
 		}
@@ -118,6 +130,12 @@ public class Jobs {
 
 	private void handleAction(final MessageComponentInteraction interaction) {
 		final Server server = interaction.getServer().get();
+		final ServerData serverData = fluffer10kFun.botDataUtils.getServerData(server.getId());
+		if (!serverData.lastJobMessageIdWrong && serverData.lastJobMessageId == null) {
+			interaction.acknowledge();
+			return;
+		}
+
 		final String[] tokens = interaction.getCustomId().split(" ");
 		final String jobId = tokens[1];
 		final boolean correct = Boolean.valueOf(tokens[2]);
@@ -134,7 +152,8 @@ public class Jobs {
 			msg = interaction.getUser().getDisplayName(server)
 					+ " successfully provided service to the client, and got paid " + pay + " gold coins!";
 		}
-		fluffer10kFun.botDataUtils.getServerData(server.getId()).lastJobMessageId = null;
+		serverData.lastJobMessageId = null;
+		serverData.lastJobMessageIdWrong = false;
 
 		final List<Embed> embeds = interaction.getMessage().getEmbeds();
 		if (embeds.isEmpty()) {
