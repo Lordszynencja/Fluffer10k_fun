@@ -1,15 +1,13 @@
 package bot.commands.jobs;
 
-import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.Utils.Pair.pair;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.javacord.api.entity.message.embed.EmbedBuilder;
-
 import bot.commands.jobs.Jobs.Job;
+import bot.commands.jobs.Jobs.JobData;
 import bot.commands.upgrades.Upgrade;
 import bot.data.MonsterGirls.MonsterGirlRace;
 import bot.userData.ServerUserData;
@@ -44,9 +42,9 @@ public class JobWaiter implements Job {
 			"wiggle your cute butt" };
 
 	@Override
-	public EmbedBuilder createJob() {
+	public JobData createJob() {
 		final MonsterGirlRace client = getRandom(MonsterGirlRace.values());
-		return makeEmbed(client.race + " wants someone to " + getRandom(tasks), null, client.imageLink);
+		return new JobData(client.race + " wants someone to " + getRandom(tasks), client.imageLink);
 	}
 
 	@Override

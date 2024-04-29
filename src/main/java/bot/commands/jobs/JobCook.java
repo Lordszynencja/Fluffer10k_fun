@@ -1,23 +1,21 @@
 package bot.commands.jobs;
 
 import static bot.util.CollectionUtils.toMap;
-import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.Utils.Pair.pair;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.javacord.api.entity.message.embed.EmbedBuilder;
-
 import bot.commands.jobs.Jobs.Job;
+import bot.commands.jobs.Jobs.JobData;
 import bot.commands.upgrades.Upgrade;
 import bot.data.MonsterGirls.MonsterGirlRace;
 import bot.userData.ServerUserData;
 
 public class JobCook implements Job {
-
-	private static final String[] foodTasks = { "cook boar", //
+	private static final String[] foodTasks = { //
+			"cook boar", //
 			"make cheeseburger", //
 			"cook chicken", //
 			"cook chicken tendies", //
@@ -47,10 +45,9 @@ public class JobCook implements Job {
 			"prepare vegetable salad" };
 
 	@Override
-	public EmbedBuilder createJob() {
+	public JobData createJob() {
 		final MonsterGirlRace client = getRandom(MonsterGirlRace.values());
-		return makeEmbed(client.race + " wants someone to " + getRandom(foodTasks) + " for her", null,
-				client.imageLink);
+		return new JobData(client.race + " wants someone to " + getRandom(foodTasks) + " for her", client.imageLink);
 	}
 
 	@Override

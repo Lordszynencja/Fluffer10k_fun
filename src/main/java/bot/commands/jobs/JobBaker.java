@@ -1,7 +1,6 @@
 package bot.commands.jobs;
 
 import static bot.util.CollectionUtils.toMap;
-import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.Utils.Pair.pair;
 import static java.util.stream.Collectors.toList;
@@ -11,10 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.javacord.api.entity.message.embed.EmbedBuilder;
-
 import bot.Fluffer10kFun;
 import bot.commands.jobs.Jobs.Job;
+import bot.commands.jobs.Jobs.JobData;
 import bot.commands.upgrades.Upgrade;
 import bot.data.MonsterGirls.MonsterGirlRace;
 import bot.userData.ServerUserData;
@@ -38,10 +36,9 @@ public class JobBaker implements Job {
 	}
 
 	@Override
-	public EmbedBuilder createJob() {
+	public JobData createJob() {
 		final MonsterGirlRace client = getRandom(MonsterGirlRace.values());
-		return makeEmbed(client.race + " wants someone to " + getRandom(foodTasks) + " for her", null,
-				client.imageLink);
+		return new JobData(client.race + " wants someone to " + getRandom(foodTasks) + " for her", client.imageLink);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package bot.commands.jobs;
 
+import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.TimerUtils.startRepeatedTimedEvent;
 import static java.util.Arrays.asList;
@@ -18,7 +19,6 @@ import org.javacord.api.entity.message.component.ActionRow;
 import org.javacord.api.entity.message.component.Button;
 import org.javacord.api.entity.message.component.ButtonStyle;
 import org.javacord.api.entity.message.component.LowLevelComponent;
-import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.MessageComponentInteraction;
@@ -29,9 +29,18 @@ import bot.userData.ServerUserData;
 import bot.util.CollectionUtils;
 
 public class Jobs {
+	public static class JobData {
+		public final String title;
+		public final String imageUrl;
+
+		public JobData(final String title, final String imageUrl) {
+			this.title = title;
+			this.imageUrl = imageUrl;
+		}
+	}
 
 	public static interface Job {
-		EmbedBuilder createJob();
+		JobData createJob();
 
 		String getJobId();
 
@@ -71,7 +80,8 @@ public class Jobs {
 			throws InterruptedException, ExecutionException {
 		final Job job = getRandom(jobs);
 
-		final EmbedBuilder embed = job.createJob();
+		final JobData jobData = job.createJob();
+		final EmbedBuilder embed = makeEmbed(jobData.title, null, jobData.imageUrl);
 		final MessageBuilder msg = new MessageBuilder()//
 				.addEmbed(embed)//
 				.addComponents(makeActionRow(job.getJobId()));
@@ -86,7 +96,8 @@ public class Jobs {
 		try {
 			final Message messagePosted = newMsg.get();
 			serverData.lastJobMessageId = messagePosted.getId();
-			serverData.lastJobMessageIdWrong = false;
+			serverData.lastJobTitle = jobData.title;
+			serverData.lastJobImageUrl = jobData.imageUrl;
 		} catch (InterruptedException | ExecutionException e) {
 			throw e;
 		} catch (final Exception e) {
@@ -133,14 +144,19 @@ public class Jobs {
 
 		fluffer10kFun.apiUtils.commandHandlers.addMessageComponentHandler("job", this::handleAction);
 
-		startRepeatedTimedEvent(this::tickJobs, 300, 300, "posting jobs");
+		startRepeatedTimedEvent(this::tickJobs, 15, 15, "posting jobs");
 	}
+
+	Long wrongMsg = null;
 
 	private void handleAction(final MessageComponentInteraction interaction) {
 		final Server server = interaction.getServer().get();
 		final ServerData serverData = fluffer10kFun.botDataUtils.getServerData(server.getId());
-		if (!serverData.lastJobMessageIdWrong && serverData.lastJobMessageId == null) {
+		final long messageId = interaction.getMessage().getId();
+		if (serverData.lastJobTitle == null || serverData.lastJobMessageId == null
+				|| serverData.lastJobMessageId != messageId) {
 			interaction.acknowledge();
+			interaction.getMessage().delete();
 			return;
 		}
 
@@ -161,17 +177,20 @@ public class Jobs {
 					+ " successfully provided service to the client, and got paid " + pay + " gold coins!";
 		}
 		serverData.lastJobMessageId = null;
-		serverData.lastJobMessageIdWrong = false;
 
-		final List<Embed> embeds = interaction.getMessage().getEmbeds();
-		if (embeds.isEmpty()) {
-			interaction.acknowledge();
-			return;
+		if (wrongMsg != null) {
+			final Message lastWrongMsg = fluffer10kFun.apiUtils.messageUtils
+					.getMessageById(interaction.getChannel().get(), wrongMsg);
+			if (lastWrongMsg.getEmbeds().isEmpty()) {
+				System.out.println("no embeds in last wrong!");
+			} else {
+				System.out.println("embeds appeared!");
+			}
 		}
-		final EmbedBuilder embed = embeds.get(0).toBuilder();
-		embed.setDescription(msg);
 
-		interaction.createOriginalMessageUpdater().addEmbed(embed)//
+		final EmbedBuilder embed = makeEmbed(serverData.lastJobTitle, msg, serverData.lastJobImageUrl);
+
+		interaction.createOriginalMessageUpdater().removeAllEmbeds().addEmbed(embed)//
 				.addComponents(ActionRow.of(asList(Button.create("do_nothing",
 						correct ? ButtonStyle.SUCCESS : ButtonStyle.DANGER, jobLabels.get(jobId)))))
 				.update();
