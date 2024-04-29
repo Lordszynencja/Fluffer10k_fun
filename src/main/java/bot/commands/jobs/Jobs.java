@@ -120,12 +120,13 @@ public class Jobs {
 		final Server server = interaction.getServer().get();
 		final ServerData serverData = fluffer10kFun.botDataUtils.getServerData(server.getId());
 		if (serverData.lastJobMessageId == null) {
+			fluffer10kFun.apiUtils.messageUtils.sendMessageToMe("last job message id is null");
 			return;
 		}
-		serverData.lastJobMessageId = null;
 
 		final List<Embed> embeds = interaction.getMessage().getEmbeds();
 		if (embeds.isEmpty()) {
+			fluffer10kFun.apiUtils.messageUtils.sendMessageToMe("no embeds");
 			return;
 		}
 		final EmbedBuilder embed = embeds.get(0).toBuilder();
@@ -145,6 +146,7 @@ public class Jobs {
 			embed.setDescription(interaction.getUser().getDisplayName(server)
 					+ " successfully provided service to the client, and got paid " + pay + " gold coins!");
 		}
+		serverData.lastJobMessageId = null;
 
 		interaction.createOriginalMessageUpdater().addEmbed(embed)//
 				.addComponents(ActionRow.of(asList(Button.create("do_nothing",
