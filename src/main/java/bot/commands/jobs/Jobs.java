@@ -18,6 +18,7 @@ import org.javacord.api.entity.message.component.ActionRow;
 import org.javacord.api.entity.message.component.Button;
 import org.javacord.api.entity.message.component.ButtonStyle;
 import org.javacord.api.entity.message.component.LowLevelComponent;
+import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.MessageComponentInteraction;
@@ -117,26 +118,33 @@ public class Jobs {
 
 	private void handleAction(final MessageComponentInteraction interaction) {
 		final Server server = interaction.getServer().get();
+		final ServerData serverData = fluffer10kFun.botDataUtils.getServerData(server.getId());
+		if (serverData.lastJobMessageId == null) {
+			return;
+		}
+		serverData.lastJobMessageId = null;
+
+		final List<Embed> embeds = interaction.getMessage().getEmbeds();
+		if (embeds.isEmpty()) {
+			return;
+		}
+		final EmbedBuilder embed = embeds.get(0).toBuilder();
+
 		final String[] tokens = interaction.getCustomId().split(" ");
 		final String jobId = tokens[1];
 		final boolean correct = Boolean.valueOf(tokens[2]);
 
-		fluffer10kFun.botDataUtils.getServerData(server.getId()).lastJobMessageId = null;
-		final String msg;
 		if (!correct) {
-			msg = interaction.getUser().getDisplayName(server)
-					+ " failed to provide service to the client, and she went away!";
+			embed.setDescription(interaction.getUser().getDisplayName(server)
+					+ " failed to provide service to the client, and she went away!");
 		} else {
 			final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(),
 					interaction.getUser().getId());
 			final long pay = jobsById.get(jobId).calculateReward(userData);
 			userData.monies += pay;
-			msg = interaction.getUser().getDisplayName(server)
-					+ " successfully provided service to the client, and got paid " + pay + " gold coins!";
+			embed.setDescription(interaction.getUser().getDisplayName(server)
+					+ " successfully provided service to the client, and got paid " + pay + " gold coins!");
 		}
-
-		final EmbedBuilder embed = interaction.getMessage().getEmbeds().get(0).toBuilder();
-		embed.setDescription(msg);
 
 		interaction.createOriginalMessageUpdater().addEmbed(embed)//
 				.addComponents(ActionRow.of(asList(Button.create("do_nothing",
