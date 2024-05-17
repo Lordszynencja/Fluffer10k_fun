@@ -22,6 +22,7 @@ import org.javacord.api.entity.message.component.LowLevelComponent;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.MessageComponentInteraction;
+import org.javacord.api.interaction.callback.ComponentInteractionOriginalMessageUpdater;
 
 import bot.Fluffer10kFun;
 import bot.data.ServerData;
@@ -61,12 +62,11 @@ public class Jobs {
 	private final Fluffer10kFun fluffer10kFun;
 
 	private void removeLastJobMessage(final long serverId, final ServerData serverData) {
-		if (serverData.lastJobMessageId == null) {
+		if (serverData.lastJobMessageId == null || serverData.lastJobUsed) {
 			return;
 		}
 
 		serverData.removeMessageFromBotChannel(serverId, fluffer10kFun.apiUtils, serverData.lastJobMessageId);
-		serverData.lastJobMessageId = null;
 	}
 
 	private ActionRow makeActionRow(final String jobId) {
@@ -96,6 +96,7 @@ public class Jobs {
 		try {
 			final Message messagePosted = newMsg.get();
 			serverData.lastJobMessageId = messagePosted.getId();
+			serverData.lastJobUsed = false;
 			serverData.lastJobTitle = jobData.title;
 			serverData.lastJobImageUrl = jobData.imageUrl;
 		} catch (InterruptedException | ExecutionException e) {
@@ -144,19 +145,22 @@ public class Jobs {
 
 		fluffer10kFun.apiUtils.commandHandlers.addMessageComponentHandler("job", this::handleAction);
 
-		startRepeatedTimedEvent(this::tickJobs, 15, 15, "posting jobs");
+		startRepeatedTimedEvent(this::tickJobs, 300, 300, "posting jobs");
 	}
-
-	Long wrongMsg = null;
 
 	private void handleAction(final MessageComponentInteraction interaction) {
 		final Server server = interaction.getServer().get();
 		final ServerData serverData = fluffer10kFun.botDataUtils.getServerData(server.getId());
+		if (serverData.lastJobUsed) {
+			interaction.acknowledge();
+			return;
+		}
+
 		final long messageId = interaction.getMessage().getId();
 		if (serverData.lastJobTitle == null || serverData.lastJobMessageId == null
-				|| serverData.lastJobMessageId != messageId) {
-			interaction.acknowledge();
+				|| !serverData.lastJobMessageId.equals(messageId)) {
 			interaction.getMessage().delete();
+			interaction.acknowledge();
 			return;
 		}
 
@@ -176,21 +180,15 @@ public class Jobs {
 			msg = interaction.getUser().getDisplayName(server)
 					+ " successfully provided service to the client, and got paid " + pay + " gold coins!";
 		}
-		serverData.lastJobMessageId = null;
-
-		if (wrongMsg != null) {
-			final Message lastWrongMsg = fluffer10kFun.apiUtils.messageUtils
-					.getMessageById(interaction.getChannel().get(), wrongMsg);
-			if (lastWrongMsg.getEmbeds().isEmpty()) {
-				System.out.println("no embeds in last wrong!");
-			} else {
-				System.out.println("embeds appeared!");
-			}
-		}
+		serverData.lastJobUsed = true;
 
 		final EmbedBuilder embed = makeEmbed(serverData.lastJobTitle, msg, serverData.lastJobImageUrl);
 
-		interaction.createOriginalMessageUpdater().removeAllEmbeds().addEmbed(embed)//
+		final ComponentInteractionOriginalMessageUpdater messageUpdater = interaction.createOriginalMessageUpdater();
+		if (!interaction.getMessage().getEmbeds().isEmpty()) {
+			messageUpdater.removeAllEmbeds();
+		}
+		messageUpdater.addEmbed(embed)//
 				.addComponents(ActionRow.of(asList(Button.create("do_nothing",
 						correct ? ButtonStyle.SUCCESS : ButtonStyle.DANGER, jobLabels.get(jobId)))))
 				.update();

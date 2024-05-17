@@ -4,6 +4,7 @@ import static bot.commands.running.RunningUtils.addRunner;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.FileUtils.readFileLines;
 import static bot.util.RandomUtils.getRandom;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.isServerTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 
@@ -35,7 +36,7 @@ public class CommandRun extends Command {
 			return;
 		}
 
-		final long channelId = interaction.getChannel().get().getId();
+		final long channelId = getServerTextChannel(interaction).getId();
 		final long userId = interaction.getUser().getId();
 		final String userName = interaction.getUser().getDisplayName(interaction.getServer().get());
 		final boolean added = addRunner(channelId, userId, userName);

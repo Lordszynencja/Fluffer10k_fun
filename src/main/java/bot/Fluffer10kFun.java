@@ -101,7 +101,7 @@ import bot.util.modularPrompt.ModularPromptUtils;
 import bot.util.pages.PagedMessageUtils;
 
 public class Fluffer10kFun {
-	private static final String inviteLink = "https://discord.com/api/oauth2/authorize?client_id=900109965035974706&permissions=2147601408&scope=bot%20applications.commands";
+	private static final String inviteLink = "https://discord.com/api/oauth2/authorize?client_id=900109965035974706&permissions=277025508352&scope=bot%20applications.commands";
 
 	public final APIUtils apiUtils;
 	public final PagedMessageUtils pagedMessageUtils;

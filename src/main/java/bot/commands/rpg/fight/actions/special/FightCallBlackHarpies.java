@@ -1,6 +1,7 @@
 package bot.commands.rpg.fight.actions.special;
 
 import static bot.util.RandomUtils.getRandomInt;
+import static bot.util.apis.MessageUtils.getServer;
 
 import org.javacord.api.entity.server.Server;
 
@@ -19,7 +20,7 @@ public class FightCallBlackHarpies implements FightActionHandler {
 
 	@Override
 	public void handle(final FightTempData data, final RPGFightAction action) {
-		final Server server = data.channel.getServer();
+		final Server server = getServer(data.channel);
 
 		final int numberOfHarpies = getRandomInt(1, 3);
 		for (int i = 0; i < numberOfHarpies; i++) {

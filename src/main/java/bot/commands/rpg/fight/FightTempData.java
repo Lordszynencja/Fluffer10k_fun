@@ -2,7 +2,7 @@ package bot.commands.rpg.fight;
 
 import java.util.List;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 
 import bot.Fluffer10kFun;
@@ -13,7 +13,7 @@ import bot.data.fight.FighterData;
 public class FightTempData {
 
 	public Message message;
-	public ServerTextChannel channel;
+	public TextChannel channel;
 	public FightData fight;
 
 	public FighterData activeFighter;
@@ -58,7 +58,7 @@ public class FightTempData {
 
 	public void setMessage(final Message message) {
 		this.message = message;
-		channel = message.getServerTextChannel().get();
+		channel = message.getChannel();
 	}
 
 	public void resetFighterData(final Fluffer10kFun fluffer10kFun) {

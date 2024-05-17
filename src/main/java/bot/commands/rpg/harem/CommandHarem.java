@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
@@ -29,6 +29,7 @@ import bot.data.items.FurnitureType;
 import bot.userData.HaremMemberData;
 import bot.userData.HaremMemberData.HaremMemberInteraction;
 import bot.userData.ServerUserData;
+import bot.util.apis.MessageUtils;
 import bot.util.subcommand.Command;
 
 public class CommandHarem extends Command {
@@ -68,14 +69,14 @@ public class CommandHarem extends Command {
 			}
 		}
 
-		final int newGirls = getSizeWithChance(1, 0.5);
+		final int newGirls = getSizeWithChance(1, 0.8);
 		for (int i = 0; i < newGirls; i++) {
 			addToLongOnMap(serverData.monmusuMarket, getRandom(MonsterGirlRace.values()), 1);
 		}
 	}
 
 	public static void populateMarketOnNewServer(final ServerData serverData) {
-		final int newGirls = getSizeWithChance(10, 0.5);
+		final int newGirls = getSizeWithChance(25, 0.9);
 		for (int i = 0; i < newGirls; i++) {
 			addToLongOnMap(serverData.monmusuMarket, getRandom(MonsterGirlRace.values()), 1);
 		}
@@ -130,7 +131,11 @@ public class CommandHarem extends Command {
 		}
 
 		if (!angryWifeNames.isEmpty()) {
-			final ServerTextChannel channel = interaction.getChannel().get().asServerTextChannel().get();
+			final TextChannel channel = MessageUtils.getServerTextChannel(interaction);
+			if (channel == null) {
+				return;
+			}
+
 			if (angryWifeNames.size() == 1) {
 				fluffer10kFun.commandMgLove.addCums(server, user, totalCums);
 				channel.sendMessage(

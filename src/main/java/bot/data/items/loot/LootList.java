@@ -17,8 +17,8 @@ public class LootList implements Loot {
 
 	private static final String[][] rarityAccents = { //
 			{ "", "" }, //
-			{ "- ", " -" }, //
-			{ "* ", " *" }, //
+			{ "\\- ", " \\-" }, //
+			{ "\\* ", " \\*" }, //
 			{ "< ", " >" }, //
 			{ "<<< ", " >>>" }, //
 			{ "! ", " !" }, //
@@ -42,14 +42,14 @@ public class LootList implements Loot {
 
 	public LootList add(final Loot loot) {
 		switch (loot.getType()) {
-		case GOLD:
-			return add((LootGold) loot);
-		case ITEM:
-			return add((LootItem) loot);
-		case MIXED:
-			return add((LootList) loot);
-		default:
-			throw new RuntimeException("wrong loot type!");
+			case GOLD:
+				return add((LootGold) loot);
+			case ITEM:
+				return add((LootItem) loot);
+			case MIXED:
+				return add((LootList) loot);
+			default:
+				throw new RuntimeException("wrong loot type!");
 		}
 	}
 

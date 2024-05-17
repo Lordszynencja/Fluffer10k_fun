@@ -1,6 +1,7 @@
 package bot.commands.rpg;
 
 import static bot.util.EmbedUtils.makeEmbed;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 import static bot.util.modularPrompt.ModularPromptButton.button;
 
@@ -43,7 +44,8 @@ public class CommandImprove extends Command {
 				+ "Agility: " + userData.rpg.agility + "\n"//
 				+ "Intelligence: " + userData.rpg.intelligence;
 
-		final String pointsLeftMsg = userData.rpg.improvementPoints > 0 ? " (" + userData.rpg.improvementPoints + " points left)"
+		final String pointsLeftMsg = userData.rpg.improvementPoints > 0
+				? " (" + userData.rpg.improvementPoints + " points left)"
 				: "";
 
 		final ModularPrompt prompt = new ModularPrompt(makeEmbed("Pick stat to improve" + pointsLeftMsg, description));
@@ -69,8 +71,8 @@ public class CommandImprove extends Command {
 
 			if (userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.BERSERKER_2)
 					&& userData.rpg.strength >= 2) {
-				fluffer10kFun.questUtils.questHeroAcademy().continueBerserker2Step(
-						in.getChannel().get().asServerTextChannel().get(), userData, in.getUser());
+				fluffer10kFun.questUtils.questHeroAcademy().continueBerserker2Step(getServerTextChannel(in), userData,
+						in.getUser());
 			}
 		}
 

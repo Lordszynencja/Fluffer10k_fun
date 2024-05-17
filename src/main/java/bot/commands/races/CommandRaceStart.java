@@ -3,6 +3,7 @@ package bot.commands.races;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.RandomUtils.getRandomLong;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 
 import java.awt.Color;
@@ -181,7 +182,7 @@ public class CommandRaceStart extends Subcommand {
 		new MessageBuilder().append(interaction.getUser())//
 				.addEmbed(embed)//
 				.addComponents(makeSponsorAcceptButtons(interaction.getUser().getId(), newSponsor, newSponsorBonus))//
-				.send(interaction.getChannel().get());
+				.send(getServerTextChannel(interaction));
 	}
 
 	private void handleActionSponsor(final MessageComponentInteraction interaction) {

@@ -5,6 +5,7 @@ import static bot.commands.rpg.quests.Quest.dialogue;
 import static bot.util.CollectionUtils.addToIntOnMap;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.RandomUtils.getRandomInt;
+import static bot.util.apis.MessageUtils.getServer;
 
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.user.User;
@@ -57,7 +58,7 @@ public class Blessing6Reward implements RewardCreator {
 		fluffer10kFun.serverUserDataUtils.getUserData(player).bless();
 
 		final User user = fluffer10kFun.apiUtils.getUser(player.userId);
-		final EmbedBuilder loveEmbed = fluffer10kFun.commandMgLove.makeLovedByEmbed(data.channel.getServer(), user,
+		final EmbedBuilder loveEmbed = fluffer10kFun.commandMgLove.makeLovedByEmbed(getServer(data.channel), user,
 				getRandomInt(200, 300), "your new wife Helga");
 
 		final String description = String.join("\n", //

@@ -3,12 +3,14 @@ package bot.commands.rpg.quests;
 import static bot.util.CollectionUtils.addToIntOnMap;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.Utils.bold;
+import static bot.util.apis.MessageUtils.getServer;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.MessageComponentInteraction;
@@ -127,9 +129,8 @@ public class QuestBusinessAsUsual1 extends Quest {
 				.addEmbed(newQuestMessage("You visit the rival blacksmith and soon the fight begins.")).respond()
 				.join();
 
-		fluffer10kFun.fightStart.startFightPvE(interaction.getChannel().get().asServerTextChannel().get(),
-				interaction.getUser(), Dwarf.DWARF_BLACKSMITH_BOSS,
-				FightEndReward.BUSINESS_AS_USUAL_QUEST_FIGHT_REWARD);
+		fluffer10kFun.fightStart.startFightPvE(getServerTextChannel(interaction), interaction.getUser(),
+				Dwarf.DWARF_BLACKSMITH_BOSS, FightEndReward.BUSINESS_AS_USUAL_QUEST_FIGHT_REWARD);
 	}
 
 	private static final String stepFinishedText = String.join("\n", //
@@ -138,12 +139,12 @@ public class QuestBusinessAsUsual1 extends Quest {
 					"Thank you~ That will surely help me a lot. As a reward, I can give you this gem, should be worth a bit."));
 	private static final String stepFinishedDescription = "You helped the dwarf blacksmith to have stable future.";
 
-	public void afterFightWon(final ServerTextChannel channel, final ServerUserData userData, final User user) {
+	public void afterFightWon(final TextChannel channel, final ServerUserData userData, final User user) {
 		userData.rpg.setQuest(new UserQuestData(type, QuestStep.FINISHED, stepFinishedDescription));
 		userData.addItem(GemItems.getId(GemSize.LARGE, GemRefinement.REFINED, GemType.TOPAZ));
 
 		channel.sendMessage(makeEmbed(type.name, stepFinishedText, MonsterGirlRace.DWARF.imageLink), //
-				userData.addExpAndMakeEmbed(2000, user, channel.getServer()), //
+				userData.addExpAndMakeEmbed(2000, user, getServer(channel)), //
 				makeEmbed("Obtained reward", "You got a topaz!"));
 	}
 }

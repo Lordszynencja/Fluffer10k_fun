@@ -3,12 +3,13 @@ package bot.commands.rpg.quests;
 import static bot.util.CollectionUtils.toMap;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.Utils.bold;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static java.util.Arrays.asList;
 
 import java.util.List;
 import java.util.Map;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.MessageComponentInteraction;
@@ -64,7 +65,7 @@ public class QuestUltimateTest extends Quest {
 
 			interaction.createImmediateResponder().addEmbed(makeEmbed(type.name, fightStartText)).respond().join();
 
-			final ServerTextChannel channel = interaction.getChannel().get().asServerTextChannel().get();
+			final TextChannel channel = getServerTextChannel(interaction);
 			final User user = interaction.getUser();
 			final Server server = interaction.getServer().get();
 			final List<FighterData> fightersList = asList(//

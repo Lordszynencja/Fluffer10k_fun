@@ -1,5 +1,6 @@
 package bot.commands.utility;
 
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class CommandAnswer extends Command {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) throws Exception {
-		final long channelId = interaction.getChannel().get().getId();
+		final long channelId = getServerTextChannel(interaction).getId();
 		final Map<Long, AnswerHandler> channelHandlers = handlers.get(channelId);
 		if (channelHandlers == null) {
 			sendEphemeralMessage(interaction, "There's nothing waiting for your input here");

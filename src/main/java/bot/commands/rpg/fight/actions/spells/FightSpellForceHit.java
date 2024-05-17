@@ -5,7 +5,7 @@ import static bot.data.fight.FighterClass.MECHANICAL;
 import static bot.data.quests.QuestType.HERO_ACADEMY_QUEST;
 import static bot.userData.rpg.questData.QuestStep.WARLOCK_2;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 
 import bot.Fluffer10kFun;
 import bot.commands.rpg.fight.FightActionsHandler.FightActionHandler;
@@ -26,7 +26,7 @@ public class FightSpellForceHit implements FightActionHandler {
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
-	private void checkQuest(final ServerTextChannel channel, final PlayerFighterData player) {
+	private void checkQuest(final TextChannel channel, final PlayerFighterData player) {
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(player);
 		if (userData.rpg.questIsOnStep(HERO_ACADEMY_QUEST, WARLOCK_2)) {
 			fluffer10kFun.questUtils.questHeroAcademy().continueWarlock2Step(channel, userData);

@@ -2,6 +2,7 @@ package bot.commands.debug;
 
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.Utils.Pair.pair;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 import static java.util.stream.Collectors.joining;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.SlashCommandInteraction;
@@ -97,7 +98,7 @@ public class CommandDebugFight extends Subcommand {
 		interaction.createImmediateResponder()
 				.addEmbed(makeEmbed("Fight", "You find " + enemy.name + " roaming the area!")).respond();
 
-		final ServerTextChannel channel = interaction.getChannel().get().asServerTextChannel().get();
+		final TextChannel channel = getServerTextChannel(interaction);
 		fluffer10kFun.fightStart.startFightPvE(channel, user, enemy, reward);
 	}
 }

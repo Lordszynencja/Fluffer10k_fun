@@ -33,6 +33,7 @@ import static bot.util.RandomUtils.getRandom;
 import static bot.util.RandomUtils.getRandomBoolean;
 import static bot.util.Utils.fixString;
 import static bot.util.Utils.Pair.pair;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
@@ -288,8 +289,7 @@ public class ExplorationFight implements ExplorationEventHandler {
 				.addEmbed(makeEmbed("Fight", "You find " + enemy.name + " roaming the area!")).respond().join();
 
 		sendEphemeralMessage(interaction, "Fight started!");
-		fluffer10kFun.fightStart.startFightPvE(interaction.getChannel().get().asServerTextChannel().get(),
-				interaction.getUser(), enemy);
+		fluffer10kFun.fightStart.startFightPvE(getServerTextChannel(interaction), interaction.getUser(), enemy);
 
 		return true;
 	}

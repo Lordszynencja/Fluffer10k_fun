@@ -1,6 +1,7 @@
 package bot.commands.utility;
 
 import static bot.util.EmbedUtils.makeEmbed;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 
 import java.io.IOException;
@@ -35,7 +36,8 @@ public class CommandBotChannel extends Command {
 			return;
 		}
 
-		fluffer10kFun.botDataUtils.getServerData(server.getId()).botChannelId = interaction.getChannel().get().getId();
+		fluffer10kFun.botDataUtils.getServerData(server.getId()).botChannelId = getServerTextChannel(interaction)
+				.getId();
 		interaction.createImmediateResponder().addEmbed(makeEmbed("Channel marked as bot channel")).respond();
 	}
 }

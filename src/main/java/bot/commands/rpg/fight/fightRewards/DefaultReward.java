@@ -8,6 +8,7 @@ import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.RandomUtils.getRandomBoolean;
 import static bot.util.RandomUtils.getRandomDouble;
+import static bot.util.apis.MessageUtils.getServer;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.stream.Collectors.toList;
@@ -15,8 +16,9 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 
 import bot.Fluffer10kFun;
@@ -71,7 +73,7 @@ public class DefaultReward implements RewardCreator {
 				.collect(toList());
 	}
 
-	private void handlePlayerWon(final ServerTextChannel channel, final ServerUserData userData,
+	private void handlePlayerWon(final TextChannel channel, final ServerUserData userData,
 			final PlayerFighterData player, final List<EnemyFighterData> leftMonsterGirlFighters,
 			final int averageLevel) {
 		if (leftMonsterGirlFighters.isEmpty()) {
@@ -107,7 +109,7 @@ public class DefaultReward implements RewardCreator {
 		channel.sendMessage(rewardEmbed);
 	}
 
-	private void handlePlayerLost(final ServerTextChannel channel, final ServerUserData userData,
+	private void handlePlayerLost(final TextChannel channel, final ServerUserData userData,
 			final PlayerFighterData player, final List<EnemyFighterData> leftMonsterGirlFighters,
 			final int averageLevel) {
 		long moneyLost = min((long) (averageLevel * (0.5 + getRandomDouble()) * 10), userData.monies);
@@ -125,18 +127,18 @@ public class DefaultReward implements RewardCreator {
 				+ (moneyLost > 0 ? " and " + getFormattedMonies(moneyLost) : "") + "!";
 		channel.sendMessage(makeEmbed(title));
 
+		final Server server = getServer(channel);
 		final User user = fluffer10kFun.apiUtils.getUser(player.userId);
 		for (final EnemyFighterData mgFighter : leftMonsterGirlFighters) {
 			if (!fluffer10kFun.rpgStatUtils.getClasses(mgFighter).contains(FighterClass.SLOW)) {
 				final int cums = max(1, (int) (averageLevel * 0.2 * getRandomDouble()));
-				fluffer10kFun.commandMgLove.addCums(channel.getServer(), user, cums);
-				channel.sendMessage(
-						fluffer10kFun.commandMgLove.makeLovedByEmbed(channel.getServer(), user, cums, mgFighter.name));
+				fluffer10kFun.commandMgLove.addCums(server, user, cums);
+				channel.sendMessage(fluffer10kFun.commandMgLove.makeLovedByEmbed(server, user, cums, mgFighter.name));
 			}
 		}
 	}
 
-	private void checkANuttySituationQuest(final ServerTextChannel channel, final ServerUserData userData,
+	private void checkANuttySituationQuest(final TextChannel channel, final ServerUserData userData,
 			final List<EnemyFighterData> leftMonsterGirlFighters, final boolean fightWon) {
 		if (!userData.rpg.questIsOnStep(QuestType.A_NUTTY_SITUATION_QUEST, QuestStep.SEARCHING_FOR_ACORNS)) {
 			return;
@@ -159,7 +161,7 @@ public class DefaultReward implements RewardCreator {
 		}
 	}
 
-	private void checkBusinessAsUsual1Quest(final ServerTextChannel channel, final ServerUserData userData,
+	private void checkBusinessAsUsual1Quest(final TextChannel channel, final ServerUserData userData,
 			final List<EnemyFighterData> leftMonsterGirlFighters, final boolean fightWon) {
 		if (!userData.rpg.questIsOnStep(QuestType.BUSINESS_AS_USUAL_1_QUEST, QuestStep.GETTING_TOOLS)) {
 			return;
@@ -181,7 +183,7 @@ public class DefaultReward implements RewardCreator {
 		}
 	}
 
-	private void checkChromeBookQuest(final ServerTextChannel channel, final ServerUserData userData,
+	private void checkChromeBookQuest(final TextChannel channel, final ServerUserData userData,
 			final List<EnemyFighterData> leftMonsterGirlFighters, final boolean fightWon) {
 		if (!userData.rpg.questIsOnStep(QuestType.CHROME_BOOK_QUEST, QuestStep.SEARCHING_FOR_THE_BOOK)) {
 			return;
@@ -204,7 +206,7 @@ public class DefaultReward implements RewardCreator {
 		channel.sendMessage(makeEmbed("Special item found!", "You found Necrofilicon!"));
 	}
 
-	private void checkHeroAcademyBerserker4Quest(final ServerTextChannel channel, final ServerUserData userData) {
+	private void checkHeroAcademyBerserker4Quest(final TextChannel channel, final ServerUserData userData) {
 		if (!userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.BERSERKER_4)) {
 			return;
 		}
@@ -212,7 +214,7 @@ public class DefaultReward implements RewardCreator {
 		fluffer10kFun.questUtils.questHeroAcademy().continueBerserker4Step(channel, userData);
 	}
 
-	private void checkHeroAcademyMage4Quest(final ServerTextChannel channel, final ServerUserData userData) {
+	private void checkHeroAcademyMage4Quest(final TextChannel channel, final ServerUserData userData) {
 		if (!userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.MAGE_4)) {
 			return;
 		}
@@ -220,7 +222,7 @@ public class DefaultReward implements RewardCreator {
 		fluffer10kFun.questUtils.questHeroAcademy().continueMage4Step(channel, userData);
 	}
 
-	private void checkHeroAcademyPaladin3Quest(final ServerTextChannel channel, final ServerUserData userData,
+	private void checkHeroAcademyPaladin3Quest(final TextChannel channel, final ServerUserData userData,
 			final List<EnemyFighterData> leftMonsterGirlFighters, final boolean fightWon) {
 		if (!userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.PALADIN_3)) {
 			return;
@@ -236,7 +238,7 @@ public class DefaultReward implements RewardCreator {
 		fluffer10kFun.questUtils.questHeroAcademy().continuePaladin3Step(channel, userData);
 	}
 
-	private void checkHeroAcademyPaladin1Quest(final ServerTextChannel channel, final ServerUserData userData,
+	private void checkHeroAcademyPaladin1Quest(final TextChannel channel, final ServerUserData userData,
 			final List<EnemyFighterData> leftMonsterGirlFighters) {
 		if (!userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.PALADIN_1)) {
 			return;
@@ -249,7 +251,7 @@ public class DefaultReward implements RewardCreator {
 		fluffer10kFun.questUtils.questHeroAcademy().continuePaladin1Step(channel, userData);
 	}
 
-	private void checkHeroAcademyRanger3Quest(final ServerTextChannel channel, final PlayerFighterData player,
+	private void checkHeroAcademyRanger3Quest(final TextChannel channel, final PlayerFighterData player,
 			final ServerUserData userData, final boolean fightWon) {
 		if (!userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.RANGER_3)) {
 			return;
@@ -285,7 +287,7 @@ public class DefaultReward implements RewardCreator {
 		fluffer10kFun.questUtils.questHeroAcademy().continueRanger1Step(data.channel, userData);
 	}
 
-	private void checkHeroAcademyRogue3Quest(final ServerTextChannel channel, final ServerUserData userData,
+	private void checkHeroAcademyRogue3Quest(final TextChannel channel, final ServerUserData userData,
 			final boolean fightWon) {
 		if (!userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.ROGUE_3)) {
 			return;
@@ -297,7 +299,7 @@ public class DefaultReward implements RewardCreator {
 		fluffer10kFun.questUtils.questHeroAcademy().continueRogue3Step(channel, userData);
 	}
 
-	private void checkHeroAcademyWarlock4Quest(final ServerTextChannel channel, final ServerUserData userData) {
+	private void checkHeroAcademyWarlock4Quest(final TextChannel channel, final ServerUserData userData) {
 		if (!userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.WARLOCK_4)) {
 			return;
 		}
@@ -305,7 +307,7 @@ public class DefaultReward implements RewardCreator {
 		fluffer10kFun.questUtils.questHeroAcademy().continueWarlock4Step(channel, userData);
 	}
 
-	private void checkHeroAcademyWarlock1Quest(final ServerTextChannel channel, final PlayerFighterData player,
+	private void checkHeroAcademyWarlock1Quest(final TextChannel channel, final PlayerFighterData player,
 			final ServerUserData userData) {
 		if (!userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.WARLOCK_1)) {
 			return;

@@ -6,6 +6,7 @@ import static bot.util.RandomUtils.getRandom;
 import static bot.util.RandomUtils.getRandomInt;
 import static bot.util.Utils.bold;
 import static bot.util.Utils.fixString;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static java.util.Arrays.asList;
 
 import java.util.HashSet;
@@ -24,6 +25,7 @@ import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
 import bot.userData.rpg.questData.UserSphinxQuestionsQuestAnsweringQuestionsStepData;
 import bot.util.Utils;
+import bot.util.apis.MessageUtils;
 
 public class QuestSphinxQuestions extends Quest {
 	public enum SphinxQuestion {
@@ -156,7 +158,7 @@ public class QuestSphinxQuestions extends Quest {
 				.addEmbed(
 						makeEmbed(type.name, text, MonsterGirlRace.SPHINX.imageLink).setFooter("Use /answer to answer"))
 				.update();
-		fluffer10kFun.commandAnswer.addAnswerHandler(interaction.getChannel().get().getId(),
+		fluffer10kFun.commandAnswer.addAnswerHandler(MessageUtils.getServerTextChannel(interaction).getId(),
 				interaction.getUser().getId(), this::onAnswer);
 	}
 
@@ -218,7 +220,7 @@ public class QuestSphinxQuestions extends Quest {
 							userData.addExpAndMakeEmbed(1_000, interaction.getUser(), interaction.getServer().get()))
 					.respond();
 
-			fluffer10kFun.commandAnswer.addAnswerHandler(interaction.getChannel().get().getId(),
+			fluffer10kFun.commandAnswer.addAnswerHandler(getServerTextChannel(interaction).getId(),
 					interaction.getUser().getId(), this::onAnswer);
 			return;
 		}

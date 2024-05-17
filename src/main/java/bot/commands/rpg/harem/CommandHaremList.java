@@ -6,6 +6,7 @@ import static bot.data.items.ItemUtils.getFormattedMonies;
 import static bot.util.CollectionUtils.addToLongOnMap;
 import static bot.util.CollectionUtils.mapToList;
 import static bot.util.EmbedUtils.makeEmbed;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.modularPrompt.ModularPromptButton.button;
 import static java.util.stream.Collectors.toList;
 
@@ -77,8 +78,14 @@ public class CommandHaremList extends Subcommand {
 		}
 
 		if (!haremMember.married) {
-			final boolean disabled = userData.monies < marryPrice || !haremMember.canBeMarried();
-			prompt.addButton(button("Marry", ButtonStyle.PRIMARY, in -> onMarry(in, userData, haremMember), disabled));
+			if (!haremMember.canBeMarried()) {
+				prompt.addButton(button("Marry (not enough affection)", ButtonStyle.PRIMARY, null, true));
+			} else if (userData.monies < marryPrice) {
+				prompt.addButton(
+						button("Marry (need " + getFormattedMonies(marryPrice) + ")", ButtonStyle.PRIMARY, null, true));
+			} else {
+				prompt.addButton(button("Marry", ButtonStyle.PRIMARY, in -> onMarry(in, userData, haremMember), false));
+			}
 		} else if (haremMember.desiredInteraction != null) {
 			prompt.addButton(button("Interact", ButtonStyle.PRIMARY, in -> onInteraction(in, userData, haremMember)));
 		}
@@ -151,7 +158,7 @@ public class CommandHaremList extends Subcommand {
 
 	private void onRename(final MessageComponentInteraction interaction, final ServerUserData userData,
 			final HaremMemberData haremMember) {
-		final long channelId = interaction.getChannel().get().getId();
+		final long channelId = getServerTextChannel(interaction).getId();
 		final long userId = interaction.getUser().getId();
 		fluffer10kFun.commandAnswer.addAnswerHandler(channelId, userId,
 				(in, answer) -> onRenameAnswer(in, userData, haremMember, answer));

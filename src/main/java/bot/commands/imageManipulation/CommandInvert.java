@@ -2,6 +2,7 @@ package bot.commands.imageManipulation;
 
 import static bot.util.ImageUtils.getImageFromUrl;
 import static bot.util.ImageUtils.rescaleToMaxSize;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 
 import java.awt.image.BufferedImage;
 import java.util.NavigableSet;
@@ -32,7 +33,7 @@ public class CommandInvert extends Command {
 			return getImageFromUrl(url);
 		}
 
-		final TextChannel channel = interaction.getChannel().get();
+		final TextChannel channel = getServerTextChannel(interaction);
 		final NavigableSet<Message> messages = channel.getMessages(10).join().descendingSet();
 		for (final Message message : messages) {
 			for (final MessageAttachment attachment : message.getAttachments()) {

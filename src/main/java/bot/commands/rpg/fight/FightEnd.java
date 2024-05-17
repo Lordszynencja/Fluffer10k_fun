@@ -12,6 +12,7 @@ import static bot.commands.rpg.fight.fightRewards.FightEndReward.DEFAULT;
 import static bot.commands.rpg.fight.fightRewards.FightEndReward.MINERS_HOME_QUEST_REWARD;
 import static bot.util.CollectionUtils.toMap;
 import static bot.util.Utils.Pair.pair;
+import static bot.util.apis.MessageUtils.getServer;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.lang.Math.pow;
@@ -158,7 +159,7 @@ public class FightEnd {
 
 			final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(playerFighter);
 			final User user = fluffer10kFun.apiUtils.getUser(playerFighter.userId);
-			data.channel.sendMessage(userData.addExpAndMakeEmbed(exp, user, data.channel.getServer()));
+			data.channel.sendMessage(userData.addExpAndMakeEmbed(exp, user, getServer(data.channel)));
 		}
 	}
 

@@ -3,6 +3,7 @@ package bot.commands;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.Utils.fixString;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.isNSFWChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 import static bot.util.apis.MessageUtils.sendMessageToUser;
@@ -41,7 +42,7 @@ public class CommandMGE extends Command {
 			if (sendToUser) {
 				sendMessageToUser(interaction.getUser(), msgPart);
 			} else {
-				interaction.getChannel().get().sendMessage(msgPart);
+				getServerTextChannel(interaction).sendMessage(msgPart);
 			}
 		}
 	}

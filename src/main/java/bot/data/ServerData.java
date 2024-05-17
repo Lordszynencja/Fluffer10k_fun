@@ -26,6 +26,7 @@ public class ServerData {
 	public long jackpotStake = 0;
 	public Long botChannelId = null;
 	public Long lastJobMessageId = null;
+	public boolean lastJobUsed = false;
 	public String lastJobTitle = null;
 	public String lastJobImageUrl = null;
 	public long goldenCookieCountdown = 0;
@@ -46,6 +47,7 @@ public class ServerData {
 		jackpotStake = longFromNumber(data.getOrDefault("jackpotStake", 0));
 		botChannelId = longFromNumber(data.get("botChannelId"));
 		lastJobMessageId = longFromNumber(data.get("lastJobMessageId"));
+		lastJobUsed = "true".equals(data.get("lastJobUsed"));
 		lastJobTitle = (String) data.get("lastJobTitle");
 		lastJobImageUrl = (String) data.get("lastJobImageUrl");
 		goldenCookieCountdown = longFromNumber(data.getOrDefault("goldenCookieCountdown", 0));
@@ -65,6 +67,7 @@ public class ServerData {
 		map.put("jackpotStake", jackpotStake);
 		map.put("botChannelId", botChannelId);
 		map.put("lastJobMessageId", lastJobMessageId);
+		map.put("lastJobUsed", lastJobUsed);
 		map.put("lastJobTitle", lastJobTitle);
 		map.put("lastJobImageUrl", lastJobImageUrl);
 		map.put("goldenCookieCountdown", goldenCookieCountdown);

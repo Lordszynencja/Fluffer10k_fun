@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 
 import bot.Fluffer10kFun;
 import bot.commands.rpg.RPGStatUtils.RPGStatsData;
@@ -161,7 +161,7 @@ public class FightTurnProgresser {
 		}
 	}
 
-	private void checkQuest(final ServerTextChannel channel, final PlayerFighterData fighter) {
+	private void checkQuest(final TextChannel channel, final PlayerFighterData fighter) {
 		if (fighter.mana == 0) {
 			final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(fighter);
 			if (userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.MAGE_2)) {

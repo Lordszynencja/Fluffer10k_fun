@@ -2,8 +2,10 @@ package bot.commands.rpg.quests;
 
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.Utils.bold;
+import static bot.util.apis.MessageUtils.getServer;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.MessageComponentInteraction;
 import org.javacord.api.interaction.SlashCommandInteraction;
@@ -78,8 +80,8 @@ public class QuestMinersHome extends Quest {
 				.addEmbed(newQuestMessage("You enter the mine and soon you are attacked by a werebat!")).respond()
 				.join();
 
-		fluffer10kFun.fightStart.startFightPvE(interaction.getChannel().get().asServerTextChannel().get(),
-				interaction.getUser(), Werebat.WEREBAT_1, FightEndReward.MINERS_HOME_QUEST_REWARD);
+		fluffer10kFun.fightStart.startFightPvE(getServerTextChannel(interaction), interaction.getUser(),
+				Werebat.WEREBAT_1, FightEndReward.MINERS_HOME_QUEST_REWARD);
 	}
 
 	private static final String stepChoppingWoodText = String.join("\n", //
@@ -89,7 +91,7 @@ public class QuestMinersHome extends Quest {
 			"You need an axe to chop down some trees to make beams for the support.", //
 			"Use " + bold("/quest continue") + " when you have it.");
 
-	public void afterFightWon(final ServerTextChannel channel, final ServerUserData userData, final User user,
+	public void afterFightWon(final TextChannel channel, final ServerUserData userData, final User user,
 			final int enemiesDefeated) {
 		final UserQuestData quest = userData.rpg.quests.get(type);
 		final int werebatsLeft = quest.getI(werebatsLeftParam) - enemiesDefeated;
@@ -104,7 +106,7 @@ public class QuestMinersHome extends Quest {
 		userData.rpg.setQuest(new UserQuestData(type, QuestStep.CHOPPING_WOOD, stepChoppingWoodDescription, true));
 
 		channel.sendMessage(makeEmbed(type.name, stepChoppingWoodText), //
-				userData.addExpAndMakeEmbed(250, user, channel.getServer()));
+				userData.addExpAndMakeEmbed(250, user, getServer(channel)));
 	}
 
 	private static final String stepFinishedText = description(

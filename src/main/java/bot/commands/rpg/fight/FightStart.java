@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 
@@ -58,16 +58,16 @@ public class FightStart {
 		return fightersOrder;
 	}
 
-	public void startFightPvE(final ServerTextChannel channel, final User user, final RPGEnemyData enemy) {
+	public void startFightPvE(final TextChannel channel, final User user, final RPGEnemyData enemy) {
 		startFightPvE(channel, user, enemy, FightEndReward.DEFAULT);
 	}
 
-	public void startFightPvE(final ServerTextChannel channel, final User user, final String enemyId,
+	public void startFightPvE(final TextChannel channel, final User user, final String enemyId,
 			final FightEndReward reward) {
 		startFightPvE(channel, user, asList(fluffer10kFun.rpgEnemies.get(enemyId)), reward);
 	}
 
-	public void startFightPvE(final ServerTextChannel channel, final User user, final RPGEnemyData enemy,
+	public void startFightPvE(final TextChannel channel, final User user, final RPGEnemyData enemy,
 			final FightEndReward reward) {
 		startFightPvE(channel, user, asList(enemy), reward);
 	}
@@ -87,18 +87,18 @@ public class FightStart {
 		return fighters;
 	}
 
-	public void startFightPvE(final ServerTextChannel channel, final User user, final List<RPGEnemyData> enemies,
+	public void startFightPvE(final TextChannel channel, final User user, final List<RPGEnemyData> enemies,
 			final FightEndReward reward) {
-		final Server server = channel.getServer();
+		final Server server = channel.asServerChannel().map(c -> c.getServer()).orElse(null);
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server, user);
 		final Map<String, FighterData> fighters = prepareFighters(server, user, userData, enemies);
 
 		startFight(channel, FightType.PVE, fighters, reward);
 	}
 
-	public void startFight(final ServerTextChannel channel, final FightType type,
-			final Map<String, FighterData> fighters, final FightEndReward reward) {
-		final Server server = channel.getServer();
+	public void startFight(final TextChannel channel, final FightType type, final Map<String, FighterData> fighters,
+			final FightEndReward reward) {
+		final Server server = channel.asServerChannel().map(c -> c.getServer()).orElse(null);
 		final List<String> fightersOrder = getFightersOrder(server, fighters);
 
 		final FightData fight = new FightData(server.getId(), type, fighters, fightersOrder, reward);

@@ -5,6 +5,7 @@ import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.FileUtils.readFileLines;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.RandomUtils.getRandomBoolean;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.isServerTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 
@@ -44,7 +45,7 @@ public class CommandCatch extends Command {
 		}
 
 		final long serverId = interaction.getServer().get().getId();
-		final long channelId = interaction.getChannel().get().getId();
+		final long channelId = getServerTextChannel(interaction).getId();
 		final RunnerData runner = RunningUtils.getCurrentRunner(channelId);
 		final User catcher = interaction.getUser();
 
@@ -92,7 +93,7 @@ public class CommandCatch extends Command {
 
 			final EmbedBuilder embed = makeEmbed(
 					catcher.getDisplayName(interaction.getServer().get()) + " caught " + runner.nick + "!")//
-							.setImage(getRandom(imageLinks));
+					.setImage(getRandom(imageLinks));
 
 			interaction.createImmediateResponder().addEmbed(embed).respond();
 		} else {

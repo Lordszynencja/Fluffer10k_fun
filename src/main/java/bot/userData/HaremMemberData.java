@@ -16,17 +16,23 @@ import bot.data.MonsterGirls.MonsterGirlRace;
 
 public class HaremMemberData implements Comparable<HaremMemberData> {
 	public static final String[] defaultNames = { //
-			"Alice", "Anna", //
+			"Alice", "Anna", "Aracely", //
 			"Barbara", //
-			"Elisa", //
-			"Hila", //
-			"Irma", "Isabela", //
+			"Cathyl", //
+			"Elisa", "Ernestine", //
+			"Fukuda", //
+			"Heidi", "Hila", //
+			"Irina", "Irma", "Isabela", //
+			"Janice", "Jeniffer", "Jeshna", //
 			"Katherine", "Kuro", //
 			"Liera", "Lilian", "Lisa", //
-			"Maria", "Momo", "Monika", //
+			"Mari", "Maria", "Meru", "Momo", "Monika", //
+			"Nancy", "Noelle", //
 			"Patricia", //
-			"Shiro", //
-			"Tallulah", //
+			"Rose", "Rubi", //
+			"Shiro", "Shun", "Suzu", //
+			"Tallulah", "Ticy", //
+			"Vanessa", //
 			"Zonda" };
 
 	public enum HaremMemberInteraction {

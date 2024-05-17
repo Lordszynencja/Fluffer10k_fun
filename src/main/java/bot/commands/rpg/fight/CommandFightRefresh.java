@@ -1,5 +1,6 @@
 package bot.commands.rpg.fight;
 
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 
 import org.javacord.api.interaction.SlashCommandInteraction;
@@ -34,6 +35,6 @@ public class CommandFightRefresh extends Subcommand {
 		}
 
 		sendEphemeralMessage(interaction, "Fight refreshed");
-		fluffer10kFun.fightActionsHandler.startFight(interaction.getChannel().get(), fight);
+		fluffer10kFun.fightActionsHandler.startFight(getServerTextChannel(interaction), fight);
 	}
 }

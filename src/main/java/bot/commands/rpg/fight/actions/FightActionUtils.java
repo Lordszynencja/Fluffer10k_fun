@@ -8,7 +8,7 @@ import static java.lang.Math.min;
 
 import java.util.Set;
 
-import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.channel.TextChannel;
 
 import bot.Fluffer10kFun;
 import bot.commands.rpg.fight.FightTempData;
@@ -56,7 +56,7 @@ public class FightActionUtils {
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
-	private void checkQuestsOnCast(final ServerTextChannel channel, final PlayerFighterData player) {
+	private void checkQuestsOnCast(final TextChannel channel, final PlayerFighterData player) {
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(player);
 		if (userData.rpg.questIsOnStep(QuestType.HERO_ACADEMY_QUEST, QuestStep.MAGE_1)) {
 			fluffer10kFun.questUtils.questHeroAcademy().continueMage1Step(channel, userData);

@@ -5,6 +5,7 @@ import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.FileUtils.readFileLines;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.Utils.toMention;
+import static bot.util.apis.MessageUtils.getServerTextChannel;
 import static bot.util.apis.MessageUtils.isNSFWChannel;
 import static bot.util.apis.MessageUtils.isServerTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
@@ -82,7 +83,7 @@ public class CommandFluff extends Command {
 		interaction.createOriginalMessageUpdater().removeAllComponents().update();
 
 		final EmbedBuilder embed = fluffTailAndMakeEmbed(flufferNick, fluffedData, fluffedNick,
-				interaction.getChannel().get().getId(), isNSFWChannel(interaction));
+				getServerTextChannel(interaction).getId(), isNSFWChannel(interaction));
 
 		interaction.getChannel().get().sendMessage(toMention(fluffedId), embed);
 	}
@@ -92,7 +93,7 @@ public class CommandFluff extends Command {
 		final UserData userData = fluffer10kFun.userDataUtils.getUserData(fluffedId);
 
 		final EmbedBuilder embed = fluffTailAndMakeEmbed(flufferNick, userData, fluffedNick,
-				interaction.getChannel().get().getId(), isNSFWChannel(interaction));
+				getServerTextChannel(interaction).getId(), isNSFWChannel(interaction));
 		interaction.createImmediateResponder().append(toMention(fluffedId)).addEmbed(embed).respond();
 	}
 
