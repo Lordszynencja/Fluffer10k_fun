@@ -100,6 +100,10 @@ public class CommandJewellerRefine extends Subcommand {
 			sendEphemeralMessage(interaction, "You don't have enough money");
 			return;
 		}
+		if (userData.items.get(itemAmount.item.id) < refineAmount) {
+			sendEphemeralMessage(interaction, "You don't have enough gems of that type");
+			return;
+		}
 
 		final String newGemId = getId(itemAmount.item.gemSize, GemRefinement.REFINED, itemAmount.item.gemType);
 		final Item newGem = fluffer10kFun.items.getItem(newGemId);

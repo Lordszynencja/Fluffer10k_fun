@@ -14,6 +14,7 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandRun extends Command {
@@ -38,7 +39,7 @@ public class CommandRun extends Command {
 
 		final long channelId = getServerTextChannel(interaction).getId();
 		final long userId = interaction.getUser().getId();
-		final String userName = interaction.getUser().getDisplayName(interaction.getServer().get());
+		final String userName = APIUtils.getUserName(interaction.getUser(), interaction.getServer().get());
 		final boolean added = addRunner(channelId, userId, userName);
 		if (added) {
 			fluffer10kFun.userDataUtils.getUserData(userId).runExp += 1;

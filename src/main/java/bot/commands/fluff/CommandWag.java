@@ -20,6 +20,7 @@ import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
 import bot.userData.UserData;
+import bot.util.apis.APIUtils;
 import bot.util.modularPrompt.ModularPrompt;
 import bot.util.subcommand.Command;
 
@@ -47,7 +48,7 @@ public class CommandWag extends Command {
 		}
 
 		final User user = interaction.getUser();
-		final String userName = user.getDisplayName(interaction.getServer().get());
+		final String userName = APIUtils.getUserName(user, interaction.getServer().get());
 		final long userId = user.getId();
 		final UserData userData = fluffer10kFun.userDataUtils.getUserData(userId);
 		final int tailsNumber = getTailsNumber(userData.fluffiness);
@@ -74,7 +75,7 @@ public class CommandWag extends Command {
 			return;
 		}
 
-		fluffer10kFun.commandFluff.fluffTailOnButton(interaction, fluffer.getDisplayName(server), userId, userData,
-				userName);
+		fluffer10kFun.commandFluff.fluffTailOnButton(interaction, APIUtils.getUserName(fluffer, server), userId,
+				userData, userName);
 	}
 }

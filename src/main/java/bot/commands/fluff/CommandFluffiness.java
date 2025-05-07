@@ -15,6 +15,7 @@ import org.javacord.api.interaction.SlashCommandOption;
 import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandFluffiness extends Command {
@@ -50,7 +51,7 @@ public class CommandFluffiness extends Command {
 		final Server server = interaction.getServer().get();
 		final User user = interaction.getArgumentUserValueByName("fluff").orElse(interaction.getUser());
 		final long userId = user.getId();
-		final String userName = user.getDisplayName(server);
+		final String userName = APIUtils.getUserName(user, server);
 		final long fluffiness = fluffer10kFun.userDataUtils.getUserData(userId).fluffiness;
 
 		if (fluffiness == 0) {

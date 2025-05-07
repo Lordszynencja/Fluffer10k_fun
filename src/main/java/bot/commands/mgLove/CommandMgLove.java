@@ -23,6 +23,7 @@ import bot.userData.ServerUserData;
 import bot.userData.UserStatusesData.UserStatusType;
 import bot.util.FileUtils;
 import bot.util.Utils;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandMgLove extends Command {
@@ -107,8 +108,9 @@ public class CommandMgLove extends Command {
 			cums *= 10;
 		}
 
-		final String title = cums > 0 ? String.format(msgIfRaped, victim.getDisplayName(server), getMgLoveMessage(cums))
-				: String.format(msgIfNotRaped, victim.getDisplayName(server));
+		final String title = cums > 0
+				? String.format(msgIfRaped, APIUtils.getUserName(victim, server), getMgLoveMessage(cums))
+				: String.format(msgIfNotRaped, APIUtils.getUserName(victim, server));
 		final String imgUrl = cums > 0 ? getRandom(mgLoveImages) : null;
 
 		return makeEmbed(title).setImage(imgUrl);
@@ -172,13 +174,14 @@ public class CommandMgLove extends Command {
 
 		if (mgLoveData.protectedFromLove) {
 			interaction.createImmediateResponder()
-					.addEmbed(makeEmbed(mgLoveData.target.getDisplayName(server) + " is protected from lewd love!"))
+					.addEmbed(makeEmbed(
+							APIUtils.getUserName(mgLoveData.target, server) + " is protected from lewd love!"))
 					.respond();
 			return;
 		}
 		if (mgLoveData.savedFromLove) {
 			interaction.createImmediateResponder()
-					.addEmbed(makeEmbed(mgLoveData.target.getDisplayName(server) + " is saved from lewd love!"))
+					.addEmbed(makeEmbed(APIUtils.getUserName(mgLoveData.target, server) + " is saved from lewd love!"))
 					.respond();
 			return;
 		}

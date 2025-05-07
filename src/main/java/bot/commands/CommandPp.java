@@ -11,19 +11,16 @@ import org.javacord.api.interaction.SlashCommandOption;
 import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandPp extends Command {
 	private static final long dayMs = 24 * 60 * 60 * 1000;
 
-	private final Fluffer10kFun fluffer10kFun;
-
 	public CommandPp(final Fluffer10kFun fluffer10kFun) {
 		super(fluffer10kFun.apiUtils, "pp", "Measure your pp", //
 				SlashCommandOption.create(SlashCommandOptionType.STRING, "target", "person whose pp you wanna see",
 						false));
-
-		this.fluffer10kFun = fluffer10kFun;
 	}
 
 	private static double getSize(final String hashPart) {
@@ -75,9 +72,9 @@ public class CommandPp extends Command {
 
 		final String name;
 		if (arg != null) {
-			name = fluffer10kFun.apiUtils.messageUtils.replaceMentionsWithUserNames(arg, server);
+			name = arg;
 		} else {
-			name = interaction.getUser().getDisplayName(server);
+			name = APIUtils.getUserName(interaction.getUser(), server);
 		}
 		final String hashPart = name;
 
@@ -86,13 +83,14 @@ public class CommandPp extends Command {
 
 		final int cmLength = (int) ppLengthCentimetres;
 		final int inchesLength = (int) (ppLengthCentimetres / 2.55);
-		final String description = getDescription(ppLengthCentimetres) + " (" + cmLength + "cm/" + inchesLength + "in)";
+		final String description = name + "'s pp " + getDescription(ppLengthCentimetres) + " (" + cmLength + "cm/"
+				+ inchesLength + "in)";
 		String pp = "8";
 		for (int i = 0; i < inchesLength; i++) {
 			pp += "=";
 		}
 		pp += "D";
 
-		interaction.createImmediateResponder().addEmbed(makeEmbed(name + "'s pp", description + "\n" + pp)).respond();
+		interaction.createImmediateResponder().addEmbed(makeEmbed(null, description + "\n\n" + pp)).respond();
 	}
 }

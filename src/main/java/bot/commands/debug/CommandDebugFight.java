@@ -22,6 +22,7 @@ import bot.commands.rpg.fight.enemies.RPGEnemyData;
 import bot.commands.rpg.fight.fightRewards.FightEndReward;
 import bot.util.CollectionUtils.ValueFrom;
 import bot.util.Utils.Pair;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Subcommand;
 
 public class CommandDebugFight extends Subcommand {
@@ -82,7 +83,7 @@ public class CommandDebugFight extends Subcommand {
 			fluffer10kFun.serverUserDataUtils.getUserData(server, user).rpg.fightId = null;
 
 			interaction.createImmediateResponder()
-					.addEmbed(makeEmbed("Fight cleared for " + user.getDisplayName(server))).respond();
+					.addEmbed(makeEmbed("Fight cleared for " + APIUtils.getUserName(user, server))).respond();
 			return;
 		}
 

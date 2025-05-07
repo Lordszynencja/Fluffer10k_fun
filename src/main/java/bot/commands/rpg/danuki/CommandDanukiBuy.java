@@ -19,6 +19,7 @@ import bot.Fluffer10kFun;
 import bot.data.items.ItemAmount;
 import bot.userData.ServerUserData;
 import bot.util.EmbedUtils.EmbedField;
+import bot.util.apis.APIUtils;
 import bot.util.pages.builders.PagedPickerMessageBuilder;
 import bot.util.pages.messages.PagedMessage;
 import bot.util.subcommand.Subcommand;
@@ -64,7 +65,7 @@ public class CommandDanukiBuy extends Subcommand {
 					"There are no items to buy (is error, you unlock items by unlocking the shop)");
 			fluffer10kFun.apiUtils.messageUtils.sendMessageToMe(
 					"Someone has no items in Danuki shop! server: " + interaction.getServer().get().getName()
-							+ ", user: " + interaction.getUser().getDisplayName(interaction.getServer().get()));
+							+ ", user: " + APIUtils.getUserName(interaction.getUser(), interaction.getServer().get()));
 			return;
 		}
 

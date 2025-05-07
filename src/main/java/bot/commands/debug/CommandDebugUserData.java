@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Subcommand;
 
 public class CommandDebugUserData extends Subcommand {
@@ -51,6 +52,6 @@ public class CommandDebugUserData extends Subcommand {
 			json = "options: " + String.join(", ", map.keySet());
 		}
 
-		sendEphemeralMessage(interaction, user.getDisplayName(server) + " data " + path + "\n" + json);
+		sendEphemeralMessage(interaction, APIUtils.getUserName(user, server) + " data " + path + "\n" + json);
 	}
 }

@@ -20,6 +20,7 @@ import bot.commands.running.RunningUtils.RunnerData;
 import bot.userData.ServerUserData;
 import bot.userData.UserData;
 import bot.userData.UserStatusesData.UserStatusType;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandCatch extends Command {
@@ -92,7 +93,7 @@ public class CommandCatch extends Command {
 			catcherUserData.catchExp += 2;
 
 			final EmbedBuilder embed = makeEmbed(
-					catcher.getDisplayName(interaction.getServer().get()) + " caught " + runner.nick + "!")//
+					APIUtils.getUserName(catcher, interaction.getServer().get()) + " caught " + runner.nick + "!")//
 					.setImage(getRandom(imageLinks));
 
 			interaction.createImmediateResponder().addEmbed(embed).respond();

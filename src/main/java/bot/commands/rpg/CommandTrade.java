@@ -28,6 +28,7 @@ import bot.data.items.Item;
 import bot.data.items.ItemAmount;
 import bot.userData.ServerUserData;
 import bot.util.EmbedUtils.EmbedField;
+import bot.util.apis.APIUtils;
 import bot.util.pages.builders.PagedPickerMessageBuilder;
 import bot.util.pages.messages.PagedMessage;
 import bot.util.subcommand.Command;
@@ -147,9 +148,9 @@ public class CommandTrade extends Command {
 		final Server server = interaction.getServer().get();
 		final User seller = interaction.getUser();
 
-		final String description = seller.getDisplayName(server) + " sells "
+		final String description = APIUtils.getUserName(seller, server) + " sells "
 				+ (tradeData.itemAmount.amount == 1 ? "item" : "items") + " to "
-				+ tradeData.buyer.getDisplayName(server);
+				+ APIUtils.getUserName(tradeData.buyer, server);
 
 		final EmbedBuilder embed = makeEmbed("Trade", description)//
 				.addField("Item", tradeData.itemAmount.getDescription())//
@@ -230,8 +231,9 @@ public class CommandTrade extends Command {
 
 		trades.remove(tradeId);
 
-		final String description = trade.buyer.getDisplayName(server) + " bought " + trade.itemAmount.getDescription()
-				+ " from " + trade.seller.getDisplayName(server) + " for " + getFormattedMonies(trade.price);
+		final String description = APIUtils.getUserName(trade.buyer, server) + " bought "
+				+ trade.itemAmount.getDescription() + " from " + APIUtils.getUserName(trade.seller, server) + " for "
+				+ getFormattedMonies(trade.price);
 		interaction.createOriginalMessageUpdater().addEmbed(makeEmbed("Trade successful!", description)).update();
 	}
 }

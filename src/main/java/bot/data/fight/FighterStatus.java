@@ -228,6 +228,9 @@ public enum FighterStatus {
 			.preventsActions()//
 			.preventsDodge()//
 			.negativeExpiringFaster()), //
+	SLEEP_RESISTANCE(new FighterStatusBuilder("Sleep resistance", //
+			"Fighter can resist sleep spells", //
+			"The sleep resistance disappears from %1$s!")), //
 	SLIME_REGEN(new FighterStatusBuilder("Slime regen", //
 			"Fighter is regenerating every turn", //
 			"%1$s can't regenerate!")), //

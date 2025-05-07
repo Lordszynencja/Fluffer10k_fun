@@ -14,6 +14,7 @@ import org.javacord.api.interaction.SlashCommandInteraction;
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
 import bot.util.EmbedUtils.EmbedField;
+import bot.util.apis.APIUtils;
 import bot.util.pages.builders.PagedMessageBuilder;
 import bot.util.pages.messages.PagedMessage;
 import bot.util.subcommand.Command;
@@ -45,7 +46,7 @@ public class CommandSpellbook extends Command {
 
 		if (userSpells.isEmpty()) {
 			interaction.createImmediateResponder()
-					.addEmbed(makeEmbed(user.getDisplayName(server) + " has no spells in the spellbook")
+					.addEmbed(makeEmbed(APIUtils.getUserName(user, server) + " has no spells in the spellbook")
 							.setImage(spellbookImgUrl))
 					.respond();
 		} else {
@@ -54,7 +55,8 @@ public class CommandSpellbook extends Command {
 				fields.add(new EmbedField(spell.getFullName(), spell.description));
 			}
 
-			final PagedMessage msg = new PagedMessageBuilder<>(user.getDisplayName(server) + "'s spellbook", 5, fields)//
+			final PagedMessage msg = new PagedMessageBuilder<>(APIUtils.getUserName(user, server) + "'s spellbook", 5,
+					fields)//
 					.imgUrl(spellbookImgUrl)//
 					.build();
 			fluffer10kFun.pagedMessageUtils.addMessage(msg, interaction);

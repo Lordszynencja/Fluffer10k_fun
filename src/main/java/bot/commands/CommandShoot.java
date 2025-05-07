@@ -14,6 +14,7 @@ import org.javacord.api.interaction.callback.InteractionImmediateResponseBuilder
 
 import bot.Fluffer10kFun;
 import bot.util.RandomUtils;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandShoot extends Command {
@@ -78,7 +79,7 @@ public class CommandShoot extends Command {
 
 		final String arg = interaction.getArgumentStringValueByName("target").orElse(null);
 
-		final String shooterName = interaction.getUser().getDisplayName(server);
+		final String shooterName = APIUtils.getUserName(interaction.getUser(), server);
 		final String target = arg == null ? "themselves"
 				: fluffer10kFun.apiUtils.messageUtils.replaceMentionsWithUserNames(arg, server);
 		final String[] template = RandomUtils.getRandom(shootTemplates);

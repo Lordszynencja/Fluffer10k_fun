@@ -32,6 +32,7 @@ import bot.userData.rpg.questData.UserQuestData;
 import bot.userData.rpg.questData.UserQuestDataFactory;
 import bot.util.CollectionUtils.ValueFrom;
 import bot.util.Utils.Pair;
+import bot.util.apis.APIUtils;
 
 public class UserRPGData {
 
@@ -146,9 +147,7 @@ public class UserRPGData {
 
 		miningExp = longFromNumber(data.getOrDefault("miningExp", 0L));
 
-		((Map<String, String>) data.get("eq")).forEach((slotId, item) -> {
-			eq.put(ItemSlot.valueOf(slotId), item);
-		});
+		((Map<String, String>) data.get("eq")).forEach((slotId, item) -> { eq.put(ItemSlot.valueOf(slotId), item); });
 		skills = mapToSet((List<String>) data.getOrDefault("skills", new ArrayList<>()), v -> Skill.valueOf(v));
 		skills.addAll(Skill.trees);
 		spellHotbar = new UserSpellHotbarData((Map<String, Object>) data.get("spellHotbar"));
@@ -216,7 +215,7 @@ public class UserRPGData {
 	}
 
 	public String getName(final User user, final Server server) {
-		return name == null ? user.getDisplayName(server) : name;
+		return name == null ? APIUtils.getUserName(user, server) : name;
 	}
 
 	public StatAccessor getStatAccessor(final String name) {

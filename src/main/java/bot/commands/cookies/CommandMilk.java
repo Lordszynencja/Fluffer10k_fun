@@ -17,6 +17,7 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandMilk extends Command {
@@ -35,7 +36,8 @@ public class CommandMilk extends Command {
 		if (maker.getId() == receiver.getId()) {
 			return "Got a bottle of milk!";
 		}
-		return receiver.getDisplayName(server) + " got a bottle of milk from " + maker.getDisplayName(server) + "!";
+		return APIUtils.getUserName(receiver, server) + " got a bottle of milk from "
+				+ APIUtils.getUserName(maker, server) + "!";
 	}
 
 	@Override

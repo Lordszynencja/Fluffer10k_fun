@@ -19,6 +19,7 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 import bot.Fluffer10kFun;
 import bot.data.items.ItemUtils;
 import bot.userData.ServerUserData;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandTransfer extends Command {
@@ -92,8 +93,8 @@ public class CommandTransfer extends Command {
 		currency.adder.accept(userData, -amount);
 		currency.adder.accept(targetData, amount);
 
-		final String description = target.getDisplayName(server) + " got " + currency.formatter.apply(amount) + " from "
-				+ user.getDisplayName(server);
+		final String description = APIUtils.getUserName(target, server) + " got " + currency.formatter.apply(amount)
+				+ " from " + APIUtils.getUserName(user, server);
 
 		interaction.createImmediateResponder().append(target).addEmbed(makeEmbed("Transfer", description)).respond();
 	}

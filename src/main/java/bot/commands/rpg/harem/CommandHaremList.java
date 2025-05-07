@@ -271,6 +271,7 @@ public class CommandHaremList extends Subcommand {
 		final ServerData serverData = fluffer10kFun.botDataUtils.getServerData(interaction.getServer().get());
 		addToLongOnMap(serverData.monmusuMarket, haremMember.race, 1);
 		userData.harem.remove(haremMember.name);
+		userData.monies += price;
 
 		final String title = "you sell " + haremMember.getFullName() + " on the market";
 		final String description = "She cries when you return her to the market\n"//

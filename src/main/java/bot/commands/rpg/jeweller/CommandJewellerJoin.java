@@ -101,6 +101,10 @@ public class CommandJewellerJoin extends Subcommand {
 			sendEphemeralMessage(interaction, "You don't have enough money");
 			return;
 		}
+		if (userData.items.get(itemAmount.item.id) < joinAmount * 2) {
+			sendEphemeralMessage(interaction, "You don't have enough gems of that type");
+			return;
+		}
 
 		final String newGemId = getId(itemAmount.item.gemSize.nextSize, itemAmount.item.gemRefinement,
 				itemAmount.item.gemType);

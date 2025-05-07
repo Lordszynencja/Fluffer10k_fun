@@ -22,6 +22,7 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.userData.UserData;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandFluff extends Command {
@@ -109,12 +110,12 @@ public class CommandFluff extends Command {
 		final User mentionedUser = interaction.getArgumentUserValueByName("target").orElse(null);
 
 		if (mentionedUser != null && mentionedUser.getId() != user.getId()) {
-			fluffTail(interaction, user.getDisplayName(server), mentionedUser.getId(),
-					mentionedUser.getDisplayName(server));
+			fluffTail(interaction, APIUtils.getUserName(user, server), mentionedUser.getId(),
+					APIUtils.getUserName(mentionedUser, server));
 			return;
 		}
 
-		final String title = user.getDisplayName(server) + " fluffed some very fluffy tails " + tamawooEmoji;
+		final String title = APIUtils.getUserName(user, server) + " fluffed some very fluffy tails " + tamawooEmoji;
 		interaction.createImmediateResponder()
 				.addEmbed(
 						makeEmbed(title, null, getRandom(isNSFWChannel(interaction) ? imageLinksNSFW : imageLinksSFW)))

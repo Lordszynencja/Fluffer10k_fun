@@ -14,6 +14,7 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
+import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandMgLoveCount extends Command {
@@ -38,7 +39,7 @@ public class CommandMgLoveCount extends Command {
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(), user.getId());
 		final String countString = userData.cums == 1 ? "1 time" : userData.cums + " times";
-		interaction.createImmediateResponder().addEmbed(makeEmbed(user.getDisplayName(server) + " came " + countString))
-				.respond();
+		interaction.createImmediateResponder()
+				.addEmbed(makeEmbed(APIUtils.getUserName(user, server) + " came " + countString)).respond();
 	}
 }

@@ -3,6 +3,7 @@ package bot.commands.rpg.fight.actions.spells;
 import static bot.commands.rpg.spells.ActiveSkill.SLEEP;
 import static bot.data.fight.FighterClass.MECHANICAL;
 import static bot.data.fight.FighterClass.SPELL_VOID;
+import static bot.data.fight.FighterStatus.SLEEP_RESISTANCE;
 import static bot.userData.UserBlessingData.Blessing.CHANNELING;
 
 import bot.Fluffer10kFun;
@@ -68,6 +69,7 @@ public class FightSpellSleep implements FightActionHandler {
 			duration--;
 		}
 		duration -= fluffer10kFun.fightActionUtils.getNegativeStatusDurationReduction(data.target);
+		duration -= (int) (data.target.statuses.getStacks(SLEEP_RESISTANCE));
 
 		data.activeFighter.addExp(duration * 5);
 		data.target.addExp(duration * 3);
@@ -77,6 +79,7 @@ public class FightSpellSleep implements FightActionHandler {
 			return;
 		}
 		data.target.statuses.addStatus(new FighterStatusData(FighterStatus.SLEEP).duration(duration));
+		data.target.statuses.addStatus(new FighterStatusData(SLEEP_RESISTANCE).stacks(1).endless());
 		data.fight.addTurnDescription(action.description(data.activeFighter.name, data.target.name));
 
 		if (player != null) {
