@@ -19,7 +19,7 @@ public class CommandChop extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandChop(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "chop", "Chop some wood");
+		super(fluffer10kFun.apiUtils, "chop", "Chop some wood", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

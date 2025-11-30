@@ -146,8 +146,8 @@ public class ExplorationMining implements ExplorationEventHandler {
 						+ "You find:\n"//
 						+ loot.getDescription(fluffer10kFun.items));
 
-		final EmbedBuilder expEmbed = userData.addExpAndMakeEmbed(miningTier.exp, interaction.getUser(),
-				interaction.getServer().get());
+		final EmbedBuilder expEmbed = userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, miningTier.exp,
+				interaction.getUser(), interaction.getServer().get());
 
 		interaction.createImmediateResponder().addEmbeds(embed, expEmbed).respond();
 

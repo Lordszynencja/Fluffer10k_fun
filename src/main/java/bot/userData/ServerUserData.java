@@ -40,6 +40,7 @@ import bot.userData.UserStatusesData.UserStatusType;
 import bot.userData.rpg.UserRPGData;
 import bot.util.CollectionUtils;
 import bot.util.Utils;
+import bot.util.apis.APIUtils;
 
 public class ServerUserData {
 	public static final int maxStamina = 120;
@@ -357,13 +358,15 @@ public class ServerUserData {
 		return new BigDecimal(multiplier);
 	}
 
-	public EmbedBuilder addExpAndMakeEmbed(final long exp, final User user, final Server server) {
-		return addExpAndMakeEmbed(BigInteger.valueOf(exp), user, server);
+	public EmbedBuilder addExpAndMakeEmbed(final APIUtils apiUtils, final long exp, final User user,
+			final Server server) {
+		return addExpAndMakeEmbed(apiUtils, BigInteger.valueOf(exp), user, server);
 	}
 
 	private static final double blessingExpMultiplier = 2;
 
-	public EmbedBuilder addExpAndMakeEmbed(final BigInteger exp, final User user, final Server server) {
+	public EmbedBuilder addExpAndMakeEmbed(final APIUtils apiUtils, final BigInteger exp, final User user,
+			final Server server) {
 		if (exp.compareTo(BigInteger.ZERO) <= 0) {
 			return null;
 		}
@@ -379,7 +382,7 @@ public class ServerUserData {
 		final int userLevelAfter = getLevelFromExp(rpg.exp);
 		final int newSkillPoints = userLevelAfter - userLevelBefore;
 
-		final String playerName = rpg.getName(user, server);
+		final String playerName = rpg.getName(apiUtils, user, server);
 		if (newSkillPoints == 0) {
 			return makeEmbed("Experience received", playerName + " got " + formatNumber(totalExp) + " experience");
 		}

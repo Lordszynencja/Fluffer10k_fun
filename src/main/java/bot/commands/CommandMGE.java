@@ -9,6 +9,7 @@ import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 import static bot.util.apis.MessageUtils.sendMessageToUser;
 import static bot.util.apis.MessageUtils.splitLongMessage;
 
+import org.javacord.api.entity.channel.ChannelType;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.interaction.SlashCommandInteraction;
 import org.javacord.api.interaction.SlashCommandOption;
@@ -25,6 +26,23 @@ public class CommandMGE extends Command {
 		super(fluffer10kFun.apiUtils, "mge", "get a page from Monster Girl Encyclopedia", //
 				SlashCommandOption.create(SlashCommandOptionType.STRING, "race",
 						"Race to show page for (or type \"all\" for all options)"));
+	}
+
+	@Override
+	public void handle(final SlashCommandInteraction interaction) {
+		if (!isNSFWChannel(interaction) && interaction.getChannel().get().getType() != ChannelType.PRIVATE_CHANNEL) {
+			sendEphemeralMessage(interaction, "This command cannot be used here");
+			return;
+		}
+
+		final String arg = fixString(interaction.getArgumentStringValueByName("race").orElse(null));
+		if (arg != null && arg.equals("all")) {
+			sendAll(interaction);
+			return;
+		}
+
+		final MonsterGirlRace race = MonsterGirls.monsterGirlRaceByRaceName.get(arg);
+		sendRace(interaction, race == null ? getRandom(MonsterGirlRace.values()) : race);
 	}
 
 	private void sendAll(final SlashCommandInteraction interaction) {
@@ -53,22 +71,5 @@ public class CommandMGE extends Command {
 				race.mgePageLink);
 
 		interaction.createImmediateResponder().addEmbed(embed).respond();
-	}
-
-	@Override
-	public void handle(final SlashCommandInteraction interaction) {
-		if (!isNSFWChannel(interaction)) {
-			sendEphemeralMessage(interaction, "This command cannot be used here");
-			return;
-		}
-
-		final String arg = fixString(interaction.getArgumentStringValueByName("race").orElse(null));
-		if (arg != null && arg.equals("all")) {
-			sendAll(interaction);
-			return;
-		}
-
-		final MonsterGirlRace race = MonsterGirls.monsterGirlRaceByRaceName.get(arg);
-		sendRace(interaction, race == null ? getRandom(MonsterGirlRace.values()) : race);
 	}
 }

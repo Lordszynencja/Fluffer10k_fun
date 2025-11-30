@@ -20,7 +20,6 @@ import org.javacord.api.interaction.callback.InteractionOriginalResponseUpdater;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandCookie extends Command {
@@ -52,22 +51,22 @@ public class CommandCookie extends Command {
 				: 1;
 	}
 
-	private static String getTitle(final int cookiesBaked, final User baker, final User receiver, final Server server) {
+	private String getTitle(final int cookiesBaked, final User baker, final User receiver, final Server server) {
 		if (cookiesBaked == 1) {
 			if (baker.getId() == receiver.getId()) {
 				return "Got a cookie!";
 			}
 
-			return APIUtils.getUserName(receiver, server) + " got a cookie from " + APIUtils.getUserName(baker, server)
-					+ "!";
+			return fluffer10kFun.apiUtils.getUserName(receiver, server) + " got a cookie from "
+					+ fluffer10kFun.apiUtils.getUserName(baker, server) + "!";
 		}
 
 		if (baker.getId() == receiver.getId()) {
 			return "Got " + cookiesBaked + " cookies!";
 		}
 
-		return APIUtils.getUserName(receiver, server) + " got " + cookiesBaked + " cookies from "
-				+ APIUtils.getUserName(baker, server) + "!";
+		return fluffer10kFun.apiUtils.getUserName(receiver, server) + " got " + cookiesBaked + " cookies from "
+				+ fluffer10kFun.apiUtils.getUserName(baker, server) + "!";
 	}
 
 	@Override

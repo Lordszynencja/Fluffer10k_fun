@@ -16,6 +16,7 @@ import org.javacord.api.interaction.SlashCommandInteraction;
 import bot.commands.rpg.exploration.CommandExplore.ExplorationEventHandler;
 import bot.data.items.loot.LootTable;
 import bot.userData.ServerUserData;
+import bot.util.apis.APIUtils;
 
 public class ExplorationNothing implements ExplorationEventHandler {
 	private enum TerrainType {
@@ -110,6 +111,14 @@ public class ExplorationNothing implements ExplorationEventHandler {
 			"some men return from underwater palaces of otohimes and bring a tamate-bako, enchanted box that makes someone relive the memories from the palace. Many men return to the palace and live their lives there after opening the box",//
 	};
 
+	private final APIUtils apiUtils;
+
+	public ExplorationNothing(final APIUtils apiUtils) {
+		super();
+
+		this.apiUtils = apiUtils;
+	}
+
 	@Override
 	public boolean handle(final SlashCommandInteraction interaction, final ServerUserData userData) {
 		final TerrainType terrain = typeSelector.getItem();
@@ -120,7 +129,7 @@ public class ExplorationNothing implements ExplorationEventHandler {
 		final String imgUrl = terrainPics == null ? null : getRandom(terrainPics);
 
 		final EmbedBuilder embed = makeEmbed("Nothing happens", description, imgUrl);
-		final EmbedBuilder expEmbed = userData.addExpAndMakeEmbed(25, interaction.getUser(),
+		final EmbedBuilder expEmbed = userData.addExpAndMakeEmbed(apiUtils, 25, interaction.getUser(),
 				interaction.getServer().get());
 
 		interaction.createImmediateResponder().addEmbeds(embed, expEmbed).respond();

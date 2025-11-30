@@ -16,7 +16,7 @@ public class CommandDanuki extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandDanuki(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "danuki", "Danuki shop", //
+		super(fluffer10kFun.apiUtils, "danuki", "Danuki shop", false, //
 				new CommandDanukiBuy(fluffer10kFun), //
 				new CommandDanukiList(fluffer10kFun), //
 				new CommandDanukiSell(fluffer10kFun), //

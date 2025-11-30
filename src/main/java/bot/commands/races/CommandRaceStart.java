@@ -22,7 +22,6 @@ import org.javacord.api.interaction.callback.ComponentInteractionOriginalMessage
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Subcommand;
 
 public class CommandRaceStart extends Subcommand {
@@ -84,7 +83,7 @@ public class CommandRaceStart extends Subcommand {
 		final RaceData race = addRace(server.getId(), userId, userData);
 
 		interaction.createImmediateResponder()//
-				.addEmbed(race.toEmbed(APIUtils.getUserName(interaction.getUser(), server)))//
+				.addEmbed(race.toEmbed(fluffer10kFun.apiUtils.getUserName(interaction.getUser(), server)))//
 				.addComponents(makeRaceButtons(userId))//
 				.respond();
 	}
@@ -132,7 +131,7 @@ public class CommandRaceStart extends Subcommand {
 		race.changeGearAndUpdateStatus(tokens[2].equals("UP"));
 
 		final ComponentInteractionOriginalMessageUpdater msgUpdater = interaction.createOriginalMessageUpdater()//
-				.addEmbed(race.toEmbed(APIUtils.getUserName(interaction.getUser(), server)));
+				.addEmbed(race.toEmbed(fluffer10kFun.apiUtils.getUserName(interaction.getUser(), server)));
 		if (!race.finished) {
 			msgUpdater.addComponents(makeRaceButtons(userId)).update();
 			return;

@@ -14,7 +14,6 @@ import org.javacord.api.interaction.SlashCommandInteraction;
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
 import bot.util.EmbedUtils.EmbedField;
-import bot.util.apis.APIUtils;
 import bot.util.pages.builders.PagedMessageBuilder;
 import bot.util.pages.messages.PagedMessage;
 import bot.util.subcommand.Command;
@@ -25,7 +24,7 @@ public class CommandSpellbook extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandSpellbook(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "spellbook", "Check your book of spells");
+		super(fluffer10kFun.apiUtils, "spellbook", "Check your book of spells", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}
@@ -45,8 +44,8 @@ public class CommandSpellbook extends Command {
 		final List<ActiveSkill> userSpells = userData.rpg.spells();
 
 		if (userSpells.isEmpty()) {
-			interaction.createImmediateResponder()
-					.addEmbed(makeEmbed(APIUtils.getUserName(user, server) + " has no spells in the spellbook")
+			interaction.createImmediateResponder().addEmbed(
+					makeEmbed(fluffer10kFun.apiUtils.getUserName(user, server) + " has no spells in the spellbook")
 							.setImage(spellbookImgUrl))
 					.respond();
 		} else {
@@ -55,8 +54,8 @@ public class CommandSpellbook extends Command {
 				fields.add(new EmbedField(spell.getFullName(), spell.description));
 			}
 
-			final PagedMessage msg = new PagedMessageBuilder<>(APIUtils.getUserName(user, server) + "'s spellbook", 5,
-					fields)//
+			final PagedMessage msg = new PagedMessageBuilder<>(
+					fluffer10kFun.apiUtils.getUserName(user, server) + "'s spellbook", 5, fields)//
 					.imgUrl(spellbookImgUrl)//
 					.build();
 			fluffer10kFun.pagedMessageUtils.addMessage(msg, interaction);

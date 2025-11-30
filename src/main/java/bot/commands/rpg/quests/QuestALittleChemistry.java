@@ -14,6 +14,7 @@ import bot.data.quests.QuestType;
 import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestALittleChemistry extends Quest {
 	public QuestALittleChemistry() {
@@ -69,9 +70,9 @@ public class QuestALittleChemistry extends Quest {
 			"The Danuki needs 3 pieces of slime jelly.", //
 			"Use the " + bold("/quest continue") + " to give her the items once you found them.");
 
-	private void continueGettingWeresheepWoolStep(final MessageComponentInteraction interaction,
-			final ServerUserData userData) {
-		defaultGiveItemStep(interaction, userData, type, MonmusuDropItems.WERESHEEP_WOOL, 1,
+	private void continueGettingWeresheepWoolStep(final APIUtils apiUtils,
+			final MessageComponentInteraction interaction, final ServerUserData userData) {
+		defaultGiveItemStep(apiUtils, interaction, userData, type, MonmusuDropItems.WERESHEEP_WOOL, 1,
 				QuestStep.GETTING_SLIME_JELLY, true, stepSlimeJellyText, stepSlimeJellyDescription,
 				MonsterGirlRace.GYOUBU_DANUKI.imageLink, 200);
 	}
@@ -83,9 +84,9 @@ public class QuestALittleChemistry extends Quest {
 			"The Danuki has asked you for 4 prisoner fruits.", //
 			"Use the " + bold("/quest continue") + " to give her the items once you found them.");
 
-	private void continueGettingSlimeJellyStep(final MessageComponentInteraction interaction,
+	private void continueGettingSlimeJellyStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
-		defaultGiveItemStep(interaction, userData, type, MonmusuDropItems.SLIME_JELLY, 3,
+		defaultGiveItemStep(apiUtils, interaction, userData, type, MonmusuDropItems.SLIME_JELLY, 3,
 				QuestStep.GETTING_PRISONER_FRUIT, true, stepPrisonerFruitText, stepPrisonerFruitDescription,
 				MonsterGirlRace.GYOUBU_DANUKI.imageLink, 400);
 	}
@@ -99,8 +100,8 @@ public class QuestALittleChemistry extends Quest {
 					"Should you find any new items that may be of interest to me, come on by and give them. Who knows, maybe I'll have new things to sell~"));
 	private static final String stepFinishedDescription = "The Danuki is happy to find a new customer, and offers special items to sell, only for her own currency though.";
 
-	private void continueGettingPrisonerFruitStep(final MessageComponentInteraction interaction,
-			final ServerUserData userData) {
+	private void continueGettingPrisonerFruitStep(final APIUtils apiUtils,
+			final MessageComponentInteraction interaction, final ServerUserData userData) {
 		if (!userData.hasItem(MonmusuDropItems.PRISONER_FRUIT, 4)) {
 			interaction.createOriginalMessageUpdater()
 					.addEmbed(makeEmbed(type.name, "You don't have the necessary item.")).update();
@@ -119,7 +120,8 @@ public class QuestALittleChemistry extends Quest {
 
 		interaction.createOriginalMessageUpdater()
 				.addEmbeds(makeEmbed(type.name, stepFinishedText, MonsterGirlRace.GYOUBU_DANUKI.imageLink), //
-						userData.addExpAndMakeEmbed(600, interaction.getUser(), interaction.getServer().get()), //
+						userData.addExpAndMakeEmbed(apiUtils, 600, interaction.getUser(),
+								interaction.getServer().get()), //
 						makeEmbed("Obtained reward", "You got a set of potions and unlocked Danuki shop!"))//
 				.update();
 	}

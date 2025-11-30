@@ -22,6 +22,7 @@ import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserANuttySituationQuestSearchingForAcornsStepData;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestANuttySituation extends Quest {
 	private final Fluffer10kFun fluffer10kFun;
@@ -100,7 +101,7 @@ public class QuestANuttySituation extends Quest {
 			SelectMenuOption.create("Indigo (mana)", SpecialItems.INDIGO_ACORN_RING), //
 			SelectMenuOption.create("Violet (mana regeneration)", SpecialItems.VIOLET_ACORN_RING));
 
-	private void continueSearchingForAcornsStep(final MessageComponentInteraction interaction,
+	private void continueSearchingForAcornsStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		final UserANuttySituationQuestSearchingForAcornsStepData questData = (UserANuttySituationQuestSearchingForAcornsStepData) userData.rpg.quests
 				.get(type);
@@ -140,7 +141,8 @@ public class QuestANuttySituation extends Quest {
 
 		interaction.createOriginalMessageUpdater()
 				.addEmbeds(makeEmbed(type.name, stepFinishedText, MonsterGirlRace.RATATOSKR.imageLink), //
-						userData.addExpAndMakeEmbed(2000, interaction.getUser(), interaction.getServer().get()), //
+						userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 2000, interaction.getUser(),
+								interaction.getServer().get()), //
 						makeEmbed("Obtained reward", "You got a magic ring!"))//
 				.update();
 	}

@@ -21,7 +21,7 @@ public class CommandImprove extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandImprove(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "improve", "Improve statistic (needs improvement point)");
+		super(fluffer10kFun.apiUtils, "improve", "Improve statistic (needs improvement point)", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

@@ -54,7 +54,7 @@ public class FighterCreator {
 
 	public FighterData getPlayerFighter(final Server server, final User user, final ServerUserData userData,
 			final String fighterId, final String team) {
-		final String name = userData.rpg.getName(user, server);
+		final String name = userData.rpg.getName(fluffer10kFun.apiUtils, user, server);
 		final RPGStatsData stats = fluffer10kFun.rpgStatUtils.getTotalStats(userData);
 		final FighterData fighter = PlayerFighterData.fromStats(fighterId, user.getId(), team, name, stats);
 		giveStartingBuffs(server, fighter);

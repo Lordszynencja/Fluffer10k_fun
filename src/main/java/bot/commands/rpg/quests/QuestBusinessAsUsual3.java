@@ -31,6 +31,7 @@ import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserBusinessAsUsual3QuestGatheringResourcesStepData;
 import bot.userData.rpg.questData.UserQuestData;
 import bot.util.EmbedUtils.EmbedField;
+import bot.util.apis.APIUtils;
 import bot.util.modularPrompt.ModularPrompt;
 import bot.util.pages.builders.PagedPickerMessageBuilder;
 import bot.util.pages.messages.PagedMessage;
@@ -79,7 +80,7 @@ public class QuestBusinessAsUsual3 extends Quest {
 			OreItems.ORE_DEMON_REALM_SILVER, //
 			OreItems.ORE_DRAGONIUM);
 
-	public void continueGatheringResourcesStep(final MessageComponentInteraction interaction,
+	public void continueGatheringResourcesStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		final List<ItemAmount> items = userData.items.entrySet().stream()//
 				.filter(entry -> entry.getValue() > 0 && acceptedItems.contains(entry.getKey()))//
@@ -150,7 +151,8 @@ public class QuestBusinessAsUsual3 extends Quest {
 
 		final List<EmbedBuilder> embeds = new ArrayList<>(
 				asList(makeEmbed(type.name, stepFinishedText, MonsterGirlRace.DWARF.imageLink), //
-						userData.addExpAndMakeEmbed(25_000, interaction.getUser(), interaction.getServer().get())));
+						userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 25_000, interaction.getUser(),
+								interaction.getServer().get())));
 
 		if (unlocked) {
 			embeds.add(makeEmbed("Unlocked tier 3 crafting and got a dragonium pickaxe blueprint!"));

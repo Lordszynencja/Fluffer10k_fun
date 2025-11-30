@@ -1,8 +1,7 @@
 package bot.commands.fluff;
 
-import org.javacord.api.entity.emoji.KnownCustomEmoji;
-
 import bot.Fluffer10kFun;
+import bot.data.Emojis;
 
 public class FluffyTailUtils {
 	private static final int[] tailsFluffinessRequirements = { //
@@ -30,14 +29,15 @@ public class FluffyTailUtils {
 		return 9;
 	}
 
-	public final KnownCustomEmoji fluffyTailEmoji;
+	public final Emojis emojis;
 
 	public FluffyTailUtils(final Fluffer10kFun fluffer10kFun) {
-		fluffyTailEmoji = fluffer10kFun.apiUtils.getEmojiByNameFromMyServer("fluffytail");
+		emojis = fluffer10kFun.emojis;
 	}
 
 	public String getTailsMsg(final int tailsNumber) {
-		return tailsNumber == 1 ? fluffyTailEmoji.getMentionTag()
-				: (tailsNumber + " " + fluffyTailEmoji.getMentionTag() + "s");
+		return tailsNumber == 1 //
+				? emojis.fluffytail.getMentionTag()//
+				: (tailsNumber + " " + emojis.fluffytail.getMentionTag() + "s");
 	}
 }

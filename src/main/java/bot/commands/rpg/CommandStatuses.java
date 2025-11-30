@@ -23,11 +23,12 @@ public class CommandStatuses extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandStatuses(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "statuses", "Check your statuses");
+		super(fluffer10kFun.apiUtils, "statuses", "Check your statuses", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
+	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().orElse(null);
 		if (server == null) {

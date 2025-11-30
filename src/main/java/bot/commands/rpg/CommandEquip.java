@@ -25,7 +25,7 @@ public class CommandEquip extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandEquip(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "equip", "Equip an item");
+		super(fluffer10kFun.apiUtils, "equip", "Equip an item", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

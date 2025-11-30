@@ -17,7 +17,7 @@ public class CommandName extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandName(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "name", "Change your name", //
+		super(fluffer10kFun.apiUtils, "name", "Change your name", false, //
 				SlashCommandOption.create(SlashCommandOptionType.STRING, "new_name",
 						"new name of your character (leave empty to clear and have user name as name)"));
 
@@ -40,6 +40,7 @@ public class CommandName extends Command {
 		userData.rpg.name = newName;
 
 		interaction.createImmediateResponder()
-				.addEmbed(makeEmbed("Name changed to " + userData.rpg.getName(user, server))).respond();
+				.addEmbed(makeEmbed("Name changed to " + userData.rpg.getName(fluffer10kFun.apiUtils, user, server)))
+				.respond();
 	}
 }

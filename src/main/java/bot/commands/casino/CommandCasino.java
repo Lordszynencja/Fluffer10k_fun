@@ -58,7 +58,8 @@ public class CommandCasino {
 		gameOptions.add(CasinoWheelOfFortune.getCommandOption());
 		gameOptions.add(CasinoWheelOfFortunePrizes.getCommandOption());
 
-		final SlashCommandBuilder scb = SlashCommand.with("casino", "Play in the casino", gameOptions);
+		final SlashCommandBuilder scb = SlashCommand.with("casino", "Play in the casino", gameOptions)
+				.setEnabledInDms(false);
 		fluffer10kFun.apiUtils.commandHandlers.addSlashCommandHandler("casino", this::handle, scb);
 
 		fluffer10kFun.apiUtils.commandHandlers.addMessageComponentHandler("casino_blackjack",

@@ -73,7 +73,7 @@ public class CommandHouseShow extends Subcommand {
 		final Server server = interaction.getServer().get();
 		final User user = interaction.getUser();
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(interaction);
-		final String userName = userData.rpg.getName(user, server);
+		final String userName = userData.rpg.getName(fluffer10kFun.apiUtils, user, server);
 		fluffer10kFun.modularPromptUtils.addMessage(makeMessage(userData, userName), interaction);
 		fluffer10kFun.commandHarem.checkIfGirlsAreAngry(interaction);
 	}

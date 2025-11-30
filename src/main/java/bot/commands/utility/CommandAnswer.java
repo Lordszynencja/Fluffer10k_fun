@@ -19,7 +19,7 @@ public class CommandAnswer extends Command {
 	}
 
 	public CommandAnswer(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "answer", "Input for some places", //
+		super(fluffer10kFun.apiUtils, "answer", "Input for some places", false, //
 				SlashCommandOption.create(SlashCommandOptionType.STRING, "answer", "the input", true));
 	}
 

@@ -11,7 +11,7 @@ import bot.util.subcommand.Command;
 
 public class CommandHouse extends Command {
 	public CommandHouse(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "house", "House commands", //
+		super(fluffer10kFun.apiUtils, "house", "House commands", false, //
 				new CommandHouseList(fluffer10kFun), //
 				new CommandHouseShow(fluffer10kFun));
 	}

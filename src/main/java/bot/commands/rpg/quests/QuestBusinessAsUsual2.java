@@ -32,6 +32,7 @@ import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserBusinessAsUsual2QuestGatheringResourcesStepData;
 import bot.userData.rpg.questData.UserQuestData;
 import bot.util.EmbedUtils.EmbedField;
+import bot.util.apis.APIUtils;
 import bot.util.modularPrompt.ModularPrompt;
 import bot.util.pages.builders.PagedPickerMessageBuilder;
 import bot.util.pages.messages.PagedMessage;
@@ -77,7 +78,7 @@ public class QuestBusinessAsUsual2 extends Quest {
 			OreItems.ORE_COPPER, //
 			OreItems.ORE_IRON);
 
-	public void continueGatheringResourcesStep(final MessageComponentInteraction interaction,
+	public void continueGatheringResourcesStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		final List<ItemAmount> items = userData.items.entrySet().stream()//
 				.filter(entry -> entry.getValue() > 0 && acceptedItems.contains(entry.getKey()))//
@@ -149,7 +150,8 @@ public class QuestBusinessAsUsual2 extends Quest {
 
 		final List<EmbedBuilder> embeds = new ArrayList<>(
 				asList(makeEmbed(type.name, stepFinishedText, MonsterGirlRace.DWARF.imageLink), //
-						userData.addExpAndMakeEmbed(10_000, interaction.getUser(), interaction.getServer().get())));
+						userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 10_000, interaction.getUser(),
+								interaction.getServer().get())));
 
 		if (unlocked) {
 			embeds.add(makeEmbed("Unlocked tier 2 crafting and got iron pickaxe blueprint!"));

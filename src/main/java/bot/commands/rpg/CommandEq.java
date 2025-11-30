@@ -22,7 +22,7 @@ public class CommandEq extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandEq(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "eq", "Check your equipment and stats");
+		super(fluffer10kFun.apiUtils, "eq", "Check your equipment and stats", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}
@@ -49,7 +49,8 @@ public class CommandEq extends Command {
 					+ formatNumber(userData.rpg.miningExp) + " exp)";
 		}
 
-		final EmbedBuilder embed = makeEmbed("Information about " + userData.rpg.getName(user, server), levelInfo)//
+		final EmbedBuilder embed = makeEmbed(
+				"Information about " + userData.rpg.getName(fluffer10kFun.apiUtils, user, server), levelInfo)//
 				.setThumbnail(userData.rpg.avatar);
 
 		String currencies = userData.getFormattedMonies() + "\n" + userData.getFormattedPlayCoins();

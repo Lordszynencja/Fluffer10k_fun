@@ -14,7 +14,6 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Subcommand;
 
 public class CommandCookiesGive extends Subcommand {
@@ -51,8 +50,8 @@ public class CommandCookiesGive extends Subcommand {
 		addToLongOnMap(giverData.cookies.cookieCounts, cookieName, -1);
 		addToLongOnMap(receiverData.cookies.cookieCounts, cookieName, 1);
 
-		final String title = APIUtils.getUserName(receiver, server) + " gets " + cookieName + " from "
-				+ APIUtils.getUserName(giver, server) + "!";
+		final String title = fluffer10kFun.apiUtils.getUserName(receiver, server) + " gets " + cookieName + " from "
+				+ fluffer10kFun.apiUtils.getUserName(giver, server) + "!";
 		final EmbedBuilder embed = makeEmbed(title)//
 				.setImage(fluffer10kFun.cookieUtils.getCookieFile(cookieName))//
 				.setColor(CookieUtils.cookiesColor);

@@ -1,7 +1,6 @@
 package bot.commands;
 
 import static bot.util.apis.MessageUtils.getMentions;
-import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 
 import java.util.List;
 
@@ -14,7 +13,6 @@ import org.javacord.api.interaction.callback.InteractionImmediateResponseBuilder
 
 import bot.Fluffer10kFun;
 import bot.util.RandomUtils;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandShoot extends Command {
@@ -72,14 +70,10 @@ public class CommandShoot extends Command {
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().orElse(null);
-		if (server == null) {
-			sendEphemeralMessage(interaction, "This command cannot be used here");
-			return;
-		}
 
 		final String arg = interaction.getArgumentStringValueByName("target").orElse(null);
 
-		final String shooterName = APIUtils.getUserName(interaction.getUser(), server);
+		final String shooterName = fluffer10kFun.apiUtils.getUserName(interaction.getUser(), server);
 		final String target = arg == null ? "themselves"
 				: fluffer10kFun.apiUtils.messageUtils.replaceMentionsWithUserNames(arg, server);
 		final String[] template = RandomUtils.getRandom(shootTemplates);

@@ -12,7 +12,7 @@ import bot.util.subcommand.Command;
 
 public class CommandCookies extends Command {
 	public CommandCookies(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "cookies", "Use various cookie related things", //
+		super(fluffer10kFun.apiUtils, "cookies", "Use various cookie related things", false, //
 				new CommandCookiesCrumble(fluffer10kFun), //
 				new CommandCookiesCrumbles(fluffer10kFun), //
 				new CommandCookiesGive(fluffer10kFun), //

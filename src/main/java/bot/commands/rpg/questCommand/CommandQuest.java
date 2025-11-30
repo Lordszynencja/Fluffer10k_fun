@@ -12,7 +12,7 @@ import bot.util.subcommand.Command;
 
 public class CommandQuest extends Command {
 	public CommandQuest(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "quest", "Quest handling", //
+		super(fluffer10kFun.apiUtils, "quest", "Quest handling", false, //
 				new CommandQuestContinue(fluffer10kFun), //
 				new CommandQuestList(fluffer10kFun));
 	}

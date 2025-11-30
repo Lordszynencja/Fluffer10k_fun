@@ -3,7 +3,7 @@ package bot.commands.fluff;
 import static bot.commands.fluff.FluffyTailUtils.getTailsNumber;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.Utils.repeat;
-import static bot.util.apis.MessageUtils.isServerTextChannel;
+import static bot.util.apis.MessageUtils.isTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 import static java.lang.String.format;
 
@@ -11,11 +11,9 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
-import bot.util.apis.APIUtils;
+import bot.util.apis.commands.FlufferCommand;
 import bot.util.subcommand.Command;
 
 public class CommandFluffiness extends Command {
@@ -35,23 +33,24 @@ public class CommandFluffiness extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandFluffiness(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "fluffiness", "Shows current fluffiness", //
-				SlashCommandOption.create(SlashCommandOptionType.USER, "fluff", "Check fluffiness of this person"));
+		super(fluffer10kFun.apiUtils, //
+				new FlufferCommand("fluffiness", "Shows current fluffiness")//
+						.addUserOption("target", "Check fluffiness of this person"));
 
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
-		if (!isServerTextChannel(interaction)) {
+		if (!isTextChannel(interaction)) {
 			sendEphemeralMessage(interaction, "Cannot use this command here");
 			return;
 		}
 
-		final Server server = interaction.getServer().get();
+		final Server server = interaction.getServer().orElse(null);
 		final User user = interaction.getArgumentUserValueByName("fluff").orElse(interaction.getUser());
 		final long userId = user.getId();
-		final String userName = APIUtils.getUserName(user, server);
+		final String userName = fluffer10kFun.apiUtils.getUserName(user, server);
 		final long fluffiness = fluffer10kFun.userDataUtils.getUserData(userId).fluffiness;
 
 		if (fluffiness == 0) {
@@ -62,7 +61,7 @@ public class CommandFluffiness extends Command {
 
 		final int tails = getTailsNumber(fluffiness);
 		final String tailsNumberMessage = format(tailNumberMessages[tails], userName, fluffiness);
-		final String tailEmojis = repeat(fluffer10kFun.fluffyTailUtils.fluffyTailEmoji.getMentionTag(), tails);
+		final String tailEmojis = repeat(fluffer10kFun.emojis.fluffytail.getMentionTag(), tails);
 
 		final EmbedBuilder embed = new EmbedBuilder()//
 				.setTitle(tailsNumberMessage)//

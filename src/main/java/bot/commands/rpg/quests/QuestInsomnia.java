@@ -15,6 +15,7 @@ import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserInsomniaQuestWaitingStepData;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestInsomnia extends Quest {
 	private static long getCurrentTime() {
@@ -78,9 +79,9 @@ public class QuestInsomnia extends Quest {
 			"Collect three pieces of barometz's cotton and bring them to the girl.", //
 			"Use the " + bold("/quest continue") + " to give her the items once you found them.");
 
-	private void continueGettingWeresheepWoolStep(final MessageComponentInteraction interaction,
-			final ServerUserData userData) {
-		defaultGiveItemStep(interaction, userData, type, MonmusuDropItems.WERESHEEP_WOOL, 5,
+	private void continueGettingWeresheepWoolStep(final APIUtils apiUtils,
+			final MessageComponentInteraction interaction, final ServerUserData userData) {
+		defaultGiveItemStep(apiUtils, interaction, userData, type, MonmusuDropItems.WERESHEEP_WOOL, 5,
 				QuestStep.GETTING_BAROMETZ_COTTON, true, stepGettingBarometzCottonText,
 				stepGettingBarometzCottonDescription, MonsterGirlRace.SUCCUBUS.imageLink, 500);
 	}
@@ -93,9 +94,9 @@ public class QuestInsomnia extends Quest {
 			"Collect ten strings of arachne silk and bring them to the girl.", //
 			"Use the " + bold("/quest continue") + " to give her the items once you found them.");
 
-	private void continueGettingBarometzCottonStep(final MessageComponentInteraction interaction,
-			final ServerUserData userData) {
-		defaultGiveItemStep(interaction, userData, type, MonmusuDropItems.BAROMETZ_COTTON, 3,
+	private void continueGettingBarometzCottonStep(final APIUtils apiUtils,
+			final MessageComponentInteraction interaction, final ServerUserData userData) {
+		defaultGiveItemStep(apiUtils, interaction, userData, type, MonmusuDropItems.BAROMETZ_COTTON, 3,
 				QuestStep.GETTING_ARACHNE_SILK, true, stepGettingArachneSilkText, stepGettingArachneSilkDescription,
 				MonsterGirlRace.SUCCUBUS.imageLink, 1500);
 	}
@@ -110,7 +111,7 @@ public class QuestInsomnia extends Quest {
 			"Come back later to collect your reward.", //
 			"Use the " + bold("/quest continue") + " a bit later.");
 
-	private void continueGettingArachneSilkStep(final MessageComponentInteraction interaction,
+	private void continueGettingArachneSilkStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		if (!userData.hasItem(MonmusuDropItems.ARACHNE_SILK, 10)) {
 			interaction.createOriginalMessageUpdater()
@@ -123,7 +124,8 @@ public class QuestInsomnia extends Quest {
 
 		interaction.createOriginalMessageUpdater()
 				.addEmbeds(makeEmbed(type.name, stepWaitingText, MonsterGirlRace.SUCCUBUS.imageLink), //
-						userData.addExpAndMakeEmbed(5000, interaction.getUser(), interaction.getServer().get()))//
+						userData.addExpAndMakeEmbed(apiUtils, 5000, interaction.getUser(),
+								interaction.getServer().get()))//
 				.update();
 	}
 
@@ -154,7 +156,8 @@ public class QuestInsomnia extends Quest {
 			description("She happily gives you your reward."));
 	private static final String stepFinishedDescription = "Your new friend made you a set of bedding, to use for your house.";
 
-	private void continueWaitingStep(final MessageComponentInteraction interaction, final ServerUserData userData) {
+	private void continueWaitingStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
+			final ServerUserData userData) {
 		final UserInsomniaQuestWaitingStepData questData = (UserInsomniaQuestWaitingStepData) userData.rpg.quests
 				.get(type);
 		final long dt = getCurrentTime() - questData.startTime;
@@ -189,7 +192,8 @@ public class QuestInsomnia extends Quest {
 
 		interaction.createOriginalMessageUpdater()
 				.addEmbeds(makeEmbed(type.name, stepFinishedText, MonsterGirlRace.SUCCUBUS.imageLink), //
-						userData.addExpAndMakeEmbed(10000, interaction.getUser(), interaction.getServer().get()), //
+						userData.addExpAndMakeEmbed(apiUtils, 10000, interaction.getUser(),
+								interaction.getServer().get()), //
 						makeEmbed("Obtained reward", "You got a set of sleepful bedding for your house!"))//
 				.update();
 	}

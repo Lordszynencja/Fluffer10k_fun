@@ -161,7 +161,7 @@ public class CommandShop extends Command {
 	}
 
 	public CommandShop(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "shop", "RPG shop commands", //
+		super(fluffer10kFun.apiUtils, "shop", "RPG shop commands", false, //
 				new CommandShopBuy(fluffer10kFun), //
 				new CommandShopSell(fluffer10kFun));
 

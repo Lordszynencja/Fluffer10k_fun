@@ -43,7 +43,7 @@ public class ExplorationFriendlyPerson {
 		final EmbedBuilder embed = makeEmbed("Friendly person",
 				"On the road, you meet a friendly villager, that recognizes you as a hero and gives you "
 						+ gift.getDescription(fluffer10kFun.items) + " as a gift.");
-		final EmbedBuilder expEmbed = userData.addExpAndMakeEmbed(100, interaction.getUser(),
+		final EmbedBuilder expEmbed = userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 100, interaction.getUser(),
 				interaction.getServer().get());
 
 		interaction.createImmediateResponder().addEmbeds(embed, expEmbed).respond();

@@ -24,6 +24,7 @@ import bot.data.quests.QuestType;
 import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestUltimateTest extends Quest {
 	private abstract class Step {
@@ -50,7 +51,8 @@ public class QuestUltimateTest extends Quest {
 			interaction.createImmediateResponder().addEmbed(newQuestMessage(startText)).respond();
 		}
 
-		public void continueStep(final MessageComponentInteraction interaction, final ServerUserData userData) {
+		public void continueStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
+				final ServerUserData userData) {
 			if (!userData.canStartOtherFight()) {
 				String msg;
 				if (userData.rpg.fightId != null) {

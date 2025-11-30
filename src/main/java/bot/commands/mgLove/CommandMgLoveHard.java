@@ -17,7 +17,6 @@ import org.javacord.api.interaction.callback.InteractionImmediateResponseBuilder
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandMgLoveHard extends Command {
@@ -26,7 +25,7 @@ public class CommandMgLoveHard extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandMgLoveHard(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "mg_love_hard", "Lots of segs", //
+		super(fluffer10kFun.apiUtils, "mg_love_hard", "Lots of segs", false, //
 				SlashCommandOption.create(SlashCommandOptionType.USER, "target", "target of your love", true));
 
 		this.fluffer10kFun = fluffer10kFun;
@@ -34,10 +33,12 @@ public class CommandMgLoveHard extends Command {
 
 	private EmbedBuilder getEmbed(final MgLoveData mgLoveData, final Server server) {
 		if (mgLoveData.protectedFromLove) {
-			return makeEmbed(APIUtils.getUserName(mgLoveData.target, server) + " is protected from lewd love!");
+			return makeEmbed(
+					fluffer10kFun.apiUtils.getUserName(mgLoveData.target, server) + " is protected from lewd love!");
 		}
 		if (mgLoveData.savedFromLove) {
-			return makeEmbed(APIUtils.getUserName(mgLoveData.target, server) + " is saved from lewd love!");
+			return makeEmbed(
+					fluffer10kFun.apiUtils.getUserName(mgLoveData.target, server) + " is saved from lewd love!");
 		}
 
 		return fluffer10kFun.commandMgLove.makeMgLoveEmbed(server, mgLoveData.target, mgLoveData.cums);

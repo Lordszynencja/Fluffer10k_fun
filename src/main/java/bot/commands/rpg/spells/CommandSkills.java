@@ -22,7 +22,7 @@ public class CommandSkills extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandSkills(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "skills", "Shows skill trees");
+		super(fluffer10kFun.apiUtils, "skills", "Shows skill trees", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}
@@ -60,9 +60,9 @@ public class CommandSkills extends Command {
 	private ModularPrompt makeSkillInactiveMessage(final ServerUserData userData, final Skill skill) {
 		final EmbedBuilder embed = makeEmbed(skill.name,
 				skill.description + "\n\nCost: " + skill.price + " skill point" + (skill.price == 1 ? "" : "s"))//
-						.setFooter("Points left: " + userData.rpg.skillPointsLeft())//
-						.addField("Cost", skill.price + (skill.price == 1 ? " skill point" : " skill points"))//
-						.addField("Requirements", skill.parents.stream().map(s -> s.name).collect(joining(", ")));
+				.setFooter("Points left: " + userData.rpg.skillPointsLeft())//
+				.addField("Cost", skill.price + (skill.price == 1 ? " skill point" : " skill points"))//
+				.addField("Requirements", skill.parents.stream().map(s -> s.name).collect(joining(", ")));
 
 		final boolean getDisabled = !userData.rpg.skills.containsAll(skill.parents)
 				|| userData.rpg.skillPointsLeft() < skill.price;

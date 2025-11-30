@@ -32,7 +32,7 @@ public class CommandDaily extends Command {
 	}
 
 	public CommandDaily(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "daily", "Get some pocket money");
+		super(fluffer10kFun.apiUtils, "daily", "Get some pocket money", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 

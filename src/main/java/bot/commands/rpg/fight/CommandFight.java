@@ -10,7 +10,7 @@ import bot.util.subcommand.Command;
 
 public class CommandFight extends Command {
 	public CommandFight(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "fight", "for bot owner or test server only", //
+		super(fluffer10kFun.apiUtils, "fight", "for bot owner or test server only", false, //
 				new CommandFightAutoWait(fluffer10kFun), //
 				new CommandFightRefresh(fluffer10kFun), //
 				new CommandFightSpellHotbar(fluffer10kFun));

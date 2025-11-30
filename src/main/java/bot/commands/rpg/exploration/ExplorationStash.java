@@ -30,7 +30,7 @@ public class ExplorationStash implements ExplorationEventHandler {
 				stashImgUrl);
 
 		final long exp = 50 + 25 * userData.rpg.level;
-		final EmbedBuilder expEmbed = userData.addExpAndMakeEmbed(exp, interaction.getUser(),
+		final EmbedBuilder expEmbed = userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, exp, interaction.getUser(),
 				interaction.getServer().get());
 
 		interaction.createImmediateResponder().addEmbeds(embed, expEmbed).respond();

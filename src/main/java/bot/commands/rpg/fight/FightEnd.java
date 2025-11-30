@@ -159,7 +159,8 @@ public class FightEnd {
 
 			final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(playerFighter);
 			final User user = fluffer10kFun.apiUtils.getUser(playerFighter.userId);
-			data.channel.sendMessage(userData.addExpAndMakeEmbed(exp, user, getServer(data.channel)));
+			data.channel.sendMessage(
+					userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, exp, user, getServer(data.channel)));
 		}
 	}
 

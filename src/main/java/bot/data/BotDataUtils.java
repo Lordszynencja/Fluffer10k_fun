@@ -152,7 +152,9 @@ public class BotDataUtils {
 			data.put("reminders", botDataReminders.toData());
 
 			try {
-				saveJSONFileWithBackup(botDataFilePath, data);
+				if (!fluffer10kFun.apiUtils.config.getBoolean("debug")) {
+					saveJSONFileWithBackup(botDataFilePath, data);
+				}
 			} catch (final IOException e) {
 				fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);
 			}

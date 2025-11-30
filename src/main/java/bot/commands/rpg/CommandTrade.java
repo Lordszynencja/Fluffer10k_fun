@@ -28,7 +28,6 @@ import bot.data.items.Item;
 import bot.data.items.ItemAmount;
 import bot.userData.ServerUserData;
 import bot.util.EmbedUtils.EmbedField;
-import bot.util.apis.APIUtils;
 import bot.util.pages.builders.PagedPickerMessageBuilder;
 import bot.util.pages.messages.PagedMessage;
 import bot.util.subcommand.Command;
@@ -66,7 +65,8 @@ public class CommandTrade extends Command {
 	private final Map<String, TradeAcceptanceData> trades = new HashMap<>();
 
 	public CommandTrade(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "trade", "Trade items, using the command will make you choose item to sell", //
+		super(fluffer10kFun.apiUtils, "trade", "Trade items, using the command will make you choose item to sell",
+				false, //
 				SlashCommandOption.create(SlashCommandOptionType.USER, "buyer", "person to trade with", true), //
 				SlashCommandOption.create(SlashCommandOptionType.LONG, "price", "price for items you will sell", true), //
 				SlashCommandOption.create(SlashCommandOptionType.LONG, "amount",
@@ -148,9 +148,9 @@ public class CommandTrade extends Command {
 		final Server server = interaction.getServer().get();
 		final User seller = interaction.getUser();
 
-		final String description = APIUtils.getUserName(seller, server) + " sells "
+		final String description = fluffer10kFun.apiUtils.getUserName(seller, server) + " sells "
 				+ (tradeData.itemAmount.amount == 1 ? "item" : "items") + " to "
-				+ APIUtils.getUserName(tradeData.buyer, server);
+				+ fluffer10kFun.apiUtils.getUserName(tradeData.buyer, server);
 
 		final EmbedBuilder embed = makeEmbed("Trade", description)//
 				.addField("Item", tradeData.itemAmount.getDescription())//
@@ -231,9 +231,9 @@ public class CommandTrade extends Command {
 
 		trades.remove(tradeId);
 
-		final String description = APIUtils.getUserName(trade.buyer, server) + " bought "
-				+ trade.itemAmount.getDescription() + " from " + APIUtils.getUserName(trade.seller, server) + " for "
-				+ getFormattedMonies(trade.price);
+		final String description = fluffer10kFun.apiUtils.getUserName(trade.buyer, server) + " bought "
+				+ trade.itemAmount.getDescription() + " from "
+				+ fluffer10kFun.apiUtils.getUserName(trade.seller, server) + " for " + getFormattedMonies(trade.price);
 		interaction.createOriginalMessageUpdater().addEmbed(makeEmbed("Trade successful!", description)).update();
 	}
 }

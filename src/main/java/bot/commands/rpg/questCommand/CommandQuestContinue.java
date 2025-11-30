@@ -54,6 +54,7 @@ public class CommandQuestContinue extends Subcommand {
 	private void onPick(final MessageComponentInteraction interaction, final int page, final UserQuestData questData) {
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(interaction.getServer().get(),
 				interaction.getUser());
-		fluffer10kFun.questUtils.getQuestHandler(questData.type).continueQuest(interaction, userData);
+		fluffer10kFun.questUtils.getQuestHandler(questData.type).continueQuest(fluffer10kFun.apiUtils, interaction,
+				userData);
 	}
 }

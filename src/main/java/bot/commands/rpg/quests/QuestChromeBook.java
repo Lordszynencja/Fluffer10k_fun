@@ -13,6 +13,7 @@ import bot.data.quests.QuestType;
 import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestChromeBook extends Quest {
 	public QuestChromeBook() {
@@ -56,7 +57,7 @@ public class QuestChromeBook extends Quest {
 			description("She says while grinning."));
 	private static final String stepFinishedDescription = "Chrome is happily using the book you gave her for... things you probably don't want to see.";
 
-	private void continueSearchingForTheBookStep(final MessageComponentInteraction interaction,
+	private void continueSearchingForTheBookStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		if (!userData.hasItem(QuestItems.NECROFILICON)) {
 			interaction.createOriginalMessageUpdater()
@@ -74,7 +75,7 @@ public class QuestChromeBook extends Quest {
 		userData.addItem(PotionItems.INTELLIGENCE_1_POTION);
 
 		interaction.createOriginalMessageUpdater().addEmbeds(makeEmbed(type.name, stepFinishedText, getImage("Chrome")), //
-				userData.addExpAndMakeEmbed(500, interaction.getUser(), interaction.getServer().get()), //
+				userData.addExpAndMakeEmbed(apiUtils, 500, interaction.getUser(), interaction.getServer().get()), //
 				makeEmbed("Obtained items", "You got 500 gold and bunch of potions"))//
 				.update();
 	}

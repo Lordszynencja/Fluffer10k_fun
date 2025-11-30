@@ -4,8 +4,8 @@ import static bot.commands.running.RunningUtils.addRunner;
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.FileUtils.readFileLines;
 import static bot.util.RandomUtils.getRandom;
-import static bot.util.apis.MessageUtils.getServerTextChannel;
-import static bot.util.apis.MessageUtils.isServerTextChannel;
+import static bot.util.apis.MessageUtils.getTextChannel;
+import static bot.util.apis.MessageUtils.isTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 
 import java.io.IOException;
@@ -14,7 +14,6 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandRun extends Command {
@@ -32,14 +31,15 @@ public class CommandRun extends Command {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
-		if (!isServerTextChannel(interaction)) {
+		if (!isTextChannel(interaction)) {
 			sendEphemeralMessage(interaction, "Can't run here");
 			return;
 		}
 
-		final long channelId = getServerTextChannel(interaction).getId();
+		final long channelId = getTextChannel(interaction).getId();
 		final long userId = interaction.getUser().getId();
-		final String userName = APIUtils.getUserName(interaction.getUser(), interaction.getServer().get());
+		final String userName = fluffer10kFun.apiUtils.getUserName(interaction.getUser(),
+				interaction.getServer().orElse(null));
 		final boolean added = addRunner(channelId, userId, userName);
 		if (added) {
 			fluffer10kFun.userDataUtils.getUserData(userId).runExp += 1;

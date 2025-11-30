@@ -41,6 +41,7 @@ import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
 import bot.util.EmbedUtils.EmbedField;
+import bot.util.apis.APIUtils;
 import bot.util.pages.builders.PagedPickerMessageBuilder;
 import bot.util.pages.messages.PagedMessage;
 import bot.util.pages.messages.PagedPickerMessage.OnPickHandler;
@@ -127,13 +128,14 @@ public class QuestJaggedJeweller extends Quest {
 			return;
 		}
 
-		defaultGiveItemStep(interaction, userData, type, itemAmount.item.id, 1, nextStep, true, stepText,
-				stepDescription, AUTOMATON.imageLink, exp);
+		defaultGiveItemStep(fluffer10kFun.apiUtils, interaction, userData, type, itemAmount.item.id, 1, nextStep, true,
+				stepText, stepDescription, AUTOMATON.imageLink, exp);
 	}
 
 	private static final Set<GemType> step1Gems = toSet(AMETHYST, JADE, QUARTZ, TOPAZ);
 
-	private void continueStep1(final MessageComponentInteraction interaction, final ServerUserData userData) {
+	private void continueStep1(final APIUtils apiUtils, final MessageComponentInteraction interaction,
+			final ServerUserData userData) {
 		pickGem(interaction, userData, step1Gems, this::onPickStep1);
 	}
 
@@ -151,7 +153,8 @@ public class QuestJaggedJeweller extends Quest {
 
 	private static final Set<GemType> step2Gems = toSet(GARNET, OPAL);
 
-	private void continueStep2(final MessageComponentInteraction interaction, final ServerUserData userData) {
+	private void continueStep2(final APIUtils apiUtils, final MessageComponentInteraction interaction,
+			final ServerUserData userData) {
 		pickGem(interaction, userData, step2Gems, this::onPickStep2);
 	}
 
@@ -172,7 +175,8 @@ public class QuestJaggedJeweller extends Quest {
 
 	private static final Set<GemType> step3Gems = toSet(EMERALD, RUBY, SAPPHIRE);
 
-	private void continueStep3(final MessageComponentInteraction interaction, final ServerUserData userData) {
+	private void continueStep3(final APIUtils apiUtils, final MessageComponentInteraction interaction,
+			final ServerUserData userData) {
 		pickGem(interaction, userData, step3Gems, this::onPickStep3);
 	}
 
@@ -192,7 +196,8 @@ public class QuestJaggedJeweller extends Quest {
 
 	private static final Set<GemType> step4Gems = toSet(DIAMOND);
 
-	private void continueStep4(final MessageComponentInteraction interaction, final ServerUserData userData) {
+	private void continueStep4(final APIUtils apiUtils, final MessageComponentInteraction interaction,
+			final ServerUserData userData) {
 		pickGem(interaction, userData, step4Gems, this::onPickStep4);
 	}
 
@@ -226,9 +231,10 @@ public class QuestJaggedJeweller extends Quest {
 
 		userData.rpg.setQuest(new UserQuestData(type, FINISHED, stepFinishedDescription));
 
-		interaction.createOriginalMessageUpdater()
-				.addEmbeds(makeEmbed(type.name, stepFinishedText, AUTOMATON.imageLink), //
-						userData.addExpAndMakeEmbed(2500, interaction.getUser(), interaction.getServer().get()), //
+		interaction
+				.createOriginalMessageUpdater().addEmbeds(makeEmbed(type.name, stepFinishedText, AUTOMATON.imageLink), //
+						userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 2500, interaction.getUser(),
+								interaction.getServer().get()), //
 						makeEmbed("Quest reward", "You got 2000 gold and unlocked jeweller!"))//
 				.update();
 	}

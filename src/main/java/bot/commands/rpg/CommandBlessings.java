@@ -75,7 +75,7 @@ public class CommandBlessings extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandBlessings(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "blessings", "List the blessings");
+		super(fluffer10kFun.apiUtils, "blessings", "List the blessings", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

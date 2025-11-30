@@ -33,6 +33,7 @@ public class CommandDebugGiveExp extends Subcommand {
 		final BigInteger amount = new BigInteger(option.getArgumentStringValueByName("amount").get());
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(), target.getId());
-		interaction.createImmediateResponder().addEmbed(userData.addExpAndMakeEmbed(amount, target, server)).respond();
+		interaction.createImmediateResponder()
+				.addEmbed(userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, amount, target, server)).respond();
 	}
 }

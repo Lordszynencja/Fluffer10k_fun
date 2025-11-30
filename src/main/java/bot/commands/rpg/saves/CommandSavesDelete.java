@@ -71,8 +71,8 @@ public class CommandSavesDelete extends Subcommand {
 		}
 
 		final String title = "Are you sure you want to delete " + saveName + "?";
-		final String description = userData.saves.get(saveName).getSaveDescription(interaction.getUser(),
-				interaction.getServer().get());
+		final String description = userData.saves.get(saveName).getSaveDescription(fluffer10kFun.apiUtils,
+				interaction.getUser(), interaction.getServer().get());
 		interaction.createImmediateResponder().addEmbed(makeEmbed(title, description))//
 				.addComponents(ActionRow.of(
 						Button.create("saves_delete_yes " + userId + " " + serverId + " " + saveName,

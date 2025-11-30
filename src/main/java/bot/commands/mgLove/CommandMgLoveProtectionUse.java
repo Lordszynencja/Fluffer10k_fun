@@ -22,7 +22,7 @@ public class CommandMgLoveProtectionUse extends Command {
 
 	public CommandMgLoveProtectionUse(final Fluffer10kFun fluffer10kFun) throws IOException {
 		super(fluffer10kFun.apiUtils, "mg_love_protection_use",
-				"Do you want to use the protection from buffs and level?", //
+				"Do you want to use the protection from buffs and level?", false, //
 				SlashCommandOption.createWithChoices(SlashCommandOptionType.STRING, "value", "new flag value", true,
 						asList(SlashCommandOptionChoice.create("on", "on"),
 								SlashCommandOptionChoice.create("off", "off"))));

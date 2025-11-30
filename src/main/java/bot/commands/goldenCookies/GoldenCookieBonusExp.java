@@ -11,6 +11,7 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.interaction.MessageComponentInteraction;
 import org.javacord.api.interaction.callback.ComponentInteractionOriginalMessageUpdater;
 
+import bot.Fluffer10kFun;
 import bot.commands.goldenCookies.GoldenCookies.GoldenCookieEffect;
 import bot.userData.ServerUserData;
 
@@ -44,13 +45,19 @@ public class GoldenCookieBonusExp implements GoldenCookieEffect {
 		return getRandomBigInteger(minExp, maxExp);
 	}
 
+	private final Fluffer10kFun fluffer10kFun;
+
+	public GoldenCookieBonusExp(final Fluffer10kFun fluffer10kFun) {
+		this.fluffer10kFun = fluffer10kFun;
+	}
+
 	@Override
 	public void apply(final MessageComponentInteraction interaction, final ServerUserData userData,
 			final int goldenCookiesCaught, final EmbedBuilder embed) {
 		embed.setDescription("You got bonus experience!");
 
 		final BigInteger exp = getRandomExp(userData.rpg.level, getGoldenCookiesTier(goldenCookiesCaught));
-		final EmbedBuilder embedExp = userData.addExpAndMakeEmbed(exp, interaction.getUser(),
+		final EmbedBuilder embedExp = userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, exp, interaction.getUser(),
 				interaction.getServer().get());
 
 		final ComponentInteractionOriginalMessageUpdater updater = interaction.createOriginalMessageUpdater()

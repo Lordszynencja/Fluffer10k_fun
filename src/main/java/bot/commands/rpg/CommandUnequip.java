@@ -25,7 +25,7 @@ public class CommandUnequip extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandUnequip(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "unequip", "Read about a status");
+		super(fluffer10kFun.apiUtils, "unequip", "Read about a status", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

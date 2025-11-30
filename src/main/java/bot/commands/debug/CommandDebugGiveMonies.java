@@ -12,7 +12,6 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 import bot.Fluffer10kFun;
 import bot.commands.rpg.CommandTransfer.Currency;
 import bot.userData.ServerUserData;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Subcommand;
 
 public class CommandDebugGiveMonies extends Subcommand {
@@ -41,7 +40,7 @@ public class CommandDebugGiveMonies extends Subcommand {
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(), target.getId());
 		currency.adder.accept(userData, amount);
 
-		sendEphemeralMessage(interaction,
-				"Gave " + currency.formatter.apply(amount) + " to " + APIUtils.getUserName(target, server));
+		sendEphemeralMessage(interaction, "Gave " + currency.formatter.apply(amount) + " to "
+				+ fluffer10kFun.apiUtils.getUserName(target, server));
 	}
 }

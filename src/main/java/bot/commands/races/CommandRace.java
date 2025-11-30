@@ -10,7 +10,7 @@ import bot.util.subcommand.Command;
 
 public class CommandRace extends Command {
 	public CommandRace(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "race", "Zoooom", //
+		super(fluffer10kFun.apiUtils, "race", "Zoooom", false, //
 				new CommandRaceSponsor(fluffer10kFun), //
 				new CommandRaceStart(fluffer10kFun));
 	}

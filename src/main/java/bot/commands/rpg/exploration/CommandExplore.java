@@ -33,7 +33,7 @@ public class CommandExplore extends Command {
 	private final Map<ExplorationType, ExplorationEventHandler> eventHandlers = new HashMap<>();
 
 	public CommandExplore(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "explore", "Explore the world", //
+		super(fluffer10kFun.apiUtils, "explore", "Explore the world", false, //
 				SlashCommandOption.create(SlashCommandOptionType.STRING, "tracking_target",
 						"target for tracking certain race of monster girls"));
 
@@ -43,7 +43,7 @@ public class CommandExplore extends Command {
 		explorationFight = new ExplorationFight(fluffer10kFun);
 
 		eventHandlers.put(ExplorationType.FIGHT, explorationFight);
-		eventHandlers.put(ExplorationType.NOTHING, new ExplorationNothing());
+		eventHandlers.put(ExplorationType.NOTHING, new ExplorationNothing(fluffer10kFun.apiUtils));
 		eventHandlers.put(ExplorationType.QUEST, new ExplorationQuest(fluffer10kFun));
 		eventHandlers.put(ExplorationType.STASH, new ExplorationStash(fluffer10kFun));
 		eventHandlers.put(ExplorationType.TRAVELING_MERCHANT, new ExplorationTravelingMerchant(fluffer10kFun));

@@ -54,7 +54,9 @@ public class UserDataUtils {
 			data.put(userData.getKey().toString(), userData.getValue().toMap());
 		}
 		try {
-			saveJSONFileWithBackup(usersDataFilePath, data);
+			if (!fluffer10kFun.apiUtils.config.getBoolean("debug")) {
+				saveJSONFileWithBackup(usersDataFilePath, data);
+			}
 		} catch (final IOException e) {
 			e.printStackTrace();
 			fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);

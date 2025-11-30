@@ -1,6 +1,7 @@
 package bot.commands.imageManipulation;
 
 import org.javacord.api.entity.Icon;
+import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.SlashCommandInteraction;
 import org.javacord.api.interaction.SlashCommandOption;
@@ -18,7 +19,9 @@ public class CommandPfp extends Command {
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final User target = interaction.getArgumentUserValueByName("target").orElse(interaction.getUser());
-		final Icon avatar = target.getServerAvatar(interaction.getServer().orElse(null)).orElse(target.getAvatar());
+		final Server server = interaction.getServer().orElse(null);
+		final Icon avatar = server == null ? target.getAvatar()
+				: target.getServerAvatar(server).orElse(target.getAvatar());
 
 		interaction.createImmediateResponder().append(avatar.getUrl()).respond();
 	}

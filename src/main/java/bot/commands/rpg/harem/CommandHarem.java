@@ -98,7 +98,7 @@ public class CommandHarem extends Command {
 	}
 
 	public CommandHarem(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "harem", "Harem commands", //
+		super(fluffer10kFun.apiUtils, "harem", "Harem commands", false, //
 				new CommandHaremDo(fluffer10kFun), //
 				new CommandHaremList(fluffer10kFun), //
 				new CommandHaremMarket(fluffer10kFun));

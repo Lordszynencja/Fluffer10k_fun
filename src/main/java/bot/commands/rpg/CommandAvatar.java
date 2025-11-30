@@ -19,7 +19,7 @@ public class CommandAvatar extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandAvatar(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "avatar", "Set your rpg avatar", //
+		super(fluffer10kFun.apiUtils, "avatar", "Set your rpg avatar", false, //
 				SlashCommandOption.create(SlashCommandOptionType.STRING, "avatar_url", "url of the image"));
 
 		this.fluffer10kFun = fluffer10kFun;

@@ -19,7 +19,6 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 import bot.Fluffer10kFun;
 import bot.data.items.ItemUtils;
 import bot.userData.ServerUserData;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandTransfer extends Command {
@@ -56,7 +55,7 @@ public class CommandTransfer extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandTransfer(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "transfer", "Transfer currency to someone", //
+		super(fluffer10kFun.apiUtils, "transfer", "Transfer currency to someone", false, //
 				SlashCommandOption.create(SlashCommandOptionType.USER, "target", "person to transfer to", true), //
 				SlashCommandOption.create(SlashCommandOptionType.LONG, "amount", "amount of currency to give", true), //
 				SlashCommandOption.createWithChoices(SlashCommandOptionType.STRING, "currency", "currency to transfer",
@@ -93,8 +92,8 @@ public class CommandTransfer extends Command {
 		currency.adder.accept(userData, -amount);
 		currency.adder.accept(targetData, amount);
 
-		final String description = APIUtils.getUserName(target, server) + " got " + currency.formatter.apply(amount)
-				+ " from " + APIUtils.getUserName(user, server);
+		final String description = fluffer10kFun.apiUtils.getUserName(target, server) + " got "
+				+ currency.formatter.apply(amount) + " from " + fluffer10kFun.apiUtils.getUserName(user, server);
 
 		interaction.createImmediateResponder().append(target).addEmbed(makeEmbed("Transfer", description)).respond();
 	}

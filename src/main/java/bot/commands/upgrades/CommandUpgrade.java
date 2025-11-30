@@ -28,7 +28,7 @@ public class CommandUpgrade extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandUpgrade(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "upgrade", "Upgrade your income", //
+		super(fluffer10kFun.apiUtils, "upgrade", "Upgrade your income", false, //
 				new UpgradeAvailable(fluffer10kFun), //
 				new UpgradeBuy(fluffer10kFun), //
 				new UpgradeList(fluffer10kFun));

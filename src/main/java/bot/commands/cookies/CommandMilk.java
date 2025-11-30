@@ -17,7 +17,6 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandMilk extends Command {
@@ -32,12 +31,12 @@ public class CommandMilk extends Command {
 		this.fluffer10kFun = fluffer10kFun;
 	}
 
-	private static String getTitle(final User maker, final User receiver, final Server server) {
+	private String getTitle(final User maker, final User receiver, final Server server) {
 		if (maker.getId() == receiver.getId()) {
 			return "Got a bottle of milk!";
 		}
-		return APIUtils.getUserName(receiver, server) + " got a bottle of milk from "
-				+ APIUtils.getUserName(maker, server) + "!";
+		return fluffer10kFun.apiUtils.getUserName(receiver, server) + " got a bottle of milk from "
+				+ fluffer10kFun.apiUtils.getUserName(maker, server) + "!";
 	}
 
 	@Override

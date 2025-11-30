@@ -11,16 +11,20 @@ import org.javacord.api.interaction.SlashCommandOption;
 import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
-import bot.util.apis.APIUtils;
+import bot.util.apis.MessageUtils;
 import bot.util.subcommand.Command;
 
 public class CommandPp extends Command {
 	private static final long dayMs = 24 * 60 * 60 * 1000;
 
+	private final Fluffer10kFun fluffer10kFun;
+
 	public CommandPp(final Fluffer10kFun fluffer10kFun) {
 		super(fluffer10kFun.apiUtils, "pp", "Measure your pp", //
 				SlashCommandOption.create(SlashCommandOptionType.STRING, "target", "person whose pp you wanna see",
 						false));
+
+		this.fluffer10kFun = fluffer10kFun;
 	}
 
 	private static double getSize(final String hashPart) {
@@ -63,7 +67,7 @@ public class CommandPp extends Command {
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
 		final Server server = interaction.getServer().orElse(null);
-		if (server == null) {
+		if (!MessageUtils.isTextChannel(interaction)) {
 			sendEphemeralMessage(interaction, "This command cannot be used here");
 			return;
 		}
@@ -74,7 +78,7 @@ public class CommandPp extends Command {
 		if (arg != null) {
 			name = arg;
 		} else {
-			name = APIUtils.getUserName(interaction.getUser(), server);
+			name = fluffer10kFun.apiUtils.getUserName(interaction.getUser(), server);
 		}
 		final String hashPart = name;
 

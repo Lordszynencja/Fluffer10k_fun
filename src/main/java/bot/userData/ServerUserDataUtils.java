@@ -101,13 +101,14 @@ public class ServerUserDataUtils {
 			serverUsersData.forEach((serverId, serverData) -> {
 				final Map<String, Object> serverDataOut = new HashMap<>();
 				data.put(serverId.toString(), serverDataOut);
-				serverData.forEach((userId, serverUserData) -> {
-					serverDataOut.put(userId.toString(), serverUserData.toMap());
-				});
+				serverData.forEach(
+						(userId, serverUserData) -> { serverDataOut.put(userId.toString(), serverUserData.toMap()); });
 			});
 
 			try {
-				saveJSONFileWithBackup(serverUsersDataFilePath, data);
+				if (!fluffer10kFun.apiUtils.config.getBoolean("debug")) {
+					saveJSONFileWithBackup(serverUsersDataFilePath, data);
+				}
 			} catch (final IOException e) {
 				e.printStackTrace();
 				fluffer10kFun.apiUtils.messageUtils.sendExceptionToMe(e);

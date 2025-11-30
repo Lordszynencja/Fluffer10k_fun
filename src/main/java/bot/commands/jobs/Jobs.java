@@ -28,7 +28,6 @@ import bot.Fluffer10kFun;
 import bot.data.ServerData;
 import bot.userData.ServerUserData;
 import bot.util.CollectionUtils;
-import bot.util.apis.APIUtils;
 
 public class Jobs {
 	public static class JobData {
@@ -171,14 +170,14 @@ public class Jobs {
 
 		final String msg;
 		if (!correct) {
-			msg = APIUtils.getUserName(interaction.getUser(), server)
+			msg = fluffer10kFun.apiUtils.getUserName(interaction.getUser(), server)
 					+ " failed to provide service to the client, and she went away!";
 		} else {
 			final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(),
 					interaction.getUser().getId());
 			final long pay = jobsById.get(jobId).calculateReward(userData);
 			userData.monies += pay;
-			msg = APIUtils.getUserName(interaction.getUser(), server)
+			msg = fluffer10kFun.apiUtils.getUserName(interaction.getUser(), server)
 					+ " successfully provided service to the client, and got paid " + pay + " gold coins!";
 		}
 		serverData.lastJobUsed = true;

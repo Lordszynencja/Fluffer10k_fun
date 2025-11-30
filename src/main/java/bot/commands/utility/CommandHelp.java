@@ -8,7 +8,7 @@ import bot.util.subcommand.Command;
 
 public class CommandHelp extends Command {
 
-	private static final PagedMessageBuilder<?> messageBuilder = new PagedMessageBuilder<>()//
+	private static final PagedMessageBuilder<?> serverMessageBuilder = new PagedMessageBuilder<>()//
 			.addSimplePage("Player commands", //
 					String.join("\n", //
 							"/avatar - set/reset your character's avatar", //
@@ -81,6 +81,28 @@ public class CommandHelp extends Command {
 							"/mod_role - for owner, to set up mod role for mod commands", //
 							"/void - to send an empty message clearing the chat a bit"));
 
+	private static final PagedMessageBuilder<?> dmMessageBuilder = new PagedMessageBuilder<>()//
+			.addSimplePage("DM commands", //
+					String.join("\n", //
+							"/catch - catch someone running", //
+							"/catch_level - check your catching proficiency", //
+							"/cookie - bake a cookie (results may vary)", //
+							"/fluff - touch fluffy tail!", //
+							"/fluffiness - check how fluffy your tails are", //
+							"/invert - invert an image", //
+							"/meme - sir, we serve memes here", //
+							"/mge - check monster girl encyclopedia", //
+							"/milk - got milk? Now you do", //
+							"/owoify - best cOwOmmand", //
+							"/pfp - Check someone's profile picture", //
+							"/pp - Check your pp size (changes daily)", //
+							"/reminder - set up a message to be sent later", //
+							"/roll - roll a dice", //
+							"/run - run away!", //
+							"/run_level - check your running proficiency", //
+							"/shoot - shoot someone", //
+							"/wag - wag your fluffy tail"));
+
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandHelp(final Fluffer10kFun fluffer10kFun) {
@@ -91,6 +113,9 @@ public class CommandHelp extends Command {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) throws Exception {
+		final PagedMessageBuilder<?> messageBuilder = interaction.getServer().isPresent() ? serverMessageBuilder
+				: dmMessageBuilder;
+
 		fluffer10kFun.pagedMessageUtils.addMessage(messageBuilder.build(), interaction);
 	}
 

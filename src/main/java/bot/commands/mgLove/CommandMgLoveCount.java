@@ -14,14 +14,13 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandMgLoveCount extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandMgLoveCount(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "mg_love_count", "Check how much fun you had with monster girls", //
+		super(fluffer10kFun.apiUtils, "mg_love_count", "Check how much fun you had with monster girls", false, //
 				SlashCommandOption.create(SlashCommandOptionType.USER, "user", "user to check"));
 
 		this.fluffer10kFun = fluffer10kFun;
@@ -40,6 +39,7 @@ public class CommandMgLoveCount extends Command {
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(), user.getId());
 		final String countString = userData.cums == 1 ? "1 time" : userData.cums + " times";
 		interaction.createImmediateResponder()
-				.addEmbed(makeEmbed(APIUtils.getUserName(user, server) + " came " + countString)).respond();
+				.addEmbed(makeEmbed(fluffer10kFun.apiUtils.getUserName(user, server) + " came " + countString))
+				.respond();
 	}
 }

@@ -5,9 +5,9 @@ import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.FileUtils.readFileLines;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.Utils.toMention;
-import static bot.util.apis.MessageUtils.getServerTextChannel;
+import static bot.util.apis.MessageUtils.getTextChannel;
 import static bot.util.apis.MessageUtils.isNSFWChannel;
-import static bot.util.apis.MessageUtils.isServerTextChannel;
+import static bot.util.apis.MessageUtils.isTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 
 import java.io.IOException;
@@ -17,30 +17,28 @@ import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.MessageComponentInteraction;
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
+import bot.data.Emojis;
 import bot.userData.UserData;
-import bot.util.apis.APIUtils;
+import bot.util.apis.commands.FlufferCommand;
+import bot.util.apis.commands.FlufferCommandOption;
 import bot.util.subcommand.Command;
 
 public class CommandFluff extends Command {
 	private final Fluffer10kFun fluffer10kFun;
-
-	private final String tamawooEmoji;
+	private final Emojis emojis;
 
 	private final String[] imageLinksSFW;
 	private final String[] imageLinksNSFW;
 
 	public CommandFluff(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "fluff", "Fluff the tail!", //
-				SlashCommandOption.create(SlashCommandOptionType.USER, "target", "Lets you fluff the tail you want",
-						true));
+		super(fluffer10kFun.apiUtils, new FlufferCommand("fluff", "Fluff the tail!")//
+				.addOption(FlufferCommandOption.user("target", "Lets you fluff the tail you want")//
+						.required()));
 
 		this.fluffer10kFun = fluffer10kFun;
-
-		tamawooEmoji = fluffer10kFun.apiUtils.getEmojiStringByNameFromMyServer("tamawoo");
+		emojis = fluffer10kFun.emojis;
 
 		imageLinksSFW = readFileLines(fluffer10kFun.apiUtils.config.getString("imageFolderPath") + "fluff/links.txt");
 		imageLinksNSFW = readFileLines(
@@ -49,7 +47,7 @@ public class CommandFluff extends Command {
 
 	private String getDescription(final boolean isNew, final int newTailsNumber, final int oldTailsNumber,
 			final String fluffedNick) {
-		final String fluffTailEmoji = fluffer10kFun.fluffyTailUtils.fluffyTailEmoji.getMentionTag();
+		final String fluffTailEmoji = emojis.fluffytail.getMentionTag();
 		if (isNew) {
 			return fluffedNick + " grew a " + fluffTailEmoji + ", welcome to the fluffy family :3";
 		}
@@ -74,19 +72,28 @@ public class CommandFluff extends Command {
 
 		final String tailMsg = fluffer10kFun.fluffyTailUtils.getTailsMsg(tailsNumber)
 				+ (tailsNumber == 1 ? " was" : " were");
-		final String title = fluffedNick + "'s " + tailMsg + " fluffed by " + flufferNick + " " + tamawooEmoji;
+		final String title = fluffedNick + "'s " + tailMsg + " fluffed by " + flufferNick + " " + emojis.tamawoo;
 		final String description = getDescription(isNew, newTailsNumber, tailsNumber, fluffedNick);
 		return makeEmbed(title, description, getRandom(isNSFW ? imageLinksNSFW : imageLinksSFW));
 	}
 
 	public void fluffTailOnButton(final MessageComponentInteraction interaction, final String flufferNick,
 			final long fluffedId, final UserData fluffedData, final String fluffedNick) {
-		interaction.createOriginalMessageUpdater().removeAllComponents().update();
-
 		final EmbedBuilder embed = fluffTailAndMakeEmbed(flufferNick, fluffedData, fluffedNick,
-				getServerTextChannel(interaction).getId(), isNSFWChannel(interaction));
+				getTextChannel(interaction).getId(), isNSFWChannel(interaction));
 
-		interaction.getChannel().get().sendMessage(toMention(fluffedId), embed);
+		if (interaction.getChannel().get().getType().isServerChannelType()) {
+			interaction.createOriginalMessageUpdater()//
+					.removeAllComponents()//
+					.update();
+			interaction.getChannel().get().sendMessage(toMention(fluffedId), embed);
+		} else {
+			interaction.createOriginalMessageUpdater()//
+					.removeAllComponents()//
+					.removeAllEmbeds()//
+					.addEmbed(embed)//
+					.update();
+		}
 	}
 
 	public void fluffTail(final SlashCommandInteraction interaction, final String flufferNick, final long fluffedId,
@@ -94,28 +101,29 @@ public class CommandFluff extends Command {
 		final UserData userData = fluffer10kFun.userDataUtils.getUserData(fluffedId);
 
 		final EmbedBuilder embed = fluffTailAndMakeEmbed(flufferNick, userData, fluffedNick,
-				getServerTextChannel(interaction).getId(), isNSFWChannel(interaction));
+				getTextChannel(interaction).getId(), isNSFWChannel(interaction));
 		interaction.createImmediateResponder().append(toMention(fluffedId)).addEmbed(embed).respond();
 	}
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
-		if (!isServerTextChannel(interaction)) {
+		if (!isTextChannel(interaction)) {
 			sendEphemeralMessage(interaction, "This command cannot be used here");
 			return;
 		}
 
 		final User user = interaction.getUser();
-		final Server server = interaction.getServer().get();
+		final Server server = interaction.getServer().orElse(null);
 		final User mentionedUser = interaction.getArgumentUserValueByName("target").orElse(null);
 
 		if (mentionedUser != null && mentionedUser.getId() != user.getId()) {
-			fluffTail(interaction, APIUtils.getUserName(user, server), mentionedUser.getId(),
-					APIUtils.getUserName(mentionedUser, server));
+			fluffTail(interaction, fluffer10kFun.apiUtils.getUserName(user, server), mentionedUser.getId(),
+					fluffer10kFun.apiUtils.getUserName(mentionedUser, server));
 			return;
 		}
 
-		final String title = APIUtils.getUserName(user, server) + " fluffed some very fluffy tails " + tamawooEmoji;
+		final String title = fluffer10kFun.apiUtils.getUserName(user, server) + " fluffed some very fluffy tails "
+				+ emojis.tamawoo;
 		interaction.createImmediateResponder()
 				.addEmbed(
 						makeEmbed(title, null, getRandom(isNSFWChannel(interaction) ? imageLinksNSFW : imageLinksSFW)))

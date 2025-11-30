@@ -37,6 +37,7 @@ import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserHeroAcademyQuestRogue2StepData;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestHeroAcademy extends Quest {
 	private static final long price = 2000;
@@ -70,7 +71,8 @@ public class QuestHeroAcademy extends Quest {
 				.update();
 	}
 
-	private void continueChooseClassStep(final MessageComponentInteraction interaction, final ServerUserData userData) {
+	private void continueChooseClassStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
+			final ServerUserData userData) {
 		addChooseClassEmbed(interaction);
 	}
 
@@ -237,7 +239,7 @@ public class QuestHeroAcademy extends Quest {
 	public void continueBerserker1Step(final TextChannel channel, final ServerUserData userData, final User user) {
 		userData.rpg.setQuest(new UserQuestData(type, QuestStep.BERSERKER_2, berserker2StepDescription));
 		channel.sendMessage(makeEmbed(type.name, berserker2StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)));
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)));
 
 		if (userData.rpg.strength >= 2) {
 			continueBerserker2Step(channel, userData, user);
@@ -251,14 +253,15 @@ public class QuestHeroAcademy extends Quest {
 	public void continueBerserker2Step(final TextChannel channel, final ServerUserData userData, final User user) {
 		userData.rpg.setQuest(new UserQuestData(type, QuestStep.BERSERKER_3, berserker3StepDescription));
 		channel.sendMessage(makeEmbed(type.name, berserker3StepText), //
-				userData.addExpAndMakeEmbed(250, user, channel.asServerChannel().map(c -> c.getServer()).orElse(null)));
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user,
+						channel.asServerChannel().map(c -> c.getServer()).orElse(null)));
 	}
 
 	public void continueBerserker2Step(final InteractionImmediateResponseBuilder responder,
 			final ServerUserData userData, final Server server, final User user) {
 		userData.rpg.setQuest(new UserQuestData(type, QuestStep.BERSERKER_3, berserker3StepDescription));
 		responder.addEmbed(makeEmbed(type.name, berserker3StepText))//
-				.addEmbed(userData.addExpAndMakeEmbed(250, user, server));
+				.addEmbed(userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, server));
 	}
 
 	private static final String berserker4StepText = String.join("\n",
@@ -286,7 +289,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, berserkerFinishedStepText), //
-				userData.addExpAndMakeEmbed(500, user, getServer(channel)), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 500, user, getServer(channel)), //
 				makeEmbed("Obtained items", "You got " + itemNames));
 	}
 
@@ -320,7 +323,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, mage2StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)));
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)));
 	}
 
 	private static final String mage3StepText = dialogue(
@@ -331,7 +334,7 @@ public class QuestHeroAcademy extends Quest {
 		userData.rpg.setQuest(new UserQuestData(type, QuestStep.MAGE_3, mage3StepDescription));
 
 		channel.sendMessage(makeEmbed(type.name, mage3StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)));
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)));
 	}
 
 	private static final String mage4StepText = dialogue(
@@ -359,7 +362,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, mageFinishedStepText), //
-				userData.addExpAndMakeEmbed(500, user, getServer(channel)), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 500, user, getServer(channel)), //
 				makeEmbed("Obtained items", "You got " + itemNames + "!"));
 	}
 
@@ -391,7 +394,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, paladin2StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)), //
 				makeEmbed("Obtained item", "You got a wooden shield"));
 	}
 
@@ -402,7 +405,7 @@ public class QuestHeroAcademy extends Quest {
 		userData.rpg.setQuest(
 				new UserQuestData(QuestType.HERO_ACADEMY_QUEST, QuestStep.PALADIN_3, paladin3StepDescription));
 		channel.sendMessage(makeEmbed(type.name, paladin3StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)));
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)));
 	}
 
 	private static final String paladinFinishedStepText = dialogue(
@@ -416,7 +419,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, paladinFinishedStepText), //
-				userData.addExpAndMakeEmbed(500, user, getServer(channel)), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 500, user, getServer(channel)), //
 				makeEmbed("Obtained items", "You got a short sword and two health potions!"));
 	}
 
@@ -453,7 +456,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, ranger2StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)));
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)));
 	}
 
 	private static final String ranger3StepText = String.join("\n", //
@@ -468,7 +471,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, ranger3StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)));
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)));
 	}
 
 	private static final String rangerFinishedStepText = String.join("\n", //
@@ -485,7 +488,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, rangerFinishedStepText), //
-				userData.addExpAndMakeEmbed(500, user, getServer(channel)), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 500, user, getServer(channel)), //
 				makeEmbed("Obtained item", "You got a short bow and a potion of swiftness!"));
 	}
 
@@ -514,7 +517,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, rogue2StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)));
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)));
 	}
 
 	private static final String rogue3StepText = dialogue(
@@ -527,7 +530,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, rogue3StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)), //
 				makeEmbed("Obtained item", "You got a knife."));
 	}
 
@@ -542,7 +545,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, rogueFinishedStepText), //
-				userData.addExpAndMakeEmbed(500, user, getServer(channel)), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 500, user, getServer(channel)), //
 				makeEmbed("Obtained item", "You got an agility potion!"));
 	}
 
@@ -581,7 +584,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, warlock2StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)), //
 				makeEmbed("Obtained item", "You got a magic scroll!"));
 	}
 
@@ -594,7 +597,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, warlock3StepText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)));
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)));
 	}
 
 	private static final String warlock4StepText = dialogue(
@@ -616,7 +619,7 @@ public class QuestHeroAcademy extends Quest {
 
 		final User user = fluffer10kFun.apiUtils.getUser(userData.userId);
 		channel.sendMessage(makeEmbed(type.name, warlockFinishedStepText), //
-				userData.addExpAndMakeEmbed(500, user, getServer(channel)), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 500, user, getServer(channel)), //
 				makeEmbed("Obtained item", "You got an apprentice staff and a strength potion!"));
 	}
 

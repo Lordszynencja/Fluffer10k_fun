@@ -26,7 +26,7 @@ public class CommandUse extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandUse(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "use", "Use an item");
+		super(fluffer10kFun.apiUtils, "use", "Use an item", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

@@ -92,6 +92,7 @@ import bot.commands.utility.CommandReminder;
 import bot.commands.utility.CommandRoll;
 import bot.commands.utility.CommandVoid;
 import bot.data.BotDataUtils;
+import bot.data.Emojis;
 import bot.data.items.Items;
 import bot.userData.ServerUserDataUtils;
 import bot.userData.UserDataUtils;
@@ -104,6 +105,7 @@ public class Fluffer10kFun {
 	private static final String inviteLink = "https://discord.com/api/oauth2/authorize?client_id=900109965035974706&permissions=277025508352&scope=bot%20applications.commands";
 
 	public final APIUtils apiUtils;
+	public final Emojis emojis;
 	public final PagedMessageUtils pagedMessageUtils;
 	public final ModularPromptUtils modularPromptUtils;
 
@@ -190,120 +192,129 @@ public class Fluffer10kFun {
 	public Fluffer10kFun() throws IOException {
 		apiUtils = new APIUtils("Fluffer 10k Fun", inviteLink, "fluffer10kFun_config.txt",
 				asList(Intent.GUILD_MEMBERS));
-		pagedMessageUtils = new PagedMessageUtils(apiUtils.commandHandlers);
-		modularPromptUtils = new ModularPromptUtils(apiUtils.commandHandlers);
 
-		botDataUtils = new BotDataUtils(this);
-		items = new Items(this);
-		BlacksmithTasksList.addTasks();
-		BlacksmithBlueprintsList.addBlueprints(items);
-		serverUserDataUtils = new ServerUserDataUtils(this);
-		cookieUtils = new CookieUtils(this);
-		goldenCookies = new GoldenCookies(this);
-		jobs = new Jobs(this);
-		fluffyTailUtils = new FluffyTailUtils(this);
-		userDataUtils = new UserDataUtils(this);
-		rpgStatUtils = new RPGStatUtils(this);
-		rpgEnemyActionSelectorUtils = new RPGEnemyActionSelectorUtils(this);
-		rpgEnemies = new RPGEnemies(this);
-		questUtils = new QuestUtils(this);
-		fightActionsHandler = new FightActionsHandler(this);
-		fightActionUtils = new FightActionUtils(this);
-		fighterCreator = new FighterCreator(this);
-		fightStart = new FightStart(this);
-		fightSender = new FightSender(this);
+		try {
+			emojis = new Emojis(apiUtils);
+			pagedMessageUtils = new PagedMessageUtils(apiUtils.commandHandlers);
+			modularPromptUtils = new ModularPromptUtils(apiUtils.commandHandlers);
 
-		commandAnswer = new CommandAnswer(this);
-		commandAvatar = new CommandAvatar(this);
-		commandBackpack = new CommandBackpack(this);
-		commandBalance = new CommandBalance(this);
-		commandBlacksmith = new CommandBlacksmith(this);
-		commandBlessings = new CommandBlessings(this);
-		commandBotChannel = new CommandBotChannel(this);
-		commandCasino = new CommandCasino(this);
-		commandCatch = new CommandCatch(this);
-		commandCatchLevel = new CommandCatchLevel(this);
-		commandChop = new CommandChop(this);
-		commandCookie = new CommandCookie(this);
-		commandCookies = new CommandCookies(this);
-		commandDaily = new CommandDaily(this);
-		commandDanuki = new CommandDanuki(this);
-		commandDebug = new CommandDebug(this);
-		commandEq = new CommandEq(this);
-		commandEquip = new CommandEquip(this);
-		commandExplore = new CommandExplore(this);
-		commandFight = new CommandFight(this);
-		commandFluff = new CommandFluff(this);
-		commandFluffiness = new CommandFluffiness(this);
-		commandHarem = new CommandHarem(this);
-		commandHelp = new CommandHelp(this);
-		commandHouse = new CommandHouse(this);
-		commandImprove = new CommandImprove(this);
-		commandInvert = new CommandInvert(this);
-		commandJeweller = new CommandJeweller(this);
-		commandMgLove = new CommandMgLove(this);
-		commandMgLoveCount = new CommandMgLoveCount(this);
-		commandMgLoveHard = new CommandMgLoveHard(this);
-		commandMgLoveProtectionUse = new CommandMgLoveProtectionUse(this);
-		commandMeme = new CommandMeme(this);
-		commandMGE = new CommandMGE(this);
-		commandMilk = new CommandMilk(this);
-		commandMilks = new CommandMilks(this);
-		commandModRole = new CommandModRole(this);
-		commandName = new CommandName(this);
-		commandOwoify = new CommandOwoify(this);
-		commandPfp = new CommandPfp(this);
-		commandPp = new CommandPp(this);
-		commandQuest = new CommandQuest(this);
-		commandRace = new CommandRace(this);
-		commandReminder = new CommandReminder(this);
-		commandRoll = new CommandRoll(this);
-		commandRun = new CommandRun(this);
-		commandRunLevel = new CommandRunLevel(this);
-		commandSaves = new CommandSaves(this);
-		commandShoot = new CommandShoot(this);
-		commandShop = new CommandShop(this);
-		commandSkills = new CommandSkills(this);
-		commandSpellbook = new CommandSpellbook(this);
-		commandStatusDescription = new CommandStatusDescription(this);
-		commandStatuses = new CommandStatuses(this);
-		commandTrade = new CommandTrade(this);
-		commandTransfer = new CommandTransfer(this);
-		commandUnequip = new CommandUnequip(this);
-		commandUpgrade = new CommandUpgrade(this);
-		commandUse = new CommandUse(this);
-		commandVoid = new CommandVoid(this);
-		commandWag = new CommandWag(this);
+			botDataUtils = new BotDataUtils(this);
+			items = new Items(this);
+			BlacksmithTasksList.addTasks();
+			BlacksmithBlueprintsList.addBlueprints(items);
+			serverUserDataUtils = new ServerUserDataUtils(this);
+			cookieUtils = new CookieUtils(this);
+			goldenCookies = new GoldenCookies(this);
+			jobs = new Jobs(this);
+			fluffyTailUtils = new FluffyTailUtils(this);
+			userDataUtils = new UserDataUtils(this);
+			rpgStatUtils = new RPGStatUtils(this);
+			rpgEnemyActionSelectorUtils = new RPGEnemyActionSelectorUtils(this);
+			rpgEnemies = new RPGEnemies(this);
+			questUtils = new QuestUtils(this);
+			fightActionsHandler = new FightActionsHandler(this);
+			fightActionUtils = new FightActionUtils(this);
+			fighterCreator = new FighterCreator(this);
+			fightStart = new FightStart(this);
+			fightSender = new FightSender(this);
 
-		final SlashCommandBuilder scb = SlashCommand.with("print", "prints")
-				.addOption(SlashCommandOption.create(SlashCommandOptionType.STRING, "arg", "arg", true));
-		apiUtils.commandHandlers.addSlashCommandHandler("print", interaction -> {
-			interaction.createImmediateResponder().append("ok").respond();
-			System.out.println(interaction.getArgumentStringValueByName("arg").get());
-		}, scb);
+			commandAnswer = new CommandAnswer(this);
+			commandAvatar = new CommandAvatar(this);
+			commandBackpack = new CommandBackpack(this);
+			commandBalance = new CommandBalance(this);
+			commandBlacksmith = new CommandBlacksmith(this);
+			commandBlessings = new CommandBlessings(this);
+			commandBotChannel = new CommandBotChannel(this);
+			commandCasino = new CommandCasino(this);
+			commandCatch = new CommandCatch(this);
+			commandCatchLevel = new CommandCatchLevel(this);
+			commandChop = new CommandChop(this);
+			commandCookie = new CommandCookie(this);
+			commandCookies = new CommandCookies(this);
+			commandDaily = new CommandDaily(this);
+			commandDanuki = new CommandDanuki(this);
+			commandDebug = new CommandDebug(this);
+			commandEq = new CommandEq(this);
+			commandEquip = new CommandEquip(this);
+			commandExplore = new CommandExplore(this);
+			commandFight = new CommandFight(this);
+			commandFluff = new CommandFluff(this);
+			commandFluffiness = new CommandFluffiness(this);
+			commandHarem = new CommandHarem(this);
+			commandHelp = new CommandHelp(this);
+			commandHouse = new CommandHouse(this);
+			commandImprove = new CommandImprove(this);
+			commandInvert = new CommandInvert(this);
+			commandJeweller = new CommandJeweller(this);
+			commandMgLove = new CommandMgLove(this);
+			commandMgLoveCount = new CommandMgLoveCount(this);
+			commandMgLoveHard = new CommandMgLoveHard(this);
+			commandMgLoveProtectionUse = new CommandMgLoveProtectionUse(this);
+			commandMeme = new CommandMeme(this);
+			commandMGE = new CommandMGE(this);
+			commandMilk = new CommandMilk(this);
+			commandMilks = new CommandMilks(this);
+			commandModRole = new CommandModRole(this);
+			commandName = new CommandName(this);
+			commandOwoify = new CommandOwoify(this);
+			commandPfp = new CommandPfp(this);
+			commandPp = new CommandPp(this);
+			commandQuest = new CommandQuest(this);
+			commandRace = new CommandRace(this);
+			commandReminder = new CommandReminder(this);
+			commandRoll = new CommandRoll(this);
+			commandRun = new CommandRun(this);
+			commandRunLevel = new CommandRunLevel(this);
+			commandSaves = new CommandSaves(this);
+			commandShoot = new CommandShoot(this);
+			commandShop = new CommandShop(this);
+			commandSkills = new CommandSkills(this);
+			commandSpellbook = new CommandSpellbook(this);
+			commandStatusDescription = new CommandStatusDescription(this);
+			commandStatuses = new CommandStatuses(this);
+			commandTrade = new CommandTrade(this);
+			commandTransfer = new CommandTransfer(this);
+			commandUnequip = new CommandUnequip(this);
+			commandUpgrade = new CommandUpgrade(this);
+			commandUse = new CommandUse(this);
+			commandVoid = new CommandVoid(this);
+			commandWag = new CommandWag(this);
 
-		apiUtils.api.addServerJoinListener(event -> {
-			event.getServer().getOwner().get().sendMessage(makeEmbed("Setup", "To set up the bot, use:\n"//
-					+ "/bot_channel in the channel where bot can send game tasks (optional, but without it tasks won't appear and experience will be worse)\n"//
-					+ "/mod_role @role to set role for mod commands (optional, some commands will only work for people with that role)"));
-		});
+			final SlashCommandBuilder scb = SlashCommand.with("print", "prints")
+					.addOption(SlashCommandOption.create(SlashCommandOptionType.STRING, "arg", "arg", true));
+			apiUtils.commandHandlers.addSlashCommandHandler("print", interaction -> {
+				interaction.createImmediateResponder().append("ok").respond();
+				System.out.println(interaction.getArgumentStringValueByName("arg").get());
+			}, scb);
 
-		apiUtils.endInit();
+			apiUtils.api.addServerJoinListener(event -> {
+				event.getServer().getOwner().get().sendMessage(makeEmbed("Setup", "To set up the bot, use:\n"//
+						+ "/bot_channel in the channel where bot can send game tasks (optional, but without it tasks won't appear and experience will be worse)\n"//
+						+ "/mod_role @role to set role for mod commands (optional, some commands will only work for people with that role)"));
+			});
 
-		CommandHandlers.addOnExit(() -> {
-			botDataUtils.forEachServer((serverId, serverData) -> {
-				final MessageBuilder msg = new MessageBuilder()//
-						.addEmbed(makeEmbed(
-								"Restarting the bot, please wait.\n\nReason:\n" + CommandHandlers.exitMessage));
-				final CompletableFuture<Message> message = serverData.sendMessageOnBotChannel(serverId, apiUtils, msg);
-				if (message != null) {
-					try {
-						message.get();
-					} catch (InterruptedException | ExecutionException e) {
+			apiUtils.endInit();
+
+			CommandHandlers.addOnExit(() -> {
+				botDataUtils.forEachServer((serverId, serverData) -> {
+					final MessageBuilder msg = new MessageBuilder()//
+							.addEmbed(makeEmbed(
+									"Restarting the bot, please wait.\n\nReason:\n" + CommandHandlers.exitMessage));
+					final CompletableFuture<Message> message = serverData.sendMessageOnBotChannel(serverId, apiUtils,
+							msg);
+					if (message != null) {
+						try {
+							message.get();
+						} catch (InterruptedException | ExecutionException e) {
+						}
 					}
-				}
-			}, apiUtils.messageUtils);
-		});
+				}, apiUtils.messageUtils);
+			});
+		} catch (final Exception e) {
+			apiUtils.messageUtils.sendExceptionToMe(e);
+
+			throw e;
+		}
 	}
 
 	public static void main(final String[] args) {

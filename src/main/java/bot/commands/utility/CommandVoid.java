@@ -16,7 +16,7 @@ public class CommandVoid extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandVoid(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "void", "Creates void (mod only)");
+		super(fluffer10kFun.apiUtils, "void", "Creates void (mod only)", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

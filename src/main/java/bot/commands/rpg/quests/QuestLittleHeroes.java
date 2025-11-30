@@ -11,6 +11,7 @@ import bot.data.quests.QuestType;
 import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestLittleHeroes extends Quest {
 	public QuestLittleHeroes() {
@@ -56,7 +57,7 @@ public class QuestLittleHeroes extends Quest {
 					"They say as they start to fight playfully. That's not much but that's all you could do for now, and possibly all they need to continue their dream."));
 	private static final String stepFinishedDescription = "The children happily practice with wooden swords to become real heroes one day.";
 
-	private void continueCollectingSwordsStep(final MessageComponentInteraction interaction,
+	private void continueCollectingSwordsStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		if (!userData.hasItem(WeaponItems.WOODEN_SWORD, 3)) {
 			interaction.createOriginalMessageUpdater()
@@ -68,7 +69,7 @@ public class QuestLittleHeroes extends Quest {
 		userData.addItem(WeaponItems.WOODEN_SWORD, -3);
 
 		interaction.createOriginalMessageUpdater().addEmbeds(makeEmbed(type.name, stepFinishedText), //
-				userData.addExpAndMakeEmbed(250, interaction.getUser(), interaction.getServer().get()))//
+				userData.addExpAndMakeEmbed(apiUtils, 250, interaction.getUser(), interaction.getServer().get()))//
 				.update();
 	}
 }

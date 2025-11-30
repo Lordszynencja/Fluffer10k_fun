@@ -209,13 +209,13 @@ public class UserRPGData {
 		return map;
 	}
 
-	public String getSaveDescription(final User user, final Server server) {
-		return "name: " + getName(user, server) + ", level: " + level + " (" + strength + "/" + agility + "/"
+	public String getSaveDescription(final APIUtils apiUtils, final User user, final Server server) {
+		return "name: " + getName(apiUtils, user, server) + ", level: " + level + " (" + strength + "/" + agility + "/"
 				+ intelligence + ")";
 	}
 
-	public String getName(final User user, final Server server) {
-		return name == null ? APIUtils.getUserName(user, server) : name;
+	public String getName(final APIUtils apiUtils, final User user, final Server server) {
+		return name == null ? apiUtils.getUserName(user, server) : name;
 	}
 
 	public StatAccessor getStatAccessor(final String name) {

@@ -25,6 +25,7 @@ import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
 import bot.userData.rpg.questData.UserSphinxQuestionsQuestAnsweringQuestionsStepData;
 import bot.util.Utils;
+import bot.util.apis.APIUtils;
 import bot.util.apis.MessageUtils;
 
 public class QuestSphinxQuestions extends Quest {
@@ -143,7 +144,7 @@ public class QuestSphinxQuestions extends Quest {
 			dialogue("Answer my question, mortal."), //
 			dialogue("%1$s"));
 
-	private void continueAnsweringQuestionsStep(final MessageComponentInteraction interaction,
+	private void continueAnsweringQuestionsStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		final UserSphinxQuestionsQuestAnsweringQuestionsStepData questData = (UserSphinxQuestionsQuestAnsweringQuestionsStepData) userData.rpg.quests
 				.get(type);
@@ -217,7 +218,8 @@ public class QuestSphinxQuestions extends Quest {
 			final String text = String.format(textFormat, answer, questData.currentQuestion.question);
 			interaction.createImmediateResponder()
 					.addEmbeds(makeEmbed(type.name, text, MonsterGirlRace.SPHINX.imageLink), //
-							userData.addExpAndMakeEmbed(1_000, interaction.getUser(), interaction.getServer().get()))
+							userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 1_000, interaction.getUser(),
+									interaction.getServer().get()))
 					.respond();
 
 			fluffer10kFun.commandAnswer.addAnswerHandler(getServerTextChannel(interaction).getId(),
@@ -231,7 +233,8 @@ public class QuestSphinxQuestions extends Quest {
 
 		final String text = String.format(stepFinishedText, answer);
 		interaction.createImmediateResponder().addEmbeds(makeEmbed(type.name, text, MonsterGirlRace.SPHINX.imageLink), //
-				userData.addExpAndMakeEmbed(5_000, interaction.getUser(), interaction.getServer().get()), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 5_000, interaction.getUser(),
+						interaction.getServer().get()), //
 				makeEmbed("Obtained reward", "You got a huge pile of gold and a golden ring with initials!"))//
 				.respond();
 	}

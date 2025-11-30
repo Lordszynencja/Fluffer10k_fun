@@ -17,7 +17,7 @@ public class CommandModRole extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandModRole(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "mod_role", "Set mod role (only server owner)", //
+		super(fluffer10kFun.apiUtils, "mod_role", "Set mod role (only server owner)", false, //
 				SlashCommandOption.create(SlashCommandOptionType.ROLE, "role",
 						"Role that will be set as mod role for bot commands on this server", true));
 

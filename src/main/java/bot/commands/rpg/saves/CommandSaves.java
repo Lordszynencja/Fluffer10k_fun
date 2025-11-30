@@ -10,7 +10,7 @@ import bot.util.subcommand.Command;
 
 public class CommandSaves extends Command {
 	public CommandSaves(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "saves", "Handle saves", //
+		super(fluffer10kFun.apiUtils, "saves", "Handle saves", false, //
 				new CommandSavesDelete(fluffer10kFun), //
 				new CommandSavesLoad(fluffer10kFun), //
 				new CommandSavesList(fluffer10kFun), //

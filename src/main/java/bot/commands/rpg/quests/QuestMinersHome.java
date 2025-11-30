@@ -19,6 +19,7 @@ import bot.data.quests.QuestType;
 import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestMinersHome extends Quest {
 	private static final String werebatsLeftParam = "werebatsLeft";
@@ -62,7 +63,7 @@ public class QuestMinersHome extends Quest {
 				.addEmbed(newQuestMessage(stepClearingMineText).setImage(MonsterGirlRace.DWARF.imageLink)).respond();
 	}
 
-	private void continueClearingMineStep(final MessageComponentInteraction interaction,
+	private void continueClearingMineStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		if (!userData.canStartOtherFight()) {
 			String msg;
@@ -106,14 +107,14 @@ public class QuestMinersHome extends Quest {
 		userData.rpg.setQuest(new UserQuestData(type, QuestStep.CHOPPING_WOOD, stepChoppingWoodDescription, true));
 
 		channel.sendMessage(makeEmbed(type.name, stepChoppingWoodText), //
-				userData.addExpAndMakeEmbed(250, user, getServer(channel)));
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 250, user, getServer(channel)));
 	}
 
 	private static final String stepFinishedText = description(
 			"You finish the work and the mine is ready to use, Now you try to remember where you put your pick...");
 	private static final String stepFinishedDescription = "Mine is ready to use.";
 
-	private void continueChoppingWoodStep(final MessageComponentInteraction interaction,
+	private void continueChoppingWoodStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		if (!userData.hasItem(WeaponItems.LUMBERJACK_AXE) && //
 				!userData.hasItem(WeaponItems.BATTLE_AXE) && //
@@ -127,7 +128,7 @@ public class QuestMinersHome extends Quest {
 		userData.rpg.setQuest(new UserQuestData(type, QuestStep.FINISHED, stepFinishedDescription));
 
 		interaction.createOriginalMessageUpdater().addEmbeds(makeEmbed(type.name, stepFinishedText), //
-				userData.addExpAndMakeEmbed(250, interaction.getUser(), interaction.getServer().get()), //
+				userData.addExpAndMakeEmbed(apiUtils, 250, interaction.getUser(), interaction.getServer().get()), //
 				makeEmbed("Unlocked reward",
 						"You have access to the mine!\nUse " + bold("/blacksmith mine") + " to mine in it"))//
 				.update();

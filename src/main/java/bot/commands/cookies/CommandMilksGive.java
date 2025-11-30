@@ -14,7 +14,6 @@ import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Subcommand;
 
 public class CommandMilksGive extends Subcommand {
@@ -50,8 +49,8 @@ public class CommandMilksGive extends Subcommand {
 		addToLongOnMap(giverData.cookies.milkCounts, milkName, -1);
 		addToLongOnMap(receiverData.cookies.milkCounts, milkName, 1);
 
-		final String title = APIUtils.getUserName(receiver, server) + " gets " + milkName + " from "
-				+ APIUtils.getUserName(giver, server) + "!";
+		final String title = fluffer10kFun.apiUtils.getUserName(receiver, server) + " gets " + milkName + " from "
+				+ fluffer10kFun.apiUtils.getUserName(giver, server) + "!";
 		final EmbedBuilder embed = makeEmbed(title)//
 				.setImage(fluffer10kFun.cookieUtils.getMilkFile(milkName))//
 				.setColor(CookieUtils.milkColor);

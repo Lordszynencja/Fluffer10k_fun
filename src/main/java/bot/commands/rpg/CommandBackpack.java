@@ -106,7 +106,7 @@ public class CommandBackpack extends Command {
 	}
 
 	public CommandBackpack(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "backpack", "Check your items", //
+		super(fluffer10kFun.apiUtils, "backpack", "Check your items", false, //
 				createItemTypeOption(), //
 				createItemRarityOption());
 

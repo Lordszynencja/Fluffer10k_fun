@@ -19,7 +19,6 @@ import bot.Fluffer10kFun;
 import bot.data.ServerData;
 import bot.userData.ServerUserData;
 import bot.util.RandomUtils;
-import bot.util.apis.APIUtils;
 
 public class GoldenCookies {
 
@@ -109,7 +108,7 @@ public class GoldenCookies {
 		this.fluffer10kFun = fluffer10kFun;
 
 		effects = new GoldenCookieEffect[] { //
-				new GoldenCookieBonusExp(), //
+				new GoldenCookieBonusExp(fluffer10kFun), //
 				new GoldenCookieCookieBox(fluffer10kFun), //
 				new GoldenCookieExpMultiplier(), //
 				new GoldenCookieGold(), //
@@ -134,8 +133,8 @@ public class GoldenCookies {
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(server.getId(),
 				interaction.getUser().getId());
-		final EmbedBuilder embed = prepareTemplateEmbed(APIUtils.getUserName(interaction.getUser(), server),
-				serverData.goldenCookiesCaught);
+		final EmbedBuilder embed = prepareTemplateEmbed(
+				fluffer10kFun.apiUtils.getUserName(interaction.getUser(), server), serverData.goldenCookiesCaught);
 
 		RandomUtils.getRandom(effects).apply(interaction, userData, serverData.goldenCookiesCaught, embed);
 	}

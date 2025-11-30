@@ -5,13 +5,14 @@ import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.FileUtils.readFileLines;
 import static bot.util.RandomUtils.getRandom;
 import static bot.util.RandomUtils.getRandomBoolean;
-import static bot.util.apis.MessageUtils.getServerTextChannel;
-import static bot.util.apis.MessageUtils.isServerTextChannel;
+import static bot.util.apis.MessageUtils.getTextChannel;
+import static bot.util.apis.MessageUtils.isTextChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 
 import java.io.IOException;
 
 import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
@@ -20,7 +21,6 @@ import bot.commands.running.RunningUtils.RunnerData;
 import bot.userData.ServerUserData;
 import bot.userData.UserData;
 import bot.userData.UserStatusesData.UserStatusType;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandCatch extends Command {
@@ -40,13 +40,13 @@ public class CommandCatch extends Command {
 
 	@Override
 	public void handle(final SlashCommandInteraction interaction) {
-		if (!isServerTextChannel(interaction)) {
+		if (!isTextChannel(interaction)) {
 			sendEphemeralMessage(interaction, "Can't catch in here");
 			return;
 		}
 
-		final long serverId = interaction.getServer().get().getId();
-		final long channelId = getServerTextChannel(interaction).getId();
+		final Server server = interaction.getServer().orElse(null);
+		final long channelId = getTextChannel(interaction).getId();
 		final RunnerData runner = RunningUtils.getCurrentRunner(channelId);
 		final User catcher = interaction.getUser();
 
@@ -63,13 +63,9 @@ public class CommandCatch extends Command {
 
 		final UserData runnerUserData = fluffer10kFun.userDataUtils.getUserData(runner.userId);
 		final UserData catcherUserData = fluffer10kFun.userDataUtils.getUserData(catcher.getId());
-		final ServerUserData runnerServerUserData = fluffer10kFun.serverUserDataUtils.getUserData(serverId,
-				runner.userId);
-		final ServerUserData catcherServerUserData = fluffer10kFun.serverUserDataUtils.getUserData(serverId,
-				catcher.getId());
 
-		final boolean runnerAdvantage = runnerServerUserData.statuses.isStatus(UserStatusType.RUNNING_ADVANTAGE);
-		final boolean catcherAdvantage = catcherServerUserData.statuses.isStatus(UserStatusType.RUNNING_ADVANTAGE);
+		final boolean runnerAdvantage = server == null ? false : getAdvantage(server.getId(), runner.userId);
+		final boolean catcherAdvantage = server == null ? false : getAdvantage(server.getId(), catcher.getId());
 
 		final boolean isCaught;
 		if (runnerAdvantage && !catcherAdvantage) {
@@ -93,7 +89,8 @@ public class CommandCatch extends Command {
 			catcherUserData.catchExp += 2;
 
 			final EmbedBuilder embed = makeEmbed(
-					APIUtils.getUserName(catcher, interaction.getServer().get()) + " caught " + runner.nick + "!")//
+					fluffer10kFun.apiUtils.getUserName(catcher, interaction.getServer().get()) + " caught "
+							+ runner.nick + "!")//
 					.setImage(getRandom(imageLinks));
 
 			interaction.createImmediateResponder().addEmbed(embed).respond();
@@ -104,5 +101,11 @@ public class CommandCatch extends Command {
 			interaction.createImmediateResponder().addEmbed(makeEmbed(runner.nick + " escaped!")).respond();
 		}
 		removeRunner(channelId, runner);
+	}
+
+	private boolean getAdvantage(final long serverId, final long userId) {
+		final ServerUserData serverUserData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, userId);
+
+		return serverUserData.statuses.isStatus(UserStatusType.RUNNING_ADVANTAGE);
 	}
 }

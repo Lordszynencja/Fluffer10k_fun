@@ -40,7 +40,7 @@ public class CommandBlacksmith extends Command {
 	}
 
 	public CommandBlacksmith(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "blacksmith", "Crafting and enchanting", //
+		super(fluffer10kFun.apiUtils, "blacksmith", "Crafting and enchanting", false, //
 				new CommandBlacksmithBlueprints(fluffer10kFun), //
 				new CommandBlacksmithBuy(fluffer10kFun), //
 				new CommandBlacksmithMine(fluffer10kFun), //

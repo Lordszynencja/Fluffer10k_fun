@@ -15,14 +15,13 @@ import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
-import bot.util.apis.APIUtils;
 import bot.util.subcommand.Command;
 
 public class CommandBalance extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandBalance(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "balance", "Check your wallet");
+		super(fluffer10kFun.apiUtils, "balance", "Check your wallet", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}
@@ -40,7 +39,7 @@ public class CommandBalance extends Command {
 
 		final ServerUserData userData = fluffer10kFun.serverUserDataUtils.getUserData(serverId, user.getId());
 
-		final EmbedBuilder embed = makeEmbed(APIUtils.getUserName(user, server) + "'s balance")//
+		final EmbedBuilder embed = makeEmbed(fluffer10kFun.apiUtils.getUserName(user, server) + "'s balance")//
 				.addField("Gold coins", formatNumber(userData.monies))//
 				.addField(capitalize(playCoinsName), formatNumber(userData.playCoins));
 

@@ -13,7 +13,7 @@ import bot.util.subcommand.Command;
 
 public class CommandStatusDescription extends Command {
 	public CommandStatusDescription(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "status_description", "Read about a fight status", //
+		super(fluffer10kFun.apiUtils, "status_description", "Read about a fight status", false, //
 				SlashCommandOption.create(SlashCommandOptionType.STRING, "statusName", "name of the status to look for",
 						true));
 	}

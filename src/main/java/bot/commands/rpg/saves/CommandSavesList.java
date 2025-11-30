@@ -37,8 +37,8 @@ public class CommandSavesList extends Subcommand {
 		}
 
 		final List<EmbedField> saveDescriptions = new ArrayList<>();
-		userData.saves.forEach(
-				(name, data) -> saveDescriptions.add(new EmbedField(name, data.getSaveDescription(user, server))));
+		userData.saves.forEach((name, data) -> saveDescriptions
+				.add(new EmbedField(name, data.getSaveDescription(fluffer10kFun.apiUtils, user, server))));
 		saveDescriptions.sort((o0, o1) -> o0.name.compareTo(o1.name));
 
 		final String title = "Your saves (" + saveDescriptions.size() + "/" + CommandSavesSave.maxSaves + ")";

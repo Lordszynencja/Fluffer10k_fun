@@ -28,7 +28,7 @@ public class CommandJeweller extends Command {
 	}
 
 	public CommandJeweller(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "jeweller", "Jeweller commands", //
+		super(fluffer10kFun.apiUtils, "jeweller", "Jeweller commands", false, //
 				new CommandJewellerBuy(fluffer10kFun), //
 				new CommandJewellerJoin(fluffer10kFun), //
 				new CommandJewellerRefine(fluffer10kFun), //

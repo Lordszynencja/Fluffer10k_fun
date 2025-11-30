@@ -13,6 +13,7 @@ import bot.data.quests.QuestType;
 import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestSleepyMouseTeddyBear extends Quest {
 	public QuestSleepyMouseTeddyBear() {
@@ -53,7 +54,7 @@ public class QuestSleepyMouseTeddyBear extends Quest {
 					"She gives you a ring and then goes home nuzzling her teddy, waving at you and thanking you again."));
 	private static final String stepFinishedDescription = "Dormouse sleeps happily in her house, hugging her teddy.";
 
-	private void continueSearchingForTeddyStep(final MessageComponentInteraction interaction,
+	private void continueSearchingForTeddyStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		if (!userData.hasItem(QuestItems.TEDDY_BEAR_PLUSHIE)) {
 			interaction.createOriginalMessageUpdater()
@@ -67,7 +68,8 @@ public class QuestSleepyMouseTeddyBear extends Quest {
 
 		interaction.createOriginalMessageUpdater()
 				.addEmbeds(makeEmbed(type.name, stepFinishedText, MonsterGirlRace.DORMOUSE.imageLink), //
-						userData.addExpAndMakeEmbed(500, interaction.getUser(), interaction.getServer().get()), //
+						userData.addExpAndMakeEmbed(apiUtils, 500, interaction.getUser(),
+								interaction.getServer().get()), //
 						makeEmbed("Obtained reward", "You got a ring of negation"))//
 				.update();
 	}

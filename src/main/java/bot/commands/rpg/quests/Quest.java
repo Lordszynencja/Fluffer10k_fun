@@ -14,10 +14,11 @@ import bot.data.quests.QuestType;
 import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public abstract class Quest {
 	protected static interface ContinueQuestHandler {
-		void handle(MessageComponentInteraction interaction, ServerUserData userData);
+		void handle(APIUtils apiUtils, MessageComponentInteraction interaction, ServerUserData userData);
 	}
 
 	public static String description(final String text) {
@@ -32,7 +33,7 @@ public abstract class Quest {
 		return makeEmbed("New quest!", description);
 	}
 
-	protected static void defaultGiveItemStep(final MessageComponentInteraction interaction,
+	protected static void defaultGiveItemStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData, final QuestType type, final String itemId, final long amount,
 			final QuestStep nextStep, final boolean nextStepContinued, final String text, final String description,
 			final String img, final long exp) {
@@ -47,7 +48,8 @@ public abstract class Quest {
 		userData.addItem(itemId, -amount);
 
 		interaction.createOriginalMessageUpdater().addEmbeds(makeEmbed(type.name, text, img), //
-				userData.addExpAndMakeEmbed(exp, interaction.getUser(), interaction.getServer().get())).update();
+				userData.addExpAndMakeEmbed(apiUtils, exp, interaction.getUser(), interaction.getServer().get()))
+				.update();
 	}
 
 	public final QuestType type;
@@ -85,13 +87,15 @@ public abstract class Quest {
 
 	protected final Map<QuestStep, ContinueQuestHandler> continueQuestHandlers = new HashMap<>();
 
-	private void defaultQuestHandler(final MessageComponentInteraction interaction, final ServerUserData userData) {
+	private void defaultQuestHandler(final APIUtils apiUtils, final MessageComponentInteraction interaction,
+			final ServerUserData userData) {
 		interaction.createOriginalMessageUpdater()
 				.addEmbed(makeEmbed("Continue quest " + type.name, "Quest can't be continued this way")).update();
 	}
 
-	public void continueQuest(final MessageComponentInteraction interaction, final ServerUserData userData) {
+	public void continueQuest(final APIUtils apiUtils, final MessageComponentInteraction interaction,
+			final ServerUserData userData) {
 		continueQuestHandlers.getOrDefault(userData.rpg.quests.get(type).step, this::defaultQuestHandler)
-				.handle(interaction, userData);
+				.handle(apiUtils, interaction, userData);
 	}
 }

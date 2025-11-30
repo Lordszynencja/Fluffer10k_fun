@@ -31,6 +31,7 @@ import bot.data.quests.QuestType;
 import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestBusinessAsUsual1 extends Quest {
 	private final Fluffer10kFun fluffer10kFun;
@@ -75,7 +76,7 @@ public class QuestBusinessAsUsual1 extends Quest {
 			"The dwarf blacksmith wants you to take care of her rival.", //
 			"Use " + bold("/quest continue") + " when you are ready for that.");
 
-	private void continueGettingToolsStep(final MessageComponentInteraction interaction,
+	private void continueGettingToolsStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		if (!userData.hasItem(QuestItems.BLACKSMITH_TOOLS_SIMPLE, 5)//
 				|| !userData.hasItem(QuestItems.BLACKSMITH_TOOLS_ADVANCED)//
@@ -100,9 +101,9 @@ public class QuestBusinessAsUsual1 extends Quest {
 				stepTalkingToRivalDescription, true);
 		userData.rpg.setQuest(questData);
 
-		final List<EmbedBuilder> embeds = new ArrayList<>(
-				asList(newQuestMessage(stepTalkingToRivalText).setImage(MonsterGirlRace.DWARF.imageLink), //
-						userData.addExpAndMakeEmbed(500, interaction.getUser(), interaction.getServer().get())));
+		final List<EmbedBuilder> embeds = new ArrayList<>(asList(
+				newQuestMessage(stepTalkingToRivalText).setImage(MonsterGirlRace.DWARF.imageLink), //
+				userData.addExpAndMakeEmbed(apiUtils, 500, interaction.getUser(), interaction.getServer().get())));
 
 		if (unlocked) {
 			embeds.add(makeEmbed("Unlocked tier 1 crafting and got a copper pickaxe blueprint!"));
@@ -111,7 +112,7 @@ public class QuestBusinessAsUsual1 extends Quest {
 		interaction.createImmediateResponder().addEmbeds(embeds).respond();
 	}
 
-	private void continueTalkingToRivalStep(final MessageComponentInteraction interaction,
+	private void continueTalkingToRivalStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
 			final ServerUserData userData) {
 		if (!userData.canStartOtherFight()) {
 			String msg;
@@ -144,7 +145,7 @@ public class QuestBusinessAsUsual1 extends Quest {
 		userData.addItem(GemItems.getId(GemSize.LARGE, GemRefinement.REFINED, GemType.TOPAZ));
 
 		channel.sendMessage(makeEmbed(type.name, stepFinishedText, MonsterGirlRace.DWARF.imageLink), //
-				userData.addExpAndMakeEmbed(2000, user, getServer(channel)), //
+				userData.addExpAndMakeEmbed(fluffer10kFun.apiUtils, 2000, user, getServer(channel)), //
 				makeEmbed("Obtained reward", "You got a topaz!"));
 	}
 }

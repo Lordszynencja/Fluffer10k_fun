@@ -23,6 +23,7 @@ import bot.userData.ServerUserData;
 import bot.userData.rpg.questData.QuestStep;
 import bot.userData.rpg.questData.UserFluffLoverQuestFluffingStepData;
 import bot.userData.rpg.questData.UserQuestData;
+import bot.util.apis.APIUtils;
 
 public class QuestFluffLover extends Quest {
 	public QuestFluffLover() {
@@ -105,7 +106,8 @@ public class QuestFluffLover extends Quest {
 					"Man leaves you your reward and hurriedly goes to hide in his tent. You get a feeling this is not the end."));
 	private static final String stepFinishedDescription = "You helped a man gather data about various fluffy girls. Who knows what will happen next? At least you touched some fluffy tails.";
 
-	private void continueFluffingStep(final MessageComponentInteraction interaction, final ServerUserData userData) {
+	private void continueFluffingStep(final APIUtils apiUtils, final MessageComponentInteraction interaction,
+			final ServerUserData userData) {
 		final UserFluffLoverQuestFluffingStepData questData = userData.rpg.quests.get(type).asSpecific();
 		if (!questData.girlsLeft.isEmpty()) {
 			interaction.createOriginalMessageUpdater()
@@ -122,7 +124,7 @@ public class QuestFluffLover extends Quest {
 		userData.addItem(INTELLIGENCE_3_POTION);
 
 		interaction.createOriginalMessageUpdater().addEmbeds(makeEmbed(type.name, stepFinishedText), //
-				userData.addExpAndMakeEmbed(20_000, interaction.getUser(), interaction.getServer().get()), //
+				userData.addExpAndMakeEmbed(apiUtils, 20_000, interaction.getUser(), interaction.getServer().get()), //
 				makeEmbed("Obtained items", "You got 10 000 gold and bunch of potions"))//
 				.update();
 	}

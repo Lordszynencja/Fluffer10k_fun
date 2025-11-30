@@ -17,7 +17,7 @@ public class CommandBotChannel extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandBotChannel(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "bot_channel", "Mark channel as bot channel (owner only)");
+		super(fluffer10kFun.apiUtils, "bot_channel", "Mark channel as bot channel (owner only)", false);
 
 		this.fluffer10kFun = fluffer10kFun;
 	}
