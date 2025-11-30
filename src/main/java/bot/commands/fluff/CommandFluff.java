@@ -72,7 +72,8 @@ public class CommandFluff extends Command {
 
 		final String tailMsg = fluffer10kFun.fluffyTailUtils.getTailsMsg(tailsNumber)
 				+ (tailsNumber == 1 ? " was" : " were");
-		final String title = fluffedNick + "'s " + tailMsg + " fluffed by " + flufferNick + " " + emojis.tamawoo;
+		final String title = fluffedNick + "'s " + tailMsg + " fluffed by " + flufferNick + " "
+				+ emojis.tamawoo.getMentionTag();
 		final String description = getDescription(isNew, newTailsNumber, tailsNumber, fluffedNick);
 		return makeEmbed(title, description, getRandom(isNSFW ? imageLinksNSFW : imageLinksSFW));
 	}
