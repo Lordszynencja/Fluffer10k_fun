@@ -295,7 +295,7 @@ public class Fluffer10kFun {
 
 			apiUtils.endInit();
 
-			CommandHandlers.addOnExit(() -> {
+			CommandHandlers.addOnExit("restarting bot message on servers", () -> {
 				botDataUtils.forEachServer((serverId, serverData) -> {
 					final MessageBuilder msg = new MessageBuilder()//
 							.addEmbed(makeEmbed(

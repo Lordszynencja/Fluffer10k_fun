@@ -42,7 +42,7 @@ public class ServerUserDataUtils {
 
 		startRepeatedTimedEvent(this::saveData, 5 * 60, 0, "saving server user data");
 
-		addOnExit(this::onExit);
+		addOnExit("saving server user data", this::onExit);
 	}
 
 	@SuppressWarnings("unchecked")

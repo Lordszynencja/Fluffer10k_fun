@@ -83,7 +83,7 @@ public class BotDataUtils {
 		startRepeatedTimedEvent(this::saveData, 5 * 60, 0, "saving bot data");
 		startRepeatedTimedEvent(this::removeUnusedFights, 60 * 60, 0, "removing unused fights");
 
-		addOnExit(this::onExit);
+		addOnExit("BotDataUtils", this::onExit);
 
 		saveData();
 	}

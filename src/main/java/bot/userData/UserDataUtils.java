@@ -31,7 +31,7 @@ public class UserDataUtils {
 
 		startRepeatedTimedEvent(this::saveData, 5 * 60, 0, "saving user data");
 
-		addOnExit(this::onExit);
+		addOnExit("saving user data", this::onExit);
 	}
 
 	@SuppressWarnings("unchecked")
