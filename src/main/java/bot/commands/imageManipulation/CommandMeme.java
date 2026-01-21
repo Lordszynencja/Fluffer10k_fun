@@ -7,6 +7,7 @@ import static bot.util.Utils.joinNames;
 import static bot.util.apis.MessageUtils.getUserMentionIds;
 import static bot.util.apis.MessageUtils.isNSFWChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
+import static bot.util.apis.commands.FlufferCommandOption.string;
 import static java.util.Arrays.asList;
 
 import java.awt.Graphics2D;
@@ -18,21 +19,22 @@ import java.awt.image.BufferedImageOp;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.util.RandomUtils;
 import bot.util.apis.Config;
+import bot.util.apis.commands.FlufferCommand;
 import bot.util.subcommand.Command;
 
 public class CommandMeme extends Command {
@@ -278,12 +280,21 @@ public class CommandMeme extends Command {
 		});
 	}
 
+	public static List<String> getMemeDescriptions() {
+		final List<String> names = new ArrayList<>(memes.keySet());
+		names.sort(null);
+
+		return names.stream().map(name -> name + "(" + memes.get(name).inserts.length + ")")
+				.collect(Collectors.toList());
+	}
+
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandMeme(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "meme", "Creates meme", //
-				SlashCommandOption.create(SlashCommandOptionType.STRING, "template", "Template name to use"), //
-				SlashCommandOption.create(SlashCommandOptionType.STRING, "targets", "Targets"));
+		super(fluffer10kFun.apiUtils, //
+				new FlufferCommand("meme", "Creates a meme")//
+						.addOption(string("template", "Template name to use"))//
+						.addOption(string("targets", "targets")));
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

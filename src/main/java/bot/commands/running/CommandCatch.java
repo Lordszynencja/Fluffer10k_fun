@@ -21,6 +21,7 @@ import bot.commands.running.RunningUtils.RunnerData;
 import bot.userData.ServerUserData;
 import bot.userData.UserData;
 import bot.userData.UserStatusesData.UserStatusType;
+import bot.util.apis.commands.FlufferCommand;
 import bot.util.subcommand.Command;
 
 public class CommandCatch extends Command {
@@ -31,7 +32,7 @@ public class CommandCatch extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandCatch(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "catch", "Catch someone!");
+		super(fluffer10kFun.apiUtils, new FlufferCommand("catch", "Catch someone!"));
 
 		imageLinks = readFileLines(fluffer10kFun.apiUtils.config.getString("imageFolderPath") + "catch/links.txt");
 

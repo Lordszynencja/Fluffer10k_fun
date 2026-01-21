@@ -1,18 +1,18 @@
 package bot.commands;
 
 import static bot.util.apis.MessageUtils.getMentions;
+import static bot.util.apis.commands.FlufferCommandOption.string;
 
 import java.util.List;
 
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 import org.javacord.api.interaction.callback.InteractionImmediateResponseBuilder;
 
 import bot.Fluffer10kFun;
 import bot.util.RandomUtils;
+import bot.util.apis.commands.FlufferCommand;
 import bot.util.subcommand.Command;
 
 public class CommandShoot extends Command {
@@ -61,8 +61,9 @@ public class CommandShoot extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandShoot(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "shoot", "Pew pew", //
-				SlashCommandOption.create(SlashCommandOptionType.STRING, "target", "target to aim at", false));
+		super(fluffer10kFun.apiUtils, //
+				new FlufferCommand("shoot", "Pew pew")//
+						.addOption(string("target", "target to aim at")));
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

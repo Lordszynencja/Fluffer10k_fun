@@ -87,6 +87,7 @@ import bot.commands.upgrades.CommandUpgrade;
 import bot.commands.utility.CommandAnswer;
 import bot.commands.utility.CommandBotChannel;
 import bot.commands.utility.CommandHelp;
+import bot.commands.utility.CommandMemes;
 import bot.commands.utility.CommandModRole;
 import bot.commands.utility.CommandReminder;
 import bot.commands.utility.CommandRoll;
@@ -102,8 +103,6 @@ import bot.util.modularPrompt.ModularPromptUtils;
 import bot.util.pages.PagedMessageUtils;
 
 public class Fluffer10kFun {
-	private static final String inviteLink = "https://discord.com/api/oauth2/authorize?client_id=900109965035974706&permissions=277025508352&scope=bot%20applications.commands";
-
 	public final APIUtils apiUtils;
 	public final Emojis emojis;
 	public final PagedMessageUtils pagedMessageUtils;
@@ -160,6 +159,7 @@ public class Fluffer10kFun {
 	public final CommandMgLoveHard commandMgLoveHard;
 	public final CommandMgLoveProtectionUse commandMgLoveProtectionUse;
 	public final CommandMeme commandMeme;
+	public final CommandMemes commandMemes;
 	public final CommandMGE commandMGE;
 	public final CommandMilk commandMilk;
 	public final CommandMilks commandMilks;
@@ -190,8 +190,7 @@ public class Fluffer10kFun {
 	public final CommandWag commandWag;
 
 	public Fluffer10kFun() throws IOException {
-		apiUtils = new APIUtils("Fluffer 10k Fun", inviteLink, "fluffer10kFun_config.txt",
-				asList(Intent.GUILD_MEMBERS));
+		apiUtils = new APIUtils("Fluffer 10k Fun", "fluffer10kFun_config.txt", asList(Intent.GUILD_MEMBERS));
 
 		try {
 			emojis = new Emojis(apiUtils);
@@ -251,6 +250,7 @@ public class Fluffer10kFun {
 			commandMgLoveHard = new CommandMgLoveHard(this);
 			commandMgLoveProtectionUse = new CommandMgLoveProtectionUse(this);
 			commandMeme = new CommandMeme(this);
+			commandMemes = new CommandMemes(this);
 			commandMGE = new CommandMGE(this);
 			commandMilk = new CommandMilk(this);
 			commandMilks = new CommandMilks(this);

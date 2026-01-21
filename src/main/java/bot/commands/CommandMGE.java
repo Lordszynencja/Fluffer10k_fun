@@ -8,24 +8,24 @@ import static bot.util.apis.MessageUtils.isNSFWChannel;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
 import static bot.util.apis.MessageUtils.sendMessageToUser;
 import static bot.util.apis.MessageUtils.splitLongMessage;
+import static bot.util.apis.commands.FlufferCommandOption.string;
 
 import org.javacord.api.entity.channel.ChannelType;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.data.MonsterGirls;
 import bot.data.MonsterGirls.MonsterGirlRace;
+import bot.util.apis.commands.FlufferCommand;
 import bot.util.subcommand.Command;
 
 public class CommandMGE extends Command {
 
 	public CommandMGE(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "mge", "get a page from Monster Girl Encyclopedia", //
-				SlashCommandOption.create(SlashCommandOptionType.STRING, "race",
-						"Race to show page for (or type \"all\" for all options)"));
+		super(fluffer10kFun.apiUtils, //
+				new FlufferCommand("mge", "get a page from Monster Girl Encyclopedia")//
+						.addOption(string("race", "Race to show page for (or type \"all\" for all options)")));
 	}
 
 	@Override

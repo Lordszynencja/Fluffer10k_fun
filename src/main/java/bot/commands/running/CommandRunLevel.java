@@ -1,24 +1,25 @@
 package bot.commands.running;
 
 import static bot.util.EmbedUtils.makeEmbed;
+import static bot.util.apis.commands.FlufferCommandOption.user;
 
 import java.io.IOException;
 
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.userData.UserData;
+import bot.util.apis.commands.FlufferCommand;
 import bot.util.subcommand.Command;
 
 public class CommandRunLevel extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandRunLevel(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "run_level", "Check running level", //
-				SlashCommandOption.create(SlashCommandOptionType.USER, "target", "person to check running level for"));
+		super(fluffer10kFun.apiUtils, //
+				new FlufferCommand("run_level", "Check running level")//
+						.addOption(user("target", "person to check running level for")));
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

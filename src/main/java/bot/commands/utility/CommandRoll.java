@@ -2,6 +2,7 @@ package bot.commands.utility;
 
 import static bot.util.EmbedUtils.makeEmbed;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
+import static bot.util.apis.commands.FlufferCommandOption.string;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.summingInt;
 
@@ -11,10 +12,9 @@ import java.util.Random;
 
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
+import bot.util.apis.commands.FlufferCommand;
 import bot.util.subcommand.Command;
 
 public class CommandRoll extends Command {
@@ -87,9 +87,9 @@ public class CommandRoll extends Command {
 	}
 
 	public CommandRoll(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "roll", "roll some dice", //
-				SlashCommandOption.create(SlashCommandOptionType.STRING, "dice_expression",
-						"expression that contains XdX, dX or +X", true));
+		super(fluffer10kFun.apiUtils, //
+				new FlufferCommand("roll", "roll some dice")//
+						.addOption(string("dice_expression", "expression that contains XdX, dX or +X").required()));
 	}
 
 	@Override

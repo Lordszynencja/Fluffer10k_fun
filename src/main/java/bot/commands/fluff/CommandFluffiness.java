@@ -14,6 +14,7 @@ import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
 import bot.util.apis.commands.FlufferCommand;
+import bot.util.apis.commands.FlufferCommandOption;
 import bot.util.subcommand.Command;
 
 public class CommandFluffiness extends Command {
@@ -35,7 +36,7 @@ public class CommandFluffiness extends Command {
 	public CommandFluffiness(final Fluffer10kFun fluffer10kFun) {
 		super(fluffer10kFun.apiUtils, //
 				new FlufferCommand("fluffiness", "Shows current fluffiness")//
-						.addUserOption("target", "Check fluffiness of this person"));
+						.addOption(FlufferCommandOption.user("target", "Check fluffiness of this person")));
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

@@ -60,6 +60,7 @@ public class CommandHelp extends Command {
 							"/fluffiness - check how fluffy your tails are", //
 							"/invert - invert an image", //
 							"/meme - sir, we serve memes here", //
+							"/memes - list the available memes", //
 							"/mg_love - force your love onto someone", //
 							"/mg_love_count - check how many times you were loved", //
 							"/mg_love_protection_use - set whether you want to use protection from love", //
@@ -91,6 +92,7 @@ public class CommandHelp extends Command {
 							"/fluffiness - check how fluffy your tails are", //
 							"/invert - invert an image", //
 							"/meme - sir, we serve memes here", //
+							"/memes - list the available memes", //
 							"/mge - check monster girl encyclopedia", //
 							"/milk - got milk? Now you do", //
 							"/owoify - best cOwOmmand", //

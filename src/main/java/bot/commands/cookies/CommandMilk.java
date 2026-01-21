@@ -12,11 +12,11 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.userData.ServerUserData;
+import bot.util.apis.commands.FlufferCommand;
+import bot.util.apis.commands.FlufferCommandOption;
 import bot.util.subcommand.Command;
 
 public class CommandMilk extends Command {
@@ -25,8 +25,9 @@ public class CommandMilk extends Command {
 	private final Map<Long, Long> timeouts = new HashMap<>();
 
 	public CommandMilk(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "milk", "Get a bottle of milk", //
-				SlashCommandOption.create(SlashCommandOptionType.USER, "target", "Person to get milk for", false));
+		super(fluffer10kFun.apiUtils, //
+				new FlufferCommand("milk", "Get a bottle of milk")
+						.addOption(FlufferCommandOption.user("target", "Person to get milk for")));
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

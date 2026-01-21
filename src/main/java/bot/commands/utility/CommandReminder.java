@@ -2,12 +2,12 @@ package bot.commands.utility;
 
 import static bot.util.DateUtils.formatDateFromMilis;
 import static bot.util.apis.MessageUtils.sendEphemeralMessage;
+import static bot.util.apis.commands.FlufferCommandOption.string;
 
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
+import bot.util.apis.commands.FlufferCommand;
 import bot.util.subcommand.Command;
 
 public class CommandReminder extends Command {
@@ -16,12 +16,12 @@ public class CommandReminder extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandReminder(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "reminder", "Set reminder", //
-				SlashCommandOption.create(SlashCommandOptionType.STRING, "time",
-						"in what time you want to be reminded? Format is numbers separated by :, 999:23:59:59 max",
-						true), //
-				SlashCommandOption.create(SlashCommandOptionType.STRING, "message",
-						"Message that will be sent as reminder", true));
+		super(fluffer10kFun.apiUtils, //
+				new FlufferCommand("reminder", "Set reminder")//
+						.addOption(string("time",
+								"in what time you want to be reminded? Format is numbers separated by :, 999:23:59:59 max")
+								.required())//
+						.addOption(string("message", "Message that will be sent as reminder").required()));
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

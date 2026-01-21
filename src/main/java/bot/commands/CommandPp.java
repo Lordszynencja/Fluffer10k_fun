@@ -7,11 +7,11 @@ import java.util.Random;
 
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
 import bot.util.apis.MessageUtils;
+import bot.util.apis.commands.FlufferCommand;
+import bot.util.apis.commands.FlufferCommandOption;
 import bot.util.subcommand.Command;
 
 public class CommandPp extends Command {
@@ -20,9 +20,9 @@ public class CommandPp extends Command {
 	private final Fluffer10kFun fluffer10kFun;
 
 	public CommandPp(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "pp", "Measure your pp", //
-				SlashCommandOption.create(SlashCommandOptionType.STRING, "target", "person whose pp you wanna see",
-						false));
+		super(fluffer10kFun.apiUtils, //
+				new FlufferCommand("pp", "Measure your pp")//
+						.addOption(FlufferCommandOption.string("target", "person whose pp you wanna see")));
 
 		this.fluffer10kFun = fluffer10kFun;
 	}

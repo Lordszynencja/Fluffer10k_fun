@@ -1,19 +1,21 @@
 package bot.commands.imageManipulation;
 
+import static bot.util.apis.commands.FlufferCommandOption.user;
+
 import org.javacord.api.entity.Icon;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.SlashCommandInteraction;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
 
 import bot.Fluffer10kFun;
+import bot.util.apis.commands.FlufferCommand;
 import bot.util.subcommand.Command;
 
 public class CommandPfp extends Command {
 	public CommandPfp(final Fluffer10kFun fluffer10kFun) {
-		super(fluffer10kFun.apiUtils, "pfp", "check pfp", //
-				SlashCommandOption.create(SlashCommandOptionType.USER, "target", "person whose pfp you wanna see"));
+		super(fluffer10kFun.apiUtils, //
+				new FlufferCommand("pfp", "check pfp")//
+						.addOption(user("target", "person whose pfp you wanna see").required()));
 	}
 
 	@Override

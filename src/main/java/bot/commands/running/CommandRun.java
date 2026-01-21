@@ -14,6 +14,7 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
 import bot.Fluffer10kFun;
+import bot.util.apis.commands.FlufferCommand;
 import bot.util.subcommand.Command;
 
 public class CommandRun extends Command {
@@ -22,7 +23,7 @@ public class CommandRun extends Command {
 	private final String[] imageLinks;
 
 	public CommandRun(final Fluffer10kFun fluffer10kFun) throws IOException {
-		super(fluffer10kFun.apiUtils, "run", "Start running");
+		super(fluffer10kFun.apiUtils, new FlufferCommand("run", "Start running"));
 
 		this.fluffer10kFun = fluffer10kFun;
 
